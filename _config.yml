@@ -2,9 +2,9 @@
 # Site settings
 # -----------------------------------------------------------------------------
 
-title: blank 
+title: blank
 first_name: Manuel
-middle_name: 
+middle_name:
 last_name: Boll
 contact_note: >
 description: > # the ">" symbol means to ignore newlines until "footer_text:"

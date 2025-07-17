@@ -12,7 +12,6 @@ What makes this so clever is that it doesn’t rely on heavy obfuscation or comp
 
 [Original Post](https://isc.sans.edu/diary/28708)
 
-
 If the sample’s name has been changed (as sandboxes often do), this command will fail, and the script won't proceed to the next stage. Genius.
 
 Xavier shows how this ultimately leads to a PowerShell iex (Invoke-Expression) command that tries to fetch further payloads from a C2 server, with the next stage hidden behind a Set-Cookie header. There’s even an embedded PNG image in the .lnk file that contains additional commands — a nice touch of steganography.
