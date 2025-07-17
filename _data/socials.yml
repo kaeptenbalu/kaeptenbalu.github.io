@@ -50,7 +50,7 @@ custom_social: # can be any name here other than the ones already defined above
 custom_social1: # can be any name here other than the ones already defined above
   logo: # can be png, svg, jpg
   title: HackTheBox
-  url: https://app.hackthebox.com/profile/61653
+  url: https://old.roi4cio.com/uploads/roi/company/hack_the_box.png
 custom_social2: # can be any name here other than the ones already defined above
   logo: https://freakazoids.de/assets/images/banner.png # can be png, svg, jpg
   title: CTFTeam
