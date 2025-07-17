@@ -8,10 +8,9 @@ related_posts: false
 
 Recently, I came across a heavily obfuscated PowerShell script—the kind you’ll often see in real-world malware or red team payloads. In this post, I’ll walk you through the process I used to deobfuscate it: decoding strings, rebuilding logic, and finally revealing the script’s real intent. This guide is for analysts, pentesters, and anyone interested in malware reverse engineering.  
 The script is sourced from the [ZHacker13/ReverseTCPShell](https://github.com/ZHacker13/ReverseTCPShell) repository and, at the time of writing, was still undetected by VirusTotal.
-[VirusTotal](https://www.virustotal.com/gui/file/1339581bb26e157363b5b2ee044a6f97adfc672688915ad1ff01481ef4bfc382) 
+[VirusTotal](https://www.virustotal.com/gui/file/1339581bb26e157363b5b2ee044a6f97adfc672688915ad1ff01481ef4bfc382)
 
 ---
-
 
 ## 1. The First Glance: A Wall of Obfuscation
 
@@ -28,11 +27,10 @@ function DRLGJTjyWALFmvoywkxE{
 ```
 
 iterally every string and function name is randomized or hidden behind run-time decoding. Classic indicators:
+
 - Math operations in arrays (e.g. [char]($_/2))
 - Inline iex calls
 - ong, random variable names
-
-
 
 ## 2. Decoding the Strings
 
@@ -54,15 +52,12 @@ Decode it manually (or with a quick helper script):
 
     [char](100/2) → [char]50 → 2
 
-
 I repeated this for all encoded sections. Many more common Windows API strings started appearing, like "MEMORYSTATUSEX", "kernel32.dll", "IsDebuggerPresent", etc.
-
-
-
 
 ## 3. Rebuilding Functions—Line by Line
 
 After decoding the key strings, I started renaming the random variables and functions to match their real purpose. I worked through each function, identifying:
+
 - Windows API calls (via P/Invoke)
 - Environment/sandbox checks
 - Memory and disk inspection
@@ -79,14 +74,13 @@ function BbkTfRaCBogtajfF{
     if($dAtFKjniAWeEaAqdw -lt 256) {return $true}
 }
 ```
+
 Check if system RAM is less than 256 MB—a common anti-sandbox trick.
-
-
-
 
 ## 4. Recognizing Anti-Analysis & Evasion Techniques
 
 The next block of functions checked for things like:
+
 - Running in a VM (QEMU, VMware, etc.)
 - Presence of analysis tools (wireshark.exe, ollydbg.exe, etc.)
 - Odd system properties or hostnames
@@ -95,24 +89,14 @@ The next block of functions checked for things like:
 Example:
 A function cycles through process names, looking for debuggers or VM tools and returns true if any are found.
 
-
-
-
-
 ## 5. Understanding the Main Flow
 
 After unwrapping the helper functions, I reconstructed the main logic:
- 1. Initial Checks: Only proceed if not in a VM/sandbox/debugger, etc.
- 2. Data Exfiltration: Collect username and AV product info, encode, and send to a remote C2.
- 3. Payload Download & Execution:
-        - Download an encrypted payload
-        - Decrypt with XOR (key often also obfuscated)
-        - Execute payload in-memory via Invoke-Expression
- 4. Error Handling: On errors, send diagnostics to another C2 URL.
 
-
-
-
+1.  Initial Checks: Only proceed if not in a VM/sandbox/debugger, etc.
+2.  Data Exfiltration: Collect username and AV product info, encode, and send to a remote C2.
+3.  Payload Download & Execution: - Download an encrypted payload - Decrypt with XOR (key often also obfuscated) - Execute payload in-memory via Invoke-Expression
+4.  Error Handling: On errors, send diagnostics to another C2 URL.
 
 ## 6. Final: The Cleaned-Up Script
 
@@ -145,10 +129,7 @@ function Main {
 }
 ```
 
-
-
 ## 7. The Final Deofuscated Code
-
 
 ```powershell
 function DRLGJTjyWALFmvoywkxE {
@@ -183,10 +164,10 @@ function DRLGJTjyWALFmvoywkxE {
     $SetLastErrorField = [Runtime.InteropServices.DllImportAttribute].GetField("SetLastError")
 
     $IKShBKVmWEOGXMvFmV = New-Object Reflection.Emit.CustomAttributeBuilder(
-        $DllImportCtor,              
-        @("kernel32.dll"),            
-        [Reflection.FieldInfo[]]@($SetLastErrorField), 
-        @($true)                      
+        $DllImportCtor,
+        @("kernel32.dll"),
+        [Reflection.FieldInfo[]]@($SetLastErrorField),
+        @($true)
     )
 
     $funcs = @(
@@ -356,22 +337,21 @@ function ExfiltrateAndLoadPayload {
 
 ExfiltrateAndLoadPayload
 ```
+
 ---
 
-
 ## 8. Key Takeaways & Lessons Learned
-
 
 - **Obfuscation**: Most obfuscation in the wild is about hiding strings and function names. If you can decode them, you can reconstruct almost any script.
 - **Scripting Automation**: For large scripts, use scripting to automate string decoding.
 - **Anti-Analysis Tricks**: Memory, disk, hostname, and process checks are standard for evasion.
 - **Pattern Recognition**: After a few of these, you’ll spot common obfuscation and evasion patterns immediately.
 - **IOC Extraction**: Deobfuscation enables you to extract critical Indicators of Compromise (IOCs), such as:
-    - C2 server domains/URLs (e.g., `host5676.info`, `dlhost5676.info`)
-    - Unique payload URLs and exfiltration endpoints
-    - Custom XOR keys and decryption methods
-    - Hardcoded process or hostname lists used for evasion (can be YARA/IOC material)
+  - C2 server domains/URLs (e.g., `host5676.info`, `dlhost5676.info`)
+  - Unique payload URLs and exfiltration endpoints
+  - Custom XOR keys and decryption methods
+  - Hardcoded process or hostname lists used for evasion (can be YARA/IOC material)
 - **Documentation**: Always document decoded strings, extracted endpoints, and unique behaviors for threat intelligence sharing.
 - **Sharing**: Sharing IOCs and deobfuscated code with the community helps everyone defend faster.
-- **YARA Detection**: There is a public YARA rule by Florian Roth (Nextron Systems) that reliably detects this obfuscation and reverse shell technique in the wild.  
-    - See: [HKTL_ReverseTCPShell_Dec19 (valhalla.nextron-systems.com)](https://valhalla.nextron-systems.com/info/rule/HKTL_ReverseTCPShell_Dec19)
+- **YARA Detection**: There is a public YARA rule by Florian Roth (Nextron Systems) that reliably detects this obfuscation and reverse shell technique in the wild.
+  - See: [HKTL_ReverseTCPShell_Dec19 (valhalla.nextron-systems.com)](https://valhalla.nextron-systems.com/info/rule/HKTL_ReverseTCPShell_Dec19)
