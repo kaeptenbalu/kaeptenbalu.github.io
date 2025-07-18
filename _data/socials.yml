@@ -55,3 +55,7 @@ custom_social2: # can be any name here other than the ones already defined above
   logo: https://app.hackthebox.com/images/logos/logo-htb.svg # can be png, svg, jpg
   title: HackTheBox
   url: https://app.hackthebox.com/profile/61653
+custom_social3: # can be any name here other than the ones already defined above
+  logo: https://www.svgrepo.com/show/331358/credly.svg# can be png, svg, jpg
+  title: Credly
+  url: https://www.credly.com/users/manuel-boll/badges#credly
