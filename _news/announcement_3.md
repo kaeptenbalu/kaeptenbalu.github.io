@@ -1,7 +1,7 @@
 ---
 layout: post
-title: When Malware Meets AI: A Promptly Bad Idea!
-date: 2025-07-15 15:00:00-0400
+title: A Promptly Bad Idea - Malware Meets AI
+date: 2025-07-15 12:00:00-0400
 inline: false
 related_posts: false
 ---
