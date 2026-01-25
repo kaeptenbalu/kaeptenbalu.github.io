@@ -1,0 +1,7 @@
+# Hugo build output
+/public/
+
+# OS / Editor noise
+.DS_Store
+*.swp
+*~

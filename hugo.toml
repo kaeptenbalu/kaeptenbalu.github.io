@@ -1,0 +1,21 @@
+baseURL = 'https://mboll.eu/'
+languageCode = 'en-us'
+title = 'mboll IT-Security'
+theme = 'maverick'
+[menu]
+  [[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
+
+  [[menu.main]]
+    name = "Posts"
+    url = "/posts/"
+    weight = 2
+
+  [[menu.main]]
+    name = "About"
+    url = "/about/"
+    weight = 3
+[params]
+  items = 10
