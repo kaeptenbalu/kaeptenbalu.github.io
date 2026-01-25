@@ -11,12 +11,10 @@ Threat hunting and detection emerge naturally from this process, but only as a c
 
 ---
 
-- 📺 **LinkedIn:** https://linkedin.com/in/manuel-boll-78097b217  
+- 📺 **LinkedIn:** https://www.linkedin.com/in/manuel-boll-78097b217/  
 - ❤️ **GitHub:** https://github.com/kaeptenbalu  
-- 📧 **Email:** hello@mboll.eu
-
-
-
-
-
-
+- 📧 **Email:** hello@mboll.eu  
+- 🏴 **CTFTime:** https://ctftime.org/user/82511  
+- 🧠 **Hack The Box:** https://app.hackthebox.com/profile/61653  
+- 🎖️ **Credly (Certifications):** https://www.credly.com/users/manuel-boll/badges  
+- 🧩 **CTF Team (FreakazoidS):** https://freakazoids.de/
