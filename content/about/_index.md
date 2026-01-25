@@ -1,4 +1,4 @@
-![prof_pic.jpg](/assets/img/prof_pic.jpg?raw=true)
+![prof_pic.jpg](https://github.com/kaeptenbalu/kaeptenbalu.github.io/blob/main/assets/img/manuel.png?raw=true)
 
 I’m a Threat Hunter who loves digging into logs and exploring raw data. My go-to tools depends on the use case are Kusto, Kibana, MISP, Yara, Ghidra, SleuthKid, Bulk Extraktor, Plaso & WSL2. I also work as a freelancer, offering consulting in Threat Hunting and Image Forensics. I have experience with DAX companies, medium-sized businesses, and small businesses, providing customized solutions to fit their needs.
 
