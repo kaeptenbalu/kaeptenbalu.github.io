@@ -1,4 +1,4 @@
-baseURL = 'https://mboll.eu/'
+baseURL = 'https://www.mboll.eu/'
 languageCode = 'en-us'
 title = 'mboll IT-Security'
 theme = 'maverick'
