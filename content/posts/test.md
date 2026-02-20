@@ -6,7 +6,7 @@ tags: ["TI", "commentary"]
 ---
 
 
-![comunication_files_vt](https://iplogger.com/1Bpy15.jpg?raw=true)
+![comunication_files_vt](https://iplogger.com/1Bpy15.jpg)
 
 
 In July 2025, NSA officials declared at a New York conference that **Volt Typhoon had “failed”** to persist quietly in US critical infrastructure.  
