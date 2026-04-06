@@ -2,6 +2,20 @@ baseURL = 'https://www.mboll.eu/'
 languageCode = 'en-us'
 title = 'mboll IT-Security'
 theme = 'maverick'
+
+# RSS Feed Configuration
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
+
+[outputFormats.RSS]
+  mediaType = "application/rss+xml"
+  baseName = "feed"  # Creates feed.xml instead of index.xml
+
+# RSS Feed Settings
+[params.rss]
+  limit = 20  # Number of posts in feed
+  fullContent = true  # Include full post content (not just summary)
 [menu]
   [[menu.main]]
     name = "Home"
