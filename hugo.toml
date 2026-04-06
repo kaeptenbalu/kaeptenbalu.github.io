@@ -10,12 +10,11 @@ theme = 'maverick'
 
 [outputFormats.RSS]
   mediaType = "application/rss+xml"
-  baseName = "feed"  # Creates feed.xml instead of index.xml
+  baseName = "feed"
 
-# RSS Feed Settings
-[params.rss]
-  limit = 20  # Number of posts in feed
-  fullContent = true  # Include full post content (not just summary)
+[services.rss]
+  limit = 20
+
 [menu]
   [[menu.main]]
     name = "Home"
@@ -31,6 +30,7 @@ theme = 'maverick'
     name = "About"
     url = "/about/"
     weight = 3
+
 [params]
   items = 10
 
