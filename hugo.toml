@@ -34,6 +34,6 @@ theme = 'maverick'
 [params]
   items = 10
 
-[Author]
+[author]
   name = "Manuel Boll"
   email = "hello@mboll.eu"
