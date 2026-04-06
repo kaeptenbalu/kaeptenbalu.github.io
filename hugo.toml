@@ -33,7 +33,8 @@ theme = 'maverick'
 
 [params]
   items = 10
+  author = "Manuel Boll"
 
-[author]
+[params.Author]
   name = "Manuel Boll"
   email = "hello@mboll.eu"
