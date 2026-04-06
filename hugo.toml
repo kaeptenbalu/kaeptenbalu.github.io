@@ -33,3 +33,7 @@ theme = 'maverick'
     weight = 3
 [params]
   items = 10
+
+[Author]
+  name = "Manuel Boll"
+  email = "boll.manuel@gmail.com"
