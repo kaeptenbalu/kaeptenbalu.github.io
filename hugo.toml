@@ -27,9 +27,14 @@ theme = 'maverick'
     weight = 2
 
   [[menu.main]]
+    name = "Dashboards"
+    url = "/dashboards/"
+    weight = 3
+
+  [[menu.main]]
     name = "About"
     url = "/about/"
-    weight = 3
+    weight = 4
 
 [params]
   items = 10
