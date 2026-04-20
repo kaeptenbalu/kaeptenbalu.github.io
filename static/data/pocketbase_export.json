@@ -2138,5 +2138,25 @@
     "songname": "",
     "state": "detected",
     "updated": "2026-04-20 11:41:55.810Z"
+  },
+  {
+    "artist": "asdfsadf",
+    "collectionId": "pbc_3077012542",
+    "collectionName": "Spotify",
+    "created": "2026-04-20 14:47:16.707Z",
+    "deleted": false,
+    "filename": "sadfsadf",
+    "first_seen": "2026-04-14 12:00:00.000Z",
+    "id": "is6zw8a66ddz83o",
+    "malwarehash": "asdfasdfsdfsagersgewrgerg",
+    "playlist": "https://open.spotify.com/playlist/3pGhFaVaaaOiDQmwDGdEiJ",
+    "playlist_duration": 90,
+    "playlist_owner": "lala",
+    "playlistname": "halotest",
+    "popularity": 40000000,
+    "song_count": 3,
+    "songname": "",
+    "state": "",
+    "updated": "2026-04-20 14:47:16.707Z"
   }
 ]
