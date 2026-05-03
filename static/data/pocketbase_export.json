@@ -2198,5 +2198,25 @@
     "songname": "",
     "state": "detected",
     "updated": "2026-04-24 00:12:10.972Z"
+  },
+  {
+    "artist": "",
+    "collectionId": "pbc_3077012542",
+    "collectionName": "Spotify",
+    "created": "2026-05-03 00:11:34.357Z",
+    "deleted": false,
+    "filename": "d1330bb273062d9dff56a31d83c3a810.virus",
+    "first_seen": "2021-07-21 09:47:07.000Z",
+    "id": "qstqxf4z3o45kin",
+    "malwarehash": "fe81b391c37365c17dd328f55ba05f3949e6432ec3b4d4cf518759369a06e81f",
+    "playlist": "https://open.spotify.com/playlist/7nvH7IXlQy805LLVaRhmg7",
+    "playlist_duration": 0,
+    "playlist_owner": "",
+    "playlistname": "",
+    "popularity": 0,
+    "song_count": 0,
+    "songname": "",
+    "state": "detected",
+    "updated": "2026-05-03 00:11:34.357Z"
   }
 ]
