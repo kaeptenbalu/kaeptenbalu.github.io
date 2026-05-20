@@ -1,9 +1,9 @@
 ## Hi there! 👋
 
 
-Welcome to my blog — a place for IT-Security that prefers context over headlines.
+Welcome to my blog — a place for IT-Security that cuts through the noise.
 
-This space is dedicated to the careful analysis of adversary behavior, malicious infrastructure, and the often inconvenient details that turn raw observations into usable intelligence. 
+Here you'll find concise, focused analysis of adversary behavior and malicious infrastructure. No lengthy posts, no fluff — just direct insights that get straight to the point without compromising depth. 
 
 
 ---
