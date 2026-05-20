@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  {{ partial "head.html" . }}
+<body>
+  <a class="skip-link" href="#main">Skip to main</a>
+  <main id="main">
+    <div class="content homepage-content">
+      {{ partial "header.html" . }}
+
+      <div class="homepage-intro">
+        {{ .Content }}
+      </div>
+
+      {{ if gt (len ( where .Site.RegularPages "Section" "posts" )) 0 }}
+      <section class="homepage-posts">
+        <h2 class="homepage-section-title">Latest Posts</h2>
+        <div class="homepage-posts-grid">
+          {{ range (first 4 (where .Site.RegularPages "Section" "posts" ).ByDate.Reverse) }}
+            <article class="post-card">
+              <a href="{{ .Permalink }}" class="post-card-link">
+                <div class="post-card-content">
+                  <h3 class="post-card-title">{{ .Title }}</h3>
+                  {{ if .Description }}
+                  <p class="post-card-description">{{ .Description }}</p>
+                  {{ else }}
+                  <p class="post-card-description">{{ .Summary | plainify | truncate 120 }}</p>
+                  {{ end }}
+                  <div class="post-card-meta">
+                    <time datetime="{{ dateFormat "2006-01-02" .Date }}">{{ dateFormat "January 2, 2006" .Date }}</time>
+                  </div>
+                </div>
+              </a>
+            </article>
+          {{ end }}
+        </div>
+      </section>
+      {{ end }}
+    </div>
+  </main>
+</body>
+</html>
