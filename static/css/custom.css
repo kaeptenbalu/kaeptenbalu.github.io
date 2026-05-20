@@ -1,4 +1,14 @@
 /* Homepage Layout */
+.homepage-body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.homepage-body main {
+    flex: 1;
+}
+
 .homepage-content {
     max-width: 90ch;
 }
@@ -41,8 +51,8 @@
 
 /* Homepage Footer */
 .homepage-footer {
-    margin-top: 5rem;
-    padding: 2rem 0;
+    margin-top: auto;
+    padding: 2rem;
     border-top: 2px solid #ddd;
     background: #f9f9f9;
 }
