@@ -31,9 +31,9 @@
     border-radius: 8px;
     padding: 2rem;
     transition: all 0.3s ease;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    aspect-ratio: 1 / 1;
 }
 
 .post-card:hover {
@@ -57,15 +57,11 @@
 }
 
 .post-card-title {
-    font-size: 1.15rem;
+    font-size: 1.25rem;
     font-weight: 700;
-    line-height: 1.3;
-    margin: 0 0 0.75rem 0;
+    line-height: 1.4;
+    margin: 0 0 1rem 0;
     transition: color 0.2s ease;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
 }
 
 .post-card:hover .post-card-title {
@@ -74,12 +70,12 @@
 
 .post-card-description {
     flex-grow: 1;
-    font-size: 0.875rem;
-    line-height: 1.5;
+    font-size: 0.95rem;
+    line-height: 1.6;
     color: #555;
-    margin: 0 0 1rem 0;
+    margin: 0 0 1.5rem 0;
     display: -webkit-box;
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
