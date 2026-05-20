@@ -13,13 +13,6 @@
           <article class="post-card">
             <a href="{{ .Permalink }}" class="post-card-link">
               <div class="post-card-content">
-                {{ if .Params.categories }}
-                <div class="post-categories">
-                  {{ range first 2 .Params.categories }}
-                    <span class="category-badge">{{ . }}</span>
-                  {{ end }}
-                </div>
-                {{ end }}
                 <h2 class="post-card-title">{{ .Title }}</h2>
                 {{ if .Description }}
                 <p class="post-card-description">{{ .Description }}</p>
