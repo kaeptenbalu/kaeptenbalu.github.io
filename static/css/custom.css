@@ -39,10 +39,38 @@
     }
 }
 
-.homepage-links {
-    margin-top: 4rem;
-    padding-top: 2rem;
-    border-top: 1px solid #ddd;
+/* Homepage Footer */
+.homepage-footer {
+    margin-top: 5rem;
+    padding: 2rem 0;
+    border-top: 2px solid #ddd;
+    background: #f9f9f9;
+}
+
+.footer-links {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem 1.5rem;
+    max-width: 70ch;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .footer-links {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem 2rem;
+    }
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.2s ease;
+    font-size: 0.95rem;
+}
+
+.footer-links a:hover {
+    color: #0066cc;
 }
 
 /* Posts Grid Layout */
