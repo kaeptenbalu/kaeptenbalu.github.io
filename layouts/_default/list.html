@@ -16,8 +16,8 @@
                 <h2 class="post-card-title">{{ .Title }}</h2>
                 {{ if .Description }}
                 <p class="post-card-description">{{ .Description }}</p>
-                {{ else if .Summary }}
-                <p class="post-card-description">{{ .Summary | truncate 150 }}</p>
+                {{ else }}
+                <p class="post-card-description">{{ .Summary | plainify | truncate 150 }}</p>
                 {{ end }}
                 <div class="post-card-meta">
                   <time datetime="{{ dateFormat "2006-01-02" .Date }}">{{ dateFormat "January 2, 2006" .Date }}</time>
