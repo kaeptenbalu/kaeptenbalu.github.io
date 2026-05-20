@@ -1,0 +1,130 @@
+/* Posts Grid Layout */
+.posts-section {
+    padding: 2rem 0;
+}
+
+.posts-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+    max-width: none;
+}
+
+@media (min-width: 768px) {
+    .posts-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .posts-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 3rem 2rem;
+    }
+}
+
+.post-card {
+    background: #f7f7f7;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.post-card:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-color: #000;
+    transform: translateY(-2px);
+}
+
+.post-card-link {
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.post-card-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.post-categories {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.category-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: #000;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 4px;
+}
+
+.post-card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.4;
+    margin: 0 0 1rem 0;
+    transition: color 0.2s ease;
+}
+
+.post-card:hover .post-card-title {
+    color: #0066cc;
+}
+
+.post-card-description {
+    flex-grow: 1;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #555;
+    margin: 0 0 1.5rem 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.post-card-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    color: #777;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid #e5e5e5;
+}
+
+.post-card-meta time {
+    font-variant-numeric: normal;
+    white-space: normal;
+}
+
+.post-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.tag-item {
+    padding: 0.15rem 0.5rem;
+    background: #eee;
+    border-radius: 3px;
+    font-size: 0.75rem;
+    color: #666;
+}
