@@ -246,7 +246,7 @@
     .theme-toggle { display: inline-flex; align-items: center; gap: 8px; height: 42px; margin-left: auto; margin-right: 190px; padding: 0 14px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--heading); box-shadow: 0 1px 4px rgba(0,0,0,.12); font-weight: 700; cursor: pointer; }
     .theme-toggle:hover, .theme-toggle:focus-visible { border-color: var(--red); color: var(--red); outline: none; }
     .theme-toggle-icon { width: 1.1em; text-align: center; }
-    .n-logo { position: absolute; right: 0; top: 0; width: 170px; height: 128px; padding: 66px 14px 10px; background: var(--red); color: #fff; font-size: 24px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; z-index: 5; }
+    .n-logo { position: absolute; right: 0; top: 0; width: 170px; height: 128px; padding: 66px 14px 10px; background: var(--red); color: #fff; font-size: 24px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; z-index: 5; text-align: center; display: flex; align-items: center; justify-content: center; padding-top: 50px; }
     .n-logo::before { content: ""; position: absolute; left: 14px; right: 14px; top: 58px; height: 2px; background: #fff; opacity: .9; }
     .n-logo::after { content: "⌂⌂"; position: absolute; right: 13px; top: 20px; color: #fff; font-size: 36px; letter-spacing: -12px; transform: scaleX(1.4); }
     .hero { min-height: 380px; margin: 0 0 30px; background: var(--hero-bg); display: flex; align-items: end; }
@@ -433,7 +433,7 @@
   <div class="sitebar" role="banner">
     <div class="sitebar-inner">
       <div style="display:flex;border:1px solid #ddd;border-radius:4px;overflow:hidden;"><a href="index.html" style="padding:8px 16px;background:#000;color:#fff;font-size:0.85rem;font-weight:600;text-decoration:none;">Dashboard</a><a href="map.html" style="padding:8px 16px;background:#fff;color:#333;font-size:0.85rem;font-weight:600;text-decoration:none;">Karte</a></div>
-      <div class="top-icons" aria-hidden="true"><span>●</span><span>☝</span><span>▰</span></div>
+      <div class="top-icons" aria-hidden="true" style="display:none;"><span>●</span><span>☝</span><span>▰</span></div>
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Dunkles Design aktivieren" aria-pressed="false"><span class="theme-toggle-icon" aria-hidden="true">☾</span><span class="theme-toggle-text">Dunkel</span></button>
       <div class="n-logo">Karlsruhe</div>
     </div>
