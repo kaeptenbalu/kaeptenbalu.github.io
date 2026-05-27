@@ -279,6 +279,17 @@
 
     .popup-link:hover { background: #333; }
 
+    .popup-range {
+      margin-top: 10px;
+      padding: 8px 10px;
+      background: #f8f9fa;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #333;
+      text-align: center;
+    }
+
     /* Responsive */
     @media (max-width: 900px) {
       .main-container {
@@ -348,10 +359,10 @@
 
       <div class="index-legend">
         <h4>Anzahl der Entfernungen</h4>
-        <div class="legend-item"><span class="legend-dot dot-rare"></span> 1–10 Entfernungen</div>
-        <div class="legend-item"><span class="legend-dot dot-repeated"></span> 11–50 Entfernungen</div>
-        <div class="legend-item"><span class="legend-dot dot-significant"></span> 51–200 Entfernungen</div>
-        <div class="legend-item"><span class="legend-dot dot-extreme"></span> 200+ Entfernungen</div>
+        <div class="legend-item"><span class="legend-dot dot-rare"></span> 1–20 Entfernungen</div>
+        <div class="legend-item"><span class="legend-dot dot-repeated"></span> 21–100 Entfernungen</div>
+        <div class="legend-item"><span class="legend-dot dot-significant"></span> 101–250 Entfernungen</div>
+        <div class="legend-item"><span class="legend-dot dot-extreme"></span> über 250 Entfernungen</div>
         <div class="legend-note">Von Google offengelegt.<br>Kein Hinweis auf Fehlverhalten.</div>
         <label class="cluster-toggle">
           <input type="checkbox" id="clusterToggle"> Nahe Betriebe gruppieren
@@ -374,10 +385,16 @@
       <div class="filter-section">
         <h3>Entfernungen (Anzahl)</h3>
         <div class="filter-grid" id="removalFilters">
-          <button class="filter-btn active" data-min="1" data-max="10">1-10</button>
-          <button class="filter-btn active" data-min="11" data-max="50">11-50</button>
-          <button class="filter-btn active" data-min="51" data-max="200">51-200</button>
-          <button class="filter-btn active" data-min="201" data-max="999999">200+</button>
+          <button class="filter-btn active" data-min="1" data-max="1">1</button>
+          <button class="filter-btn active" data-min="2" data-max="5">2–5</button>
+          <button class="filter-btn active" data-min="6" data-max="10">6–10</button>
+          <button class="filter-btn active" data-min="11" data-max="20">11–20</button>
+          <button class="filter-btn active" data-min="21" data-max="50">21–50</button>
+          <button class="filter-btn active" data-min="51" data-max="100">51–100</button>
+          <button class="filter-btn active" data-min="101" data-max="150">101–150</button>
+          <button class="filter-btn active" data-min="151" data-max="200">151–200</button>
+          <button class="filter-btn active" data-min="201" data-max="250">201–250</button>
+          <button class="filter-btn active" data-min="251" data-max="999999">über 250</button>
         </div>
       </div>
 
@@ -408,7 +425,7 @@
     let markerClusterGroup;
     let map;
     let activeCategory = 'all';
-    let activeRemovalRanges = new Set(['1-10', '11-50', '51-200', '201-999999']);
+    let activeRemovalRanges = new Set(['1-1', '2-5', '6-10', '11-20', '21-50', '51-100', '101-150', '151-200', '201-250', '251-999999']);
     let activeRatioRanges = new Set(['1-10', '11-20', '21-40', '41-60', '61-100']);
     let clusteringEnabled = false;
 
@@ -433,13 +450,13 @@
       });
     }
 
-    // Get severity from removals count
+    // Get severity from removals count (aligned with Google's categories)
     function getSeverity(removals) {
       if (!removals || removals === 0) return 'clean';
-      if (removals <= 10) return 'rare';
-      if (removals <= 50) return 'repeated';
-      if (removals <= 200) return 'significant';
-      return 'extreme';
+      if (removals <= 20) return 'rare';        // 1, 2–5, 6–10, 11–20
+      if (removals <= 100) return 'repeated';   // 21–50, 51–100
+      if (removals <= 250) return 'significant'; // 101–150, 151–200, 201–250
+      return 'extreme';                          // über 250
     }
 
     // Load data from main page's embedded JSON
@@ -469,6 +486,7 @@
       return rows.map(row => {
         const hasBanner = row.length > 12;
         const removedEstimate = hasBanner ? row[13] : 0;
+        const removedRange = hasBanner ? (dicts[4] ? dicts[4][row[12]] : '') : '';
 
         const reviewCount = row[7] || 0;
         const totalReviews = reviewCount + removedEstimate;
@@ -488,6 +506,7 @@
           address: row[10] || '',
           hasBanner: hasBanner,
           removedEstimate: removedEstimate,
+          removedRange: removedRange,
           removalRatio: removalRatio,
           severity: getSeverity(removedEstimate)
         };
@@ -585,6 +604,7 @@
             <div class="popup-stat-label">Quote</div>
           </div>
         </div>
+        ${venue.removedRange ? `<div class="popup-range">Entfernt: ${escapeHtml(venue.removedRange)} Bewertungen</div>` : ''}
       `;
     }
 
