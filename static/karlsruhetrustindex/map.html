@@ -578,7 +578,7 @@
 
         const icon = L.divIcon({
           className: 'custom-marker-wrapper',
-          html: `<div class="custom-marker marker-${venue.severity}" style="width:${size}px;height:${size}px">${Math.round(venue.removedEstimate)}</div>`,
+          html: `<div class="custom-marker marker-${venue.severity}" style="width:${size}px;height:${size}px">${Math.round(venue.removalRatio)}%</div>`,
           iconSize: [size, size],
           iconAnchor: [size/2, size/2]
         });
@@ -618,7 +618,7 @@
           </div>
           <div class="popup-stat">
             <div class="popup-stat-value">${Math.round(venue.removedEstimate)}</div>
-            <div class="popup-stat-label">Entfernt</div>
+            <div class="popup-stat-label">Näherungswert</div>
           </div>
           <div class="popup-stat">
             <div class="popup-stat-value">${venue.removalRatio.toFixed(1)}%</div>
