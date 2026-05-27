@@ -1,3 +1,128 @@
+/* Dark Mode Variables */
+:root {
+    --bg: #fffdfa;
+    --text: #000;
+    --text-muted: #777;
+    --surface: #f7f7f7;
+    --border: #e5e5e5;
+    --border-dark: #ddd;
+    --link-hover: #0066cc;
+}
+
+[data-theme="dark"] {
+    --bg: #0e0c0b;
+    --text: #e7e2dc;
+    --text-muted: #b8afa6;
+    --surface: #171412;
+    --border: #332e2b;
+    --border-dark: #332e2b;
+    --link-hover: #6ab8d8;
+}
+
+[data-theme="dark"] body {
+    background: var(--bg);
+    color: var(--text);
+}
+
+[data-theme="dark"] .post-card {
+    background: var(--surface);
+    border-color: var(--border);
+}
+
+[data-theme="dark"] .post-card:hover {
+    border-color: #fff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .post-card-title {
+    color: var(--text);
+}
+
+[data-theme="dark"] .post-card:hover .post-card-title {
+    color: var(--link-hover);
+}
+
+[data-theme="dark"] .post-card-description {
+    color: var(--text-muted);
+}
+
+[data-theme="dark"] .post-card-meta {
+    color: var(--text-muted);
+    border-top-color: var(--border);
+}
+
+[data-theme="dark"] .homepage-footer {
+    background: var(--surface);
+    border-top-color: var(--border);
+}
+
+[data-theme="dark"] .footer-links a {
+    color: var(--text-muted);
+}
+
+[data-theme="dark"] .footer-links a:hover {
+    color: var(--link-hover);
+}
+
+[data-theme="dark"] code, [data-theme="dark"] pre {
+    background: var(--surface);
+}
+
+[data-theme="dark"] blockquote {
+    border-left-color: var(--border);
+}
+
+[data-theme="dark"] .tag-item {
+    background: var(--surface);
+    color: var(--text-muted);
+}
+
+[data-theme="dark"] a, [data-theme="dark"] a:visited {
+    color: var(--text);
+}
+
+[data-theme="dark"] .meta {
+    color: var(--text-muted);
+}
+
+[data-theme="dark"] th {
+    background-color: var(--surface);
+}
+
+[data-theme="dark"] th, [data-theme="dark"] td {
+    border-color: var(--border);
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+}
+
+[data-theme="dark"] .theme-toggle {
+    border-color: var(--border);
+    background: var(--surface);
+}
+
 /* Homepage Layout */
 .homepage-body {
     min-height: 100vh;
