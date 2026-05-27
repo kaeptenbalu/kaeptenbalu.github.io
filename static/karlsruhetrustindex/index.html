@@ -101,58 +101,50 @@
   }
   </script>
 
-  <script>
-    (function () {
-      try {
-        const savedTheme = localStorage.getItem('dashboardTheme');
-        if (savedTheme === 'dark' || savedTheme === 'light') document.documentElement.dataset.theme = savedTheme;
-      } catch (_) {}
-    }());
-  </script>
   <style>
     :root {
       color-scheme: light;
       --red: #000;
       --red-dark: #333;
-      --text: #3f3f3f;
-      --heading: #333;
-      --muted: #6f6f6f;
-      --line: #d6d6d6;
+      --text: #000;
+      --heading: #000;
+      --muted: #777;
+      --line: #ddd;
       --soft: #f4f4f4;
-      --blue: #1f6f8b;
-      --green: #2d7b3f;
-      --orange: #d97a1d;
-      --bg: #fff;
-      --surface: #fff;
+      --blue: #000;
+      --green: #000;
+      --orange: #555;
+      --bg: #fffdfa;
+      --surface: #fffdfa;
       --surface-raised: #fff;
-      --surface-muted: #f6f6f6;
+      --surface-muted: #f7f7f7;
       --surface-subtle: #fafafa;
-      --control-bg: #333;
+      --control-bg: #000;
       --control-text: #fff;
       --control-muted: rgba(255,255,255,.78);
       --input-bg: #fff;
-      --input-text: #333;
-      --nav-text: #666;
-      --hero-bg: linear-gradient(180deg, rgba(0,0,0,.03), rgba(0,0,0,.03)), linear-gradient(135deg, #f7f7f7 0%, #fff 45%, #f4f4f4 100%);
-      --hero-title-bg: rgba(0,0,0,.9);
-      --track-bg: #e7e7e7;
-      --table-head-bg: #f3f3f3;
-      --table-head-hover: #ececec;
-      --row-hover: #fff4f2;
-      --target-row: #fff0cc;
-      --pill-bg: #eef0f3;
-      --pill-bad-bg: #e2e8f1;
-      --marker-clean: #8a8e94;
-      --marker-mid: #5b7b8e;
-      --marker-high: #3c4e6b;
-      --pill-text: #555a62;
-      --pill-bad-text: #2f3e57;
+      --input-text: #000;
+      --nav-text: #000;
+      --hero-bg: #fffdfa;
+      --hero-title-bg: #000;
+      --track-bg: #eee;
+      --table-head-bg: #f2f2f2;
+      --table-head-hover: #e5e5e5;
+      --row-hover: #f7f7f7;
+      --target-row: #f0f0f0;
+      --pill-bg: #eee;
+      --pill-bad-bg: #ddd;
+      --marker-clean: #999;
+      --marker-mid: #666;
+      --marker-high: #333;
+      --pill-text: #333;
+      --pill-bad-text: #000;
       --map-bg: #f4f4f4;
-      --hint-bg: rgba(51,51,51,.88);
-      --focus-blue: rgba(31,111,139,.13);
-      --focus-red: rgba(207,42,27,.35);
-      --shadow: 0 2px 10px rgba(0,0,0,.18);
-      --sans: Arial, Helvetica, sans-serif;
+      --hint-bg: rgba(0,0,0,.85);
+      --focus-blue: rgba(0,0,0,.1);
+      --focus-red: rgba(0,0,0,.2);
+      --shadow: none;
+      --sans: "Bricolage Grotesque", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
     }
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) {
@@ -240,21 +232,18 @@
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body { margin: 0; min-height: 100vh; font-family: var(--sans); color: var(--text); background: var(--bg); }
-    .sitebar { height: 76px; background: var(--surface-raised); border-bottom: 1px solid var(--line); box-shadow: var(--shadow); }
+    .sitebar { height: 76px; background: var(--surface-raised); border-bottom: 2px solid #000; }
     .sitebar-inner { position: relative; width: min(1320px, calc(100vw - 32px)); height: 100%; margin: 0 auto; display: flex; align-items: center; gap: 42px; }
     .site-home { color: var(--heading); font-size: 18px; font-weight: 700; text-decoration: none; }
     .site-home:hover { color: var(--red); }
-    .theme-toggle { display: inline-flex; align-items: center; gap: 8px; height: 42px; margin-left: auto; margin-right: 190px; padding: 0 14px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--heading); box-shadow: 0 1px 4px rgba(0,0,0,.12); font-weight: 700; cursor: pointer; }
-    .theme-toggle:hover, .theme-toggle:focus-visible { border-color: var(--red); color: var(--red); outline: none; }
-    .theme-toggle-icon { width: 1.1em; text-align: center; }
     .n-logo { position: absolute; right: 0; top: 50%; transform: translateY(-50%); padding: 12px 20px; background: #000; color: #fff; font-size: 18px; font-weight: 700; letter-spacing: .02em; text-transform: none; z-index: 5; border-radius: 4px; display: flex; align-items: center; justify-content: center; text-align: center; }
     .n-logo::before { display: none; }
     .n-logo::after { display: none; }
-    .hero { min-height: 380px; margin: 0 0 30px; background: var(--hero-bg); display: flex; align-items: end; }
+    .hero { min-height: 200px; margin: 0 0 30px; padding: 2rem 0; background: var(--hero-bg); display: flex; align-items: end; }
     .hero-inner { width: min(1320px, calc(100vw - 32px)); margin: 0 auto; padding: 120px 0 42px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 440px); gap: 22px; align-items: end; }
     .hero-title { width: min(760px, 100%); margin: 0; padding: 24px 28px; background: var(--hero-title-bg); color: #fff; font-size: clamp(32px, 4vw, 52px); line-height: 1.12; font-weight: 400; }
     .hero-subtitle { width: min(760px, 100%); margin-top: 14px; padding: 18px 22px; background: var(--surface-raised); border-radius: 5px; box-shadow: var(--shadow); color: var(--muted); font-size: 20px; line-height: 1.45; }
-    .context-note, .appeal-box { padding: 18px; border: 1px solid var(--line); border-top: 5px solid var(--blue); background: var(--surface-raised); box-shadow: var(--shadow); color: var(--text); }
+    .context-note, .appeal-box { padding: 18px; border: 1px solid #e5e5e5; border-left: 3px solid #000; background: var(--surface-raised); color: var(--text); border-radius: 4px; }
     .context-note strong, .appeal-box h2 { display: block; margin: 0 0 8px; color: var(--heading); font-size: 20px; line-height: 1.2; }
     .context-note p, .appeal-box p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.45; }
     .context-mobile, .appeal-short { display: none; }
@@ -281,7 +270,7 @@
     .reset { height: 34px; border: 0; border-radius: 5px; padding: 0 10px; background: var(--control-bg); color: var(--control-text); font-size: 13px; font-weight: 700; cursor: pointer; align-self: center; }
     .grid { display: grid; gap: 16px; }
     .kpis { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-    .card { background: var(--surface); border: 1px solid var(--line); overflow: hidden; }
+    .card { background: var(--surface); border: 1px solid #e5e5e5; overflow: hidden; border-radius: 8px; }
     .seo-summary { padding: 18px; margin-top: 18px; line-height: 1.55; }
     .seo-summary h2, .seo-top h3 { margin: 0 0 8px; color: var(--heading); }
     .seo-summary p { margin: 0 0 12px; color: var(--muted); }
@@ -292,11 +281,11 @@
     .seo-top ol { margin: 8px 0 0 22px; padding: 0; }
     .seo-top li { margin: 6px 0; }
     .seo-meta { color: var(--muted); }
-    .kpi { padding: 18px; border-top: 5px solid var(--red); }
-    .kpi:nth-child(2) { border-top-color: var(--orange); }
-    .kpi:nth-child(3) { border-top-color: var(--blue); }
-    .kpi:nth-child(4) { border-top-color: var(--red-dark); }
-    .kpi:nth-child(5) { border-top-color: var(--green); }
+    .kpi { padding: 18px; border-top: 3px solid #000; }
+    .kpi:nth-child(2) { border-top-color: #333; }
+    .kpi:nth-child(3) { border-top-color: #555; }
+    .kpi:nth-child(4) { border-top-color: #777; }
+    .kpi:nth-child(5) { border-top-color: #999; }
     .kpi .value { display: block; color: var(--heading); font-size: clamp(30px, 3vw, 44px); font-weight: 400; line-height: 1; }
     .kpi .label { display: block; margin-top: 8px; color: var(--muted); font-size: 14px; }
     .panel-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: stretch; margin-top: 18px; }
@@ -434,7 +423,6 @@
   <div class="sitebar" role="banner">
     <div class="sitebar-inner">
       <a href="/" class="site-home">mboll.eu</a>
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Dunkles Design aktivieren" aria-pressed="false"><span class="theme-toggle-icon" aria-hidden="true">☾</span><span class="theme-toggle-text">Dunkel</span></button>
       <div class="n-logo">Karlsruhe</div>
     </div>
   </div>
