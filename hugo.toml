@@ -27,13 +27,13 @@ theme = 'maverick'
     weight = 2
 
   [[menu.main]]
-    name = "Dashboards"
-    url = "/dashboards/"
+    name = "Karlsruhe Trust Index"
+    url = "/karlsruhetrustindex/"
     weight = 3
 
   [[menu.main]]
-    name = "Karlsruhe Trust Index"
-    url = "/karlsruhetrustindex/"
+    name = "howweak"
+    url = "https://www.howweak.de"
     weight = 4
 
   [[menu.main]]
