@@ -361,7 +361,7 @@
     .table-head strong { color: var(--heading); font-size: 22px; }
     .table-wrap { overflow: auto; background: var(--surface); border: 1px solid var(--line); }
     table { width: 100%; min-width: 1570px; border-collapse: collapse; table-layout: fixed; }
-    col.rank { width: 70px; } col.name { width: 360px; } col.bezirk { width: 210px; } col.plz { width: 90px; } col.rating { width: 95px; } col.reviews { width: 125px; } col.banner { width: 100px; } col.removed { width: 120px; } col.estimate { width: 125px; } col.ratio { width: 120px; } col.real { width: 160px; } col.checked { width: 130px; } col.category { width: 175px; }
+    col.rank { width: 70px; } col.name { width: 360px; } col.bezirk { display: none; } col.plz { display: none; } col.rating { width: 95px; } col.reviews { width: 125px; } col.banner { width: 100px; } col.removed { width: 120px; } col.estimate { width: 125px; } col.ratio { width: 120px; } col.real { width: 160px; } col.checked { width: 130px; } col.category { width: 175px; }
     th { position: sticky; top: 0; z-index: 2; padding: 0; background: var(--table-head-bg); border-bottom: 2px solid var(--line); color: var(--heading); font-size: 13px; text-align: left; }
     th button { display: flex; align-items: center; gap: 5px; width: 100%; min-height: 44px; padding: 12px; border: 0; background: transparent; color: inherit; font: inherit; font-weight: 700; text-align: inherit; cursor: pointer; }
     th.num button, th.rank button { justify-content: flex-end; text-align: right; }
@@ -461,7 +461,7 @@
       <div class="appeal-actions"><a href="https://support.google.com/maps/answer/16673099?hl=de" target="_blank" rel="noopener noreferrer">Google-Einspruch</a><a href="https://digital-strategy.ec.europa.eu/de/policies/dsa-out-court-dispute-settlement" target="_blank" rel="noopener noreferrer">EU-Streitbeilegung</a></div>
     </aside>
 
-    <section class="chips" aria-label="Quick-Filter"><button type="button" class="chip" data-chip="banner">🔴 Mit Google-Hinweis</button><button type="button" class="chip" data-chip="gastro">🍽️ Gastronomie</button><button type="button" class="chip" data-chip="nachtleben">🎉 Nachtleben</button><button type="button" class="chip" data-chip="beauty">💇 Beauty &amp; Wellness</button><button type="button" class="chip" data-chip="hotels">🏨 Beherbergung</button><button type="button" class="chip" data-chip="gesundheit">🏥 Gesundheit</button><button type="button" class="chip" data-chip="altstadt">🗺️ Altstadt</button></section>
+    <section class="chips" aria-label="Quick-Filter"><button type="button" class="chip" data-chip="banner">🔴 Mit Google-Hinweis</button><button type="button" class="chip" data-chip="gastro">🍽️ Gastronomie</button><button type="button" class="chip" data-chip="nachtleben">🎉 Nachtleben</button><button type="button" class="chip" data-chip="beauty">💇 Beauty &amp; Wellness</button><button type="button" class="chip" data-chip="hotels">🏨 Beherbergung</button><button type="button" class="chip" data-chip="gesundheit">🏥 Gesundheit</button><button type="button" class="chip" data-chip="altstadt" style="display:none;">🗺️ Altstadt</button></section>
     <section class="controls is-collapsed" id="dashboardFilterControls" aria-label="Dashboard-Filter">
       <button class="filter-toggle" id="filterToggle" type="button" aria-expanded="false" aria-controls="dashboardFilterControls"><span><strong>Filter</strong><span class="filter-summary" id="filterSummary">Keine aktiven Filter</span></span><span class="filter-toggle-icon" aria-hidden="true">▾</span></button>
       <div class="control search"><label for="searchInput">Suche</label><input id="searchInput" type="search" placeholder="Name, PLZ, Kategorie, Hinweisbereich …" autocomplete="off"></div>
@@ -537,8 +537,8 @@
         <thead><tr>
           <th class="rank"><button data-sort="rank">Rang <span class="arrow"></span></button></th>
           <th><button data-sort="name">Name / Google Maps <span class="arrow"></span></button></th>
-          <th><button data-sort="bezirkLabel">Bezirk <span class="arrow"></span></button></th>
-          <th><button data-sort="postcode">PLZ <span class="arrow"></span></button></th>
+          <th style="display:none;"><button data-sort="bezirkLabel">Bezirk <span class="arrow"></span></button></th>
+          <th style="display:none;"><button data-sort="postcode">PLZ <span class="arrow"></span></button></th>
           <th class="num"><button data-sort="rating">Rating <span class="arrow"></span></button></th>
           <th class="num"><button data-sort="reviewCount">Rezensionen <span class="arrow"></span></button></th>
           <th><button data-sort="hasBanner">Google-Hinweis <span class="arrow"></span></button></th>
@@ -1172,7 +1172,7 @@ function renderTable(rows) {
     const rank = index + 1;
     const distance = state.mode === 'nearby' ? '<span class="entry-address">Entfernung: ' + esc(distanceLabel(rowDistanceKm(row))) + '</span>' : '';
     const address = row.address ? '<span class="entry-address">' + esc(row.address) + '</span>' : '';
-    return '<tr data-entry-id="' + esc(row.id) + '"><td class="rank">' + rank + '</td><td class="name"><a href="' + esc(row.url) + '" target="_blank" rel="noopener noreferrer">' + esc(row.name) + '</a>' + distance + address + '</td><td>' + esc(row.bezirkLabel || '–') + '</td><td>' + esc(row.postcode) + '</td><td class="num">' + rating(row.rating) + '</td><td class="num">' + n(row.reviewCount) + '</td><td>' + (row.hasBanner ? '<span class="pill bad">Google-Hinweis</span>' : '<span class="pill">kein Hinweis</span>') + '</td><td class="num">' + (row.hasBanner ? esc(row.removedRange) : '–') + '</td><td class="num">' + (row.hasBanner ? rating(row.removedEstimate) : '–') + '</td><td class="num">' + pct(row.deletionRatioPct) + '</td><td class="num">' + rating(row.realRatingAdjusted, 2) + '</td><td>' + esc(readAtLabel(row.readAt)) + '</td><td>' + esc(row.category) + '</td></tr>';
+    return '<tr data-entry-id="' + esc(row.id) + '"><td class="rank">' + rank + '</td><td class="name"><a href="' + esc(row.url) + '" target="_blank" rel="noopener noreferrer">' + esc(row.name) + '</a>' + distance + address + '</td><td style="display:none;">' + esc(row.bezirkLabel || '–') + '</td><td style="display:none;">' + esc(row.postcode) + '</td><td class="num">' + rating(row.rating) + '</td><td class="num">' + n(row.reviewCount) + '</td><td>' + (row.hasBanner ? '<span class="pill bad">Google-Hinweis</span>' : '<span class="pill">kein Hinweis</span>') + '</td><td class="num">' + (row.hasBanner ? esc(row.removedRange) : '–') + '</td><td class="num">' + (row.hasBanner ? rating(row.removedEstimate) : '–') + '</td><td class="num">' + pct(row.deletionRatioPct) + '</td><td class="num">' + rating(row.realRatingAdjusted, 2) + '</td><td>' + esc(readAtLabel(row.readAt)) + '</td><td>' + esc(row.category) + '</td></tr>';
   }).join('');
   document.querySelectorAll('th button[data-sort]').forEach(button => {
     const active = button.dataset.sort === state.sortKey;
