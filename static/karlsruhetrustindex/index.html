@@ -244,6 +244,10 @@
     .sitebar-inner { position: relative; width: min(1320px, calc(100vw - 32px)); height: 100%; margin: 0 auto; display: flex; align-items: center; gap: 42px; }
     .site-home { color: var(--heading); font-size: 18px; font-weight: 700; text-decoration: none; }
     .site-home:hover { color: var(--red); }
+    .view-toggle { display: flex; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+    .view-btn { padding: 8px 16px; border: none; background: var(--surface); color: var(--heading); font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; }
+    .view-btn:hover { background: var(--soft); }
+    .view-btn.active { background: #000; color: #fff; }
     .theme-toggle { display: inline-flex; align-items: center; gap: 8px; height: 42px; margin-left: auto; margin-right: 190px; padding: 0 14px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--heading); box-shadow: 0 1px 4px rgba(0,0,0,.12); font-weight: 700; cursor: pointer; }
     .theme-toggle:hover, .theme-toggle:focus-visible { border-color: var(--red); color: var(--red); outline: none; }
     .theme-toggle-icon { width: 1.1em; text-align: center; }
@@ -402,11 +406,12 @@
     @media (max-width: 1200px) { .hero-inner { grid-template-columns: 1fr; } .appeal-box { width: min(760px, 100%); } .kpis, .panel-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .related-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .controls { grid-template-columns: 1fr 1fr 1fr; } .search { grid-column: 1 / -1; } .theme-toggle { margin-left: auto; margin-right: 0; } .n-logo { position: relative; height: auto; width: auto; margin-left: auto; padding: 10px 16px; font-size: 16px; } }
     @media (max-width: 720px) {
       .sitebar-inner, main, .hero-inner { width: min(100vw - 20px, 1320px); }
-      .sitebar-inner { gap: 14px; }
+      .sitebar-inner { gap: 10px; }
       .site-home { font-size: 16px; }
+      .view-btn { padding: 6px 10px; font-size: 12px; }
       .theme-toggle { width: 42px; padding: 0; justify-content: center; }
       .theme-toggle-text { display: none; }
-      .n-logo { width: 128px; font-size: 18px; padding-left: 10px; padding-right: 10px; }
+      .n-logo { width: 100px; font-size: 14px; padding-left: 8px; padding-right: 8px; }
       .kpis, .panel-grid, .seo-facts, .dist-grid, .related-grid { grid-template-columns: 1fr; }
       .controls { position: sticky; top: 0; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 10px; padding: 10px; margin-bottom: 14px; }
       .filter-toggle { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; min-height: 42px; padding: 8px 12px; border: 0; border-radius: 5px; background: var(--control-bg); color: var(--control-text); text-align: left; cursor: pointer; }
@@ -434,6 +439,10 @@
   <div class="sitebar" role="banner">
     <div class="sitebar-inner">
       <a href="/" class="site-home">mboll.eu</a>
+      <div class="view-toggle">
+        <a href="index.html" class="view-btn active">Dashboard</a>
+        <a href="map.html" class="view-btn">Karte</a>
+      </div>
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Dunkles Design aktivieren" aria-pressed="false"><span class="theme-toggle-icon" aria-hidden="true">☾</span><span class="theme-toggle-text">Dunkel</span></button>
       <div class="n-logo">Karlsruhe</div>
     </div>
