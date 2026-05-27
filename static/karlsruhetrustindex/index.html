@@ -1,0 +1,1354 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Karlsruhe Google-Maps-Bewertungen: Dashboard zu Google-Hinweisen</title>
+  <meta name="description" content="Interaktives Karlsruhe-Dashboard zu öffentlich sichtbaren Google-Maps-Hinweisen auf entfernte Bewertungen: Spannen, Näherungswerte, Karte und Daten-Explorer.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="author" content="Manuel Boll">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e0c0b" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="https://www.mboll.eu/karlsruhetrustindex/">
+  <link rel="alternate" hreflang="de" href="https://www.mboll.eu/karlsruhetrustindex/">
+  <link rel="alternate" hreflang="x-default" href="https://www.mboll.eu/karlsruhetrustindex/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:site_name" content="Karlsruhe Maps Review Removals">
+  <meta property="og:title" content="Karlsruhe Google-Maps-Bewertungen: Dashboard zu Google-Hinweisen">
+  <meta property="og:description" content="Interaktives Karlsruhe-Dashboard zu öffentlich sichtbaren Google-Maps-Hinweisen auf entfernte Bewertungen: Spannen, Näherungswerte, Karte und Daten-Explorer.">
+  <meta property="og:url" content="https://www.mboll.eu/karlsruhetrustindex/">
+  <meta property="og:image" content="https://www.mboll.eu/karlsruhetrustindex/charts/karlsruhe_overall_summary.png">
+  <meta property="og:image:width" content="1800">
+  <meta property="og:image:height" content="2500">
+  <meta property="og:image:alt" content="Diagramm zur Auswertung sichtbarer Google-Maps-Hinweise in Karlsruhe">
+  <meta property="og:updated_time" content="2026-05-27T10:00:00Z">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Karlsruhe Google-Maps-Bewertungen: Dashboard zu Google-Hinweisen">
+  <meta name="twitter:description" content="Interaktives Karlsruhe-Dashboard zu öffentlich sichtbaren Google-Maps-Hinweisen auf entfernte Bewertungen: Spannen, Näherungswerte, Karte und Daten-Explorer.">
+  <meta name="twitter:image" content="https://www.mboll.eu/karlsruhetrustindex/charts/karlsruhe_overall_summary.png">
+  <meta name="twitter:image:alt" content="Diagramm zur Auswertung sichtbarer Google-Maps-Hinweise in Karlsruhe">
+  <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@id": "https://www.mboll.eu/karlsruhetrustindex/#website",
+        "@type": "WebSite",
+        "inLanguage": "de-DE",
+        "name": "Karlsruhe Maps Review Removals",
+        "publisher": {
+          "@type": "Person",
+          "name": "Manuel Boll",
+          "url": "https://mboll.eu"
+        },
+        "url": "https://www.mboll.eu/karlsruhetrustindex/"
+      },
+      {
+        "@id": "https://www.mboll.eu/karlsruhetrustindex/#webpage",
+        "@type": "WebPage",
+        "dateModified": "2026-05-27",
+        "description": "Interaktives Karlsruhe-Dashboard zu öffentlich sichtbaren Google-Maps-Hinweisen auf entfernte Bewertungen: Spannen, Näherungswerte, Karte und Daten-Explorer.",
+        "inLanguage": "de-DE",
+        "isPartOf": {
+          "@id": "https://www.mboll.eu/karlsruhetrustindex/#website"
+        },
+        "mainEntity": {
+          "@id": "https://www.mboll.eu/karlsruhetrustindex/#dataset"
+        },
+        "name": "Karlsruhe Google-Maps-Bewertungen: Dashboard zu Google-Hinweisen",
+        "primaryImageOfPage": {
+          "@type": "ImageObject",
+          "url": "https://www.mboll.eu/karlsruhetrustindex/charts/karlsruhe_overall_summary.png"
+        },
+        "url": "https://www.mboll.eu/karlsruhetrustindex/"
+      },
+      {
+        "@id": "https://www.mboll.eu/karlsruhetrustindex/#dataset",
+        "@type": "Dataset",
+        "creator": {
+          "@type": "Person",
+          "name": "Manuel Boll",
+          "url": "https://mboll.eu"
+        },
+        "dateModified": "2026-05-27",
+        "description": "Interaktives Karlsruhe-Dashboard zu öffentlich sichtbaren Google-Maps-Hinweisen auf entfernte Bewertungen: Spannen, Näherungswerte, Karte und Daten-Explorer.",
+        "keywords": [
+          "Karlsruhe",
+          "Google Maps Bewertungen",
+          "entfernte Bewertungen",
+          "Google-Hinweise",
+          "Diffamierungsbeschwerden"
+        ],
+        "measurementTechnique": "Scrape öffentlich sichtbarer Google-Maps-Ortsseiten",
+        "name": "Karlsruhe Google-Maps-Bewertungen mit sichtbaren Google-Hinweisen",
+        "size": "12 Orte, 8 sichtbare Google-Hinweise",
+        "spatialCoverage": {
+          "@type": "City",
+          "name": "Karlsruhe"
+        },
+        "temporalCoverage": "2026-05-27",
+        "url": "https://www.mboll.eu/karlsruhetrustindex/",
+        "variableMeasured": [
+          "Orte",
+          "sichtbare Google-Hinweise",
+          "Näherungswert aus Google-Spannen",
+          "Hinweis-Anteil",
+          "Worst-Case-Rating"
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <script>
+    (function () {
+      try {
+        const savedTheme = localStorage.getItem('dashboardTheme');
+        if (savedTheme === 'dark' || savedTheme === 'light') document.documentElement.dataset.theme = savedTheme;
+      } catch (_) {}
+    }());
+  </script>
+  <style>
+    :root {
+      color-scheme: light;
+      --red: #cf2a1b;
+      --red-dark: #9f2017;
+      --text: #3f3f3f;
+      --heading: #333;
+      --muted: #6f6f6f;
+      --line: #d6d6d6;
+      --soft: #f4f4f4;
+      --blue: #1f6f8b;
+      --green: #2d7b3f;
+      --orange: #d97a1d;
+      --bg: #fff;
+      --surface: #fff;
+      --surface-raised: #fff;
+      --surface-muted: #f6f6f6;
+      --surface-subtle: #fafafa;
+      --control-bg: #333;
+      --control-text: #fff;
+      --control-muted: rgba(255,255,255,.78);
+      --input-bg: #fff;
+      --input-text: #333;
+      --nav-text: #666;
+      --hero-bg: linear-gradient(180deg, rgba(38,120,155,.25), rgba(38,120,155,.25)), linear-gradient(135deg, #b7d5e1 0%, #e1edf2 45%, #bdc8cf 100%);
+      --hero-title-bg: rgba(55,55,55,.78);
+      --track-bg: #e7e7e7;
+      --table-head-bg: #f3f3f3;
+      --table-head-hover: #ececec;
+      --row-hover: #fff4f2;
+      --target-row: #fff0cc;
+      --pill-bg: #eef0f3;
+      --pill-bad-bg: #e2e8f1;
+      --marker-clean: #8a8e94;
+      --marker-mid: #5b7b8e;
+      --marker-high: #3c4e6b;
+      --pill-text: #555a62;
+      --pill-bad-text: #2f3e57;
+      --map-bg: #f4f4f4;
+      --hint-bg: rgba(51,51,51,.88);
+      --focus-blue: rgba(31,111,139,.13);
+      --focus-red: rgba(207,42,27,.35);
+      --shadow: 0 2px 10px rgba(0,0,0,.18);
+      --sans: Arial, Helvetica, sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+        --red: #ff5b49;
+        --red-dark: #e23c2b;
+        --text: #e7e2dc;
+        --heading: #fff5ec;
+        --muted: #b8afa6;
+        --line: #332e2b;
+        --soft: #171412;
+        --blue: #6ab8d8;
+        --green: #72c382;
+        --orange: #ff9d42;
+        --bg: #0e0c0b;
+        --surface: #171412;
+        --surface-raised: #211c19;
+        --surface-muted: #211c19;
+        --surface-subtle: #141110;
+        --control-bg: #fff5ec;
+        --control-text: #171412;
+        --control-muted: rgba(23,20,18,.68);
+        --input-bg: #120f0e;
+        --input-text: #fff5ec;
+        --nav-text: #d4c8bd;
+        --hero-bg: radial-gradient(circle at 18% 18%, rgba(255,91,73,.18), transparent 34%), linear-gradient(180deg, rgba(14,12,11,.32), rgba(14,12,11,.68)), linear-gradient(135deg, #102b35 0%, #171412 48%, #3b1c18 100%);
+        --hero-title-bg: rgba(14,12,11,.82);
+        --track-bg: #302925;
+        --table-head-bg: #211c19;
+        --table-head-hover: #2b2420;
+        --row-hover: #2a1714;
+        --target-row: #382b12;
+        --pill-bg: rgba(180,188,200,.16);
+        --pill-bad-bg: rgba(120,148,184,.20);
+        --marker-clean: #9aa0a8;
+        --marker-mid: #7aa3ba;
+        --marker-high: #6a82af;
+        --pill-text: #b8bdc6;
+        --pill-bad-text: #b4cae4;
+        --map-bg: #151210;
+        --hint-bg: rgba(14,12,11,.92);
+        --focus-blue: rgba(106,184,216,.22);
+        --focus-red: rgba(255,91,73,.32);
+        --shadow: 0 18px 40px rgba(0,0,0,.42);
+      }
+    }
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --red: #ff5b49;
+      --red-dark: #e23c2b;
+      --text: #e7e2dc;
+      --heading: #fff5ec;
+      --muted: #b8afa6;
+      --line: #332e2b;
+      --soft: #171412;
+      --blue: #6ab8d8;
+      --green: #72c382;
+      --orange: #ff9d42;
+      --bg: #0e0c0b;
+      --surface: #171412;
+      --surface-raised: #211c19;
+      --surface-muted: #211c19;
+      --surface-subtle: #141110;
+      --control-bg: #fff5ec;
+      --control-text: #171412;
+      --control-muted: rgba(23,20,18,.68);
+      --input-bg: #120f0e;
+      --input-text: #fff5ec;
+      --nav-text: #d4c8bd;
+      --hero-bg: radial-gradient(circle at 18% 18%, rgba(255,91,73,.18), transparent 34%), linear-gradient(180deg, rgba(14,12,11,.32), rgba(14,12,11,.68)), linear-gradient(135deg, #102b35 0%, #171412 48%, #3b1c18 100%);
+      --hero-title-bg: rgba(14,12,11,.82);
+      --track-bg: #302925;
+      --table-head-bg: #211c19;
+      --table-head-hover: #2b2420;
+      --row-hover: #2a1714;
+      --target-row: #382b12;
+      --pill-bg: rgba(114,195,130,.16);
+      --pill-bad-bg: rgba(255,91,73,.16);
+      --map-bg: #151210;
+      --hint-bg: rgba(14,12,11,.92);
+      --focus-blue: rgba(106,184,216,.22);
+      --focus-red: rgba(255,91,73,.32);
+      --shadow: 0 18px 40px rgba(0,0,0,.42);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; min-height: 100vh; font-family: var(--sans); color: var(--text); background: var(--bg); }
+    .sitebar { height: 76px; background: var(--surface-raised); border-bottom: 1px solid var(--line); box-shadow: var(--shadow); }
+    .sitebar-inner { position: relative; width: min(1320px, calc(100vw - 32px)); height: 100%; margin: 0 auto; display: flex; align-items: center; gap: 42px; }
+    .top-icons { display: flex; gap: 28px; color: var(--nav-text); font-size: 33px; line-height: 1; }
+    .theme-toggle { display: inline-flex; align-items: center; gap: 8px; height: 42px; margin-left: auto; margin-right: 190px; padding: 0 14px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--heading); box-shadow: 0 1px 4px rgba(0,0,0,.12); font-weight: 700; cursor: pointer; }
+    .theme-toggle:hover, .theme-toggle:focus-visible { border-color: var(--red); color: var(--red); outline: none; }
+    .theme-toggle-icon { width: 1.1em; text-align: center; }
+    .n-logo { position: absolute; right: 0; top: 0; width: 170px; height: 128px; padding: 66px 14px 10px; background: var(--red); color: #fff; font-size: 24px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; z-index: 5; }
+    .n-logo::before { content: ""; position: absolute; left: 14px; right: 14px; top: 58px; height: 2px; background: #fff; opacity: .9; }
+    .n-logo::after { content: "⌂⌂"; position: absolute; right: 13px; top: 20px; color: #fff; font-size: 36px; letter-spacing: -12px; transform: scaleX(1.4); }
+    .hero { min-height: 380px; margin: 0 0 30px; background: var(--hero-bg); display: flex; align-items: end; }
+    .hero-inner { width: min(1320px, calc(100vw - 32px)); margin: 0 auto; padding: 120px 0 42px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 440px); gap: 22px; align-items: end; }
+    .hero-title { width: min(760px, 100%); margin: 0; padding: 24px 28px; background: var(--hero-title-bg); color: #fff; font-size: clamp(32px, 4vw, 52px); line-height: 1.12; font-weight: 400; }
+    .hero-subtitle { width: min(760px, 100%); margin-top: 14px; padding: 18px 22px; background: var(--surface-raised); border-radius: 5px; box-shadow: var(--shadow); color: var(--muted); font-size: 20px; line-height: 1.45; }
+    .context-note, .appeal-box { padding: 18px; border: 1px solid var(--line); border-top: 5px solid var(--blue); background: var(--surface-raised); box-shadow: var(--shadow); color: var(--text); }
+    .context-note strong, .appeal-box h2 { display: block; margin: 0 0 8px; color: var(--heading); font-size: 20px; line-height: 1.2; }
+    .context-note p, .appeal-box p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.45; }
+    .context-mobile, .appeal-short { display: none; }
+    .context-note nav { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; font-size: 13px; font-weight: 700; }
+    .appeal-box { margin-bottom: 14px; }
+    .appeal-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .appeal-actions a { display: inline-flex; align-items: center; min-height: 34px; padding: 0 11px; border-radius: 4px; background: var(--control-bg); color: var(--control-text); font-size: 13px; font-weight: 700; text-decoration: none; }
+    .appeal-actions a:hover, .appeal-actions a:focus-visible { background: var(--red); color: #fff; outline: none; }
+    main { width: min(1320px, calc(100vw - 32px)); margin: 0 auto 70px; }
+    .controls { position: sticky; top: 0; z-index: 2000; display: grid; grid-template-columns: minmax(200px, 1fr) 120px 170px 130px 130px 130px 95px auto; gap: 12px; align-items: end; padding: 16px; margin: 0 0 24px; background: var(--surface-raised); border: 1px solid var(--line); box-shadow: 0 2px 8px rgba(0,0,0,.12); }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+    .chip { display: inline-flex; align-items: center; gap: 5px; padding: 7px 16px; border: 1px solid var(--line); border-radius: 20px; background: var(--surface); color: var(--text); font-size: 13px; cursor: pointer; transition: .12s; }
+    .chip:hover { border-color: var(--red); background: var(--row-hover); }
+    .chip.active { background: var(--red); border-color: var(--red); color: #fff; }
+    .sub-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: -8px 0 14px; min-height: 30px; }
+    .sub-chip { padding: 4px 12px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface-muted); color: var(--muted); font-size: 12px; cursor: pointer; transition: .12s; }
+    .sub-chip:hover { border-color: var(--red); color: var(--text); background: var(--surface); }
+    .sub-chip.active { background: var(--red); border-color: var(--red); color: #fff; }
+    .filter-toggle { display: none; }
+    label { display: block; margin-bottom: 6px; color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+    input, select, button { font: inherit; }
+    input, select { width: 100%; height: 44px; padding: 0 12px; border: 1px solid var(--line); border-radius: 5px; background: var(--input-bg); color: var(--input-text); outline: none; }
+    input:focus, select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px var(--focus-blue); }
+    .reset { height: 34px; border: 0; border-radius: 5px; padding: 0 10px; background: var(--control-bg); color: var(--control-text); font-size: 13px; font-weight: 700; cursor: pointer; align-self: center; }
+    .grid { display: grid; gap: 16px; }
+    .kpis { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .card { background: var(--surface); border: 1px solid var(--line); overflow: hidden; }
+    .seo-summary { padding: 18px; margin-top: 18px; line-height: 1.55; }
+    .seo-summary h2, .seo-top h3 { margin: 0 0 8px; color: var(--heading); }
+    .seo-summary p { margin: 0 0 12px; color: var(--muted); }
+    .seo-facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 14px 0; padding: 0; list-style: none; }
+    .seo-facts li { margin: 0; padding: 12px; border: 1px solid var(--line); background: var(--surface-muted); }
+    .seo-facts strong { display: block; color: var(--heading); font-size: 22px; line-height: 1.1; }
+    .seo-top { margin-top: 14px; }
+    .seo-top ol { margin: 8px 0 0 22px; padding: 0; }
+    .seo-top li { margin: 6px 0; }
+    .seo-meta { color: var(--muted); }
+    .kpi { padding: 18px; border-top: 5px solid var(--red); }
+    .kpi:nth-child(2) { border-top-color: var(--orange); }
+    .kpi:nth-child(3) { border-top-color: var(--blue); }
+    .kpi:nth-child(4) { border-top-color: var(--red-dark); }
+    .kpi:nth-child(5) { border-top-color: var(--green); }
+    .kpi .value { display: block; color: var(--heading); font-size: clamp(30px, 3vw, 44px); font-weight: 400; line-height: 1; }
+    .kpi .label { display: block; margin-top: 8px; color: var(--muted); font-size: 14px; }
+    .panel-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: stretch; margin-top: 18px; }
+    .panel { padding: 18px; min-height: 330px; }
+    .panel h2, .dist h2 { margin: 0 0 8px; color: var(--heading); font-size: 22px; font-weight: 700; }
+    .panel p { margin: 0 0 16px; color: var(--muted); font-size: 13px; }
+    .bars { display: grid; gap: 10px; }
+    .bar-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 7px 10px; align-items: center; font-size: 12px; }
+    .bar-link { width: 100%; padding: 0; border: 0; background: transparent; color: inherit; text-align: left; text-decoration: none; cursor: pointer; }
+    .bar-link:hover .bar-name, .bar-link:focus .bar-name { color: var(--red); text-decoration: underline; }
+    .bar-link:focus { outline: 2px solid var(--focus-red); outline-offset: 3px; }
+    .bar-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 700; }
+    .bar-value { color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .track { grid-column: 1 / -1; height: 8px; background: var(--track-bg); overflow: hidden; }
+    .fill { height: 100%; background: var(--red); }
+    .fill.orange { background: var(--orange); }
+    .fill.green { background: var(--green); }
+    .dist { padding: 18px; margin-top: 18px; }
+    .dist-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 22px; }
+    .dist-panel p { margin: 0 0 12px; color: var(--muted); font-size: 13px; line-height: 1.45; }
+    .dist-row { display: grid; grid-template-columns: 130px minmax(0, 1fr) 90px; gap: 12px; align-items: center; margin: 8px 0; font-size: 13px; }
+    .bezirk-summary { padding: 18px; margin-top: 18px; }
+    .bezirk-summary h2 { margin: 0 0 8px; color: var(--heading); font-size: 22px; font-weight: 700; }
+    .bezirk-summary p { margin: 0 0 14px; color: var(--muted); font-size: 13px; }
+    .bezirk-list { display: grid; gap: 8px; }
+    .bezirk-row { display: grid; grid-template-columns: minmax(0, 1fr) 76px 80px 86px; gap: 12px; align-items: center; width: 100%; padding: 10px 12px; border: 1px solid var(--line); background: var(--surface); color: var(--heading); text-align: left; cursor: pointer; }
+    .bezirk-row:hover, .bezirk-row:focus { border-color: var(--red); background: var(--row-hover); outline: none; }
+    .bezirk-row strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .bezirk-row span { color: var(--muted); font-variant-numeric: tabular-nums; text-align: right; }
+    .dist-track { height: 12px; background: var(--track-bg); overflow: hidden; }
+    .dist-fill { height: 100%; background: var(--red); }
+    .dist-note { margin-top: 10px !important; color: var(--muted); font-size: 12px !important; }
+    .map-panel { margin-top: 18px; padding: 18px; }
+    .map-panel h2 { margin: 0 0 8px; color: var(--heading); font-size: 22px; font-weight: 700; }
+    .map-panel p { margin: 0 0 16px; color: var(--muted); font-size: 13px; }
+    #placesMap { position: relative; z-index: 0; height: 520px; border: 1px solid var(--line); background: var(--map-bg); }
+    #placesMap.map-needs-key::after, #placesMap.map-active::after { position: absolute; left: 50%; top: 18px; z-index: 1000; transform: translateX(-50%); padding: 10px 14px; border-radius: 4px; background: var(--hint-bg); color: #fff; font-size: 13px; font-weight: 700; box-shadow: 0 2px 10px rgba(0,0,0,.22); pointer-events: none; }
+    #placesMap.map-needs-key::after { content: "Strg/⌘ halten, um mit dem Mausrad zu zoomen"; }
+    #placesMap.map-active::after { content: "Karten-Zoom aktiv"; }
+    @media (pointer: coarse) { #placesMap.map-needs-key::after { content: "Zwei Finger zum Zoomen und Bewegen der Karte"; } }
+    .map-empty { display: grid; place-items: center; height: 100%; padding: 20px; color: var(--muted); text-align: center; }
+    .map-consent { display: grid; place-items: center; height: 100%; padding: 24px; color: var(--muted); text-align: center; }
+    .map-consent-inner { max-width: 520px; }
+    .map-consent .map-consent-text { margin: 0 0 18px; color: var(--text); font-size: 14px; line-height: 1.5; }
+    .map-consent .map-consent-btn { display: inline-flex; align-items: center; min-height: 38px; padding: 0 16px; border: 0; border-radius: 4px; background: var(--red); color: #fff; font-size: 14px; font-weight: 700; cursor: pointer; }
+    .map-consent .map-consent-btn:hover, .map-consent .map-consent-btn:focus-visible { background: var(--red-dark); outline: none; }
+    .map-consent .map-consent-link { margin: 22px 0 0; font-size: 12px; line-height: 1.5; }
+    .map-legend { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 10px; color: var(--muted); font-size: 13px; }
+    .legend-dot { display: inline-block; width: 12px; height: 12px; margin-right: 6px; border-radius: 50%; vertical-align: -1px; }
+    .legend-area { display: inline-block; width: 16px; height: 12px; margin-right: 6px; border: 2px solid var(--red); background: rgba(207,42,27,.12); vertical-align: -2px; }
+    .leaflet-container { background: var(--map-bg); color: var(--text); }
+    .leaflet-bar a, .leaflet-bar a:hover, .leaflet-control-attribution { background: var(--surface-raised); color: var(--text); border-color: var(--line); }
+    .leaflet-control-attribution a, .leaflet-tooltip a { color: var(--red); }
+    .leaflet-tooltip, .leaflet-popup-content-wrapper, .leaflet-popup-tip { background: var(--surface-raised); color: var(--text); border-color: var(--line); box-shadow: var(--shadow); }
+    .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 14px; }
+    .tab { border: 1px solid var(--line); border-radius: 5px; padding: 10px 14px; background: var(--surface-muted); color: var(--heading); font-weight: 700; cursor: pointer; }
+    .tab.active { background: var(--red); border-color: var(--red); color: #fff; }
+    .tab:disabled { opacity: .65; cursor: progress; }
+    .nearby-status { margin: -6px 0 14px; color: var(--muted); font-size: 13px; }
+    .nearby-status.error { color: var(--red); font-weight: 700; }
+    .nearby-status[hidden] { display: none; }
+    .table-head { display: flex; justify-content: space-between; align-items: center; margin: 0 0 10px; color: var(--muted); font-size: 14px; }
+    .table-head strong { color: var(--heading); font-size: 22px; }
+    .table-wrap { overflow: auto; background: var(--surface); border: 1px solid var(--line); }
+    table { width: 100%; min-width: 1570px; border-collapse: collapse; table-layout: fixed; }
+    col.rank { width: 70px; } col.name { width: 360px; } col.bezirk { width: 210px; } col.plz { width: 90px; } col.rating { width: 95px; } col.reviews { width: 125px; } col.banner { width: 100px; } col.removed { width: 120px; } col.estimate { width: 125px; } col.ratio { width: 120px; } col.real { width: 160px; } col.checked { width: 130px; } col.category { width: 175px; }
+    th { position: sticky; top: 0; z-index: 2; padding: 0; background: var(--table-head-bg); border-bottom: 2px solid var(--line); color: var(--heading); font-size: 13px; text-align: left; }
+    th button { display: flex; align-items: center; gap: 5px; width: 100%; min-height: 44px; padding: 12px; border: 0; background: transparent; color: inherit; font: inherit; font-weight: 700; text-align: inherit; cursor: pointer; }
+    th.num button, th.rank button { justify-content: flex-end; text-align: right; }
+    th button:hover { color: var(--red); background: var(--table-head-hover); }
+    .arrow { width: 1em; color: var(--muted); }
+    button.active .arrow { color: var(--red); }
+    td { padding: 12px; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 14px; }
+    tbody tr:nth-child(even) { background: var(--surface-subtle); }
+    tbody tr:hover { background: var(--row-hover); }
+    tbody tr.target-row { background: var(--target-row); box-shadow: inset 5px 0 0 var(--red); }
+    td.num, td.rank { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    td.name { overflow-wrap: anywhere; font-weight: 700; }
+    .entry-address { display: block; margin-top: 4px; color: var(--muted); font-size: 12px; font-weight: 400; line-height: 1.35; }
+    a { color: var(--red); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .pill { display: inline-flex; align-items: center; border-radius: 3px; padding: 3px 7px; background: var(--pill-bg); color: var(--pill-text); font-weight: 700; font-size: 12px; }
+    .pill.bad { background: var(--pill-bad-bg); color: var(--pill-bad-text); }
+    .show-more { display: block; min-width: 220px; height: 42px; margin: 14px auto 0; padding: 0 18px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface-raised); color: var(--heading); font-weight: 700; cursor: pointer; }
+    .show-more:hover, .show-more:focus-visible { border-color: var(--red); color: var(--red); outline: none; }
+    .show-more[hidden] { display: none; }
+    .related-dashboards { padding: 18px; margin-top: 18px; }
+    .related-dashboards h2 { margin: 0 0 8px; color: var(--heading); font-size: 22px; font-weight: 700; }
+    .related-dashboards p { margin: 0 0 14px; color: var(--muted); font-size: 13px; line-height: 1.45; }
+    .related-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+    .related-link { display: block; min-height: 82px; padding: 12px; border: 1px solid var(--line); background: var(--surface-muted); color: var(--text); text-decoration: none; }
+    .related-link:hover, .related-link:focus-visible { border-color: var(--red); background: var(--row-hover); outline: none; text-decoration: none; }
+    .related-link strong { display: block; margin-bottom: 6px; color: var(--heading); font-size: 15px; line-height: 1.2; }
+    .related-link span { display: block; color: var(--muted); font-size: 12px; line-height: 1.35; overflow-wrap: anywhere; }
+    footer { margin-top: 18px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+    .footer-privacy, .footer-credit { margin-top: 6px; }
+    .footer-credit a { font-weight: 700; }
+    @media (min-width: 1600px) {
+      .table-wrap { margin: 0 calc(-1 * (100vw - min(1320px, calc(100vw - 32px))) / 2); }
+      table { min-width: 0; table-layout: auto; }
+      col.rank, col.name, col.bezirk, col.plz, col.rating, col.reviews, col.banner, col.removed, col.estimate, col.ratio, col.real, col.checked, col.category { width: auto; }
+    }
+    @media (max-width: 1200px) { .hero-inner { grid-template-columns: 1fr; } .appeal-box { width: min(760px, 100%); } .kpis, .panel-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .related-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .controls { grid-template-columns: 1fr 1fr 1fr; } .search { grid-column: 1 / -1; } .theme-toggle { margin-left: auto; margin-right: 0; } .n-logo { position: relative; height: 76px; width: 150px; margin-left: 0; padding-top: 48px; } .n-logo::before { top: 40px; } .n-logo::after { top: 4px; } }
+    @media (max-width: 720px) {
+      .sitebar-inner, main, .hero-inner { width: min(100vw - 20px, 1320px); }
+      .sitebar-inner { gap: 14px; }
+      .top-icons { display: none; }
+      .theme-toggle { width: 42px; padding: 0; justify-content: center; }
+      .theme-toggle-text { display: none; }
+      .n-logo { width: 128px; font-size: 18px; padding-left: 10px; padding-right: 10px; }
+      .kpis, .panel-grid, .seo-facts, .dist-grid, .related-grid { grid-template-columns: 1fr; }
+      .controls { position: sticky; top: 0; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 10px; padding: 10px; margin-bottom: 14px; }
+      .filter-toggle { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; min-height: 42px; padding: 8px 12px; border: 0; border-radius: 5px; background: var(--control-bg); color: var(--control-text); text-align: left; cursor: pointer; }
+      .filter-toggle strong { display: block; font-size: 15px; line-height: 1.1; }
+      .filter-summary { display: block; max-width: 380px; overflow: hidden; color: var(--control-muted); font-size: 12px; font-weight: 400; line-height: 1.3; text-overflow: ellipsis; white-space: nowrap; }
+      .filter-toggle-icon { font-size: 16px; transition: transform .18s ease; }
+      .controls:not(.is-collapsed) .filter-toggle-icon { transform: rotate(180deg); }
+      .controls.is-collapsed .control, .controls.is-collapsed .reset { display: none; }
+      .search { grid-column: 1 / -1; }
+      label { margin-bottom: 4px; font-size: 10px; letter-spacing: .04em; }
+      input, select { height: 38px; padding: 0 9px; font-size: 15px; }
+      .reset { height: 34px; padding: 0 10px; font-size: 13px; }
+      .hero { min-height: 300px; margin-bottom: 14px; }
+      .hero-inner { padding-top: 92px; gap: 14px; }
+      .hero-title { font-size: 32px; padding: 18px; }
+      .hero-subtitle { display: none; }
+      .context-note, .appeal-box { padding: 16px; }
+      .context-note strong, .appeal-box h2 { font-size: 19px; }
+      .context-desktop, .appeal-full { display: none; }
+      .context-mobile, .appeal-short { display: inline; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sitebar" role="banner">
+    <div class="sitebar-inner">
+      <div class="top-icons" aria-hidden="true"><span>●</span><span>☝</span><span>▰</span></div>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Dunkles Design aktivieren" aria-pressed="false"><span class="theme-toggle-icon" aria-hidden="true">☾</span><span class="theme-toggle-text">Dunkel</span></button>
+      <div class="n-logo">Karlsruhe</div>
+    </div>
+  </div>
+
+  <section class="hero" aria-label="Seitentitel">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <h1 class="hero-title">Karlsruhe Google-Maps-Bewertungen</h1>
+        <div class="hero-subtitle">Interaktives Daten-Dashboard zu öffentlich sichtbaren Google-Maps-Hinweisen auf entfernte Bewertungen wegen Diffamierungsbeschwerden.</div>
+      </div>
+      <section class="context-note" aria-label="Einordnung">
+        <strong>Einordnung</strong>
+        <p class="context-desktop">Diese Seite dokumentiert öffentlich sichtbare Google-Hinweise. Sie behauptet nicht, dass Betriebe rechtswidrig gehandelt, Bewertungen missbräuchlich entfernen ließen oder legitime Kritik unterdrückt wurde. Die Daten sind eine Momentaufnahme.</p>
+        <p class="context-mobile">Dokumentation öffentlich sichtbarer Google-Hinweise. Keine Aussage über Rechtswidrigkeit, Missbrauch oder unterdrückte Kritik. Momentaufnahme.</p>
+        <nav aria-label="Weiterführende Hinweise"><a href="methodik.html">Methodik</a><a href="korrektur.html">Korrektur melden</a><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></nav>
+      </section>
+    </div>
+  </section>
+
+  <main>
+    <aside class="appeal-box" aria-label="Hilfe bei entfernter eigener Bewertung">
+      <h2>Eigene Bewertung entfernt?</h2>
+      <p><span class="appeal-full">Wenn eine eigene Google-Maps-Bewertung aus deiner Sicht zu Unrecht entfernt wurde, kannst du zuerst bei Google Einspruch einlegen. In der EU gibt es zusätzlich außergerichtliche Streitbeilegung nach dem Digital Services Act. Keine Erfolgsgarantie.</span><span class="appeal-short">Wenn deine eigene Bewertung aus deiner Sicht zu Unrecht entfernt wurde: erst Google-Einspruch, danach ggf. EU-Streitbeilegung. Keine Erfolgsgarantie.</span></p>
+      <div class="appeal-actions"><a href="https://support.google.com/maps/answer/16673099?hl=de" target="_blank" rel="noopener noreferrer">Google-Einspruch</a><a href="https://digital-strategy.ec.europa.eu/de/policies/dsa-out-court-dispute-settlement" target="_blank" rel="noopener noreferrer">EU-Streitbeilegung</a></div>
+    </aside>
+
+    <section class="chips" aria-label="Quick-Filter"><button type="button" class="chip" data-chip="banner">🔴 Mit Google-Hinweis</button><button type="button" class="chip" data-chip="gastro">🍽️ Gastronomie</button><button type="button" class="chip" data-chip="nachtleben">🎉 Nachtleben</button><button type="button" class="chip" data-chip="beauty">💇 Beauty &amp; Wellness</button><button type="button" class="chip" data-chip="hotels">🏨 Beherbergung</button><button type="button" class="chip" data-chip="gesundheit">🏥 Gesundheit</button><button type="button" class="chip" data-chip="altstadt">🗺️ Altstadt</button></section>
+    <section class="controls is-collapsed" id="dashboardFilterControls" aria-label="Dashboard-Filter">
+      <button class="filter-toggle" id="filterToggle" type="button" aria-expanded="false" aria-controls="dashboardFilterControls"><span><strong>Filter</strong><span class="filter-summary" id="filterSummary">Keine aktiven Filter</span></span><span class="filter-toggle-icon" aria-hidden="true">▾</span></button>
+      <div class="control search"><label for="searchInput">Suche</label><input id="searchInput" type="search" placeholder="Name, PLZ, Kategorie, Hinweisbereich …" autocomplete="off"></div>
+      <div class="control"><label for="postcodeFilter">PLZ</label><select id="postcodeFilter"><option value="">Alle PLZ</option><option value="76131">76131</option><option value="76133">76133</option><option value="76137">76137</option><option value="76139">76139</option><option value="76149">76149</option><option value="76185">76185</option><option value="76227">76227</option></select></div>
+      <div class="control"><label for="bezirkFilter">Bezirk</label><select id="bezirkFilter"><option value="">Alle Bezirke</option><option value="__none__">Ohne Bezirk</option></select></div>
+      <div class="control"><label for="bannerFilter">Hinweis</label><select id="bannerFilter"><option value="all">Alle</option><option value="banner">Mit Hinweis</option><option value="clean">Ohne Hinweis</option></select></div>
+      <div class="control"><label for="rangeFilter">Spanne</label><select id="rangeFilter"><option value="">Alle Bereiche</option><option value="51–200">51–200</option><option value="21–50">21–50</option><option value="11–20">11–20</option><option value="1–10">1–10</option></select></div>
+      <div class="control"><label for="categoryFilter">Kategorie</label><select id="categoryFilter"><option value="">Alle Kategorien</option><option value="parent:Gastronomie">Gastronomie</option><option value="Restaurant">&nbsp;&nbsp;Restaurant</option><option value="Café">&nbsp;&nbsp;Café</option><option value="Pizzeria">&nbsp;&nbsp;Pizzeria</option><option value="Döner">&nbsp;&nbsp;Döner</option><option value="Bäckerei">&nbsp;&nbsp;Bäckerei</option><option value="Sushi">&nbsp;&nbsp;Sushi</option><option value="parent:Beauty &amp; Wellness">Beauty &amp; Wellness</option><option value="Friseur">&nbsp;&nbsp;Friseur</option><option value="Fitnessstudio">&nbsp;&nbsp;Fitnessstudio</option><option value="parent:Nachtleben">Nachtleben</option><option value="Bar">&nbsp;&nbsp;Bar</option><option value="Club">&nbsp;&nbsp;Club</option><option value="parent:Beherbergung">Beherbergung</option><option value="Hotel">&nbsp;&nbsp;Hotel</option><option value="parent:Gesundheit">Gesundheit</option><option value="Apotheke">&nbsp;&nbsp;Apotheke</option></select></div>
+      <div class="control"><label for="minReviews">Min. Rezensionen</label><input id="minReviews" type="number" min="0" step="1" value="0"></div>
+      <button class="reset" id="resetFilters" type="button">Reset</button>
+    </section>
+
+    <section class="grid kpis" aria-label="Kennzahlen">
+      <div class="card kpi"><span class="value" id="kpiPlaces">–</span><span class="label">Orte im Filter</span></div>
+      <div class="card kpi"><span class="value" id="kpiBanners">–</span><span class="label">mit sichtbarem Google-Hinweis</span></div>
+      <div class="card kpi"><span class="value" id="kpiBannerPct">–</span><span class="label">Anteil mit Hinweis</span></div>
+      <div class="card kpi"><span class="value" id="kpiRemoved">–</span><span class="label">Näherungswert aus Spannen</span></div>
+      <div class="card kpi"><span class="value" id="kpiClean">–</span><span class="label">ohne sichtbaren Hinweis</span></div>
+    </section>
+
+<section class="card seo-summary" aria-labelledby="data-overview-title">
+      <h2 id="data-overview-title">Datenstand: Google-Maps-Bewertungen und Google-Hinweise in Karlsruhe</h2>
+      <p>Dieses Dashboard macht öffentlich sichtbare Hinweise auf wegen Diffamierungsbeschwerden entfernte Google-Maps-Bewertungen in Karlsruhe durchsuchbar. Die Karte, Filter und Ranglisten zeigen sichtbare Google-Hinweise, öffentlich angezeigte Spannen, Näherungswerte, Hinweis-Anteile und Worst-Case-Ratings je Ort.</p>
+      <ul class="seo-facts">
+        <li><strong>12</strong> erfasste Orte</li>
+        <li><strong>8</strong> mit sichtbarem Google-Hinweis</li>
+        <li><strong>398</strong> Näherungswert aus Spannen</li>
+        <li><strong>4</strong> ohne sichtbaren Hinweis</li>
+      </ul>
+      <p class="seo-meta">Datenstand: 27.05.2026. Kein sichtbarer Hinweis bedeutet nur, dass beim Abruf kein passender Hinweis sichtbar war.</p>
+<div class="seo-top"><h3>Kurzüberblick: Orte mit den höchsten Hinweisspannen</h3><ol><li><a href="https://maps.google.com/?cid=demo008" target="_blank" rel="noopener noreferrer nofollow">Demo Döner Nordstadt</a> <span class="seo-meta">Spanne 51–200 · PLZ 76133 · Näherungswert ca. 126</span></li><li><a href="https://maps.google.com/?cid=demo004" target="_blank" rel="noopener noreferrer nofollow">Demo Hotel Durlach</a> <span class="seo-meta">Spanne 51–200 · PLZ 76227 · Näherungswert ca. 126</span></li><li><a href="https://maps.google.com/?cid=demo009" target="_blank" rel="noopener noreferrer nofollow">Demo Club Innenstadt</a> <span class="seo-meta">Spanne 21–50 · PLZ 76133 · Näherungswert ca. 36</span></li><li><a href="https://maps.google.com/?cid=demo007" target="_blank" rel="noopener noreferrer nofollow">Demo Fitnessstudio Oststadt</a> <span class="seo-meta">Spanne 21–50 · PLZ 76131 · Näherungswert ca. 36</span></li><li><a href="https://maps.google.com/?cid=demo001" target="_blank" rel="noopener noreferrer nofollow">Demo Restaurant Innenstadt</a> <span class="seo-meta">Spanne 21–50 · PLZ 76133 · Näherungswert ca. 36</span></li><li><a href="https://maps.google.com/?cid=demo003" target="_blank" rel="noopener noreferrer nofollow">Demo Bar Weststadt</a> <span class="seo-meta">Spanne 11–20 · PLZ 76133 · Näherungswert ca. 16</span></li><li><a href="https://maps.google.com/?cid=demo012" target="_blank" rel="noopener noreferrer nofollow">Demo Sushi Südweststadt</a> <span class="seo-meta">Spanne 11–20 · PLZ 76137 · Näherungswert ca. 16</span></li><li><a href="https://maps.google.com/?cid=demo005" target="_blank" rel="noopener noreferrer nofollow">Demo Pizzeria Südstadt</a> <span class="seo-meta">Spanne 1–10 · PLZ 76137 · Näherungswert ca. 6</span></li></ol></div>
+    </section>
+
+    <section class="grid panel-grid" aria-label="Top-Rankings">
+      <article class="card panel"><h2>Höchste Hinweisspannen</h2><p>Sortiert nach dem Mittelpunkt der öffentlich angezeigten Google-Spanne.</p><div class="bars" id="barsRemoved"></div></article>
+      <article class="card panel"><h2>Geschätzter Hinweis-Anteil</h2><p>Pro Ort: entfernt / (sichtbar + entfernt). Näherungswert, nicht als exakte Quote interpretieren.</p><div class="bars" id="barsRatio"></div></article>
+      <article class="card panel"><h2>Hypothetisches Worst-Case-Rating</h2><p>Mathematische Untergrenze unter der Annahme, dass alle entfernten Bewertungen 1★ waren. Keine Aussage über Betriebsqualität.</p><div class="bars" id="barsWorst"></div></article>
+      <article class="card panel"><h2>Ohne sichtbaren Hinweis</h2><p>Im Abruf war kein passender Google-Hinweis sichtbar. Sortiert nach Rating ab 100 Rezensionen. Keine Qualitätsaussage gegenüber anderen Orten.</p><div class="bars" id="barsClean"></div></article>
+    </section>
+
+    <section class="card dist" aria-label="Verteilungen">
+      <div class="dist-grid">
+        <div class="dist-panel"><h2>Verteilung der Spannen</h2><div id="distribution"></div></div>
+        <div class="dist-panel"><h2>Hinweis-Anteil im Vergleich</h2><p>Nur Orte mit sichtbarem Google-Hinweis und mindestens 50 sichtbaren Rezensionen im aktuellen Filter.</p><div id="ratioHistogram"></div></div>
+      </div>
+    </section>
+
+    <section class="card bezirk-summary" aria-label="Bezirks-Gruppen"><h2>Gruppierung nach statistischem Bezirk</h2><p>Top-Bezirke im aktuellen Filter, sortiert nach Hinweis-Anteil. Anklicken setzt den Bezirksfilter.</p><div class="bezirk-list" id="bezirkSummary"></div></section>
+
+    <section class="card bezirk-summary" aria-label="Kategorie-Gruppen"><h2>Gruppierung nach Kategorie</h2><p>Übergeordnete Kategorie-Gruppen im aktuellen Filter, sortiert nach Hinweis-Anteil.</p><div class="bezirk-list" id="parentSummary"></div></section>
+
+    <section class="card map-panel" aria-label="Karte">
+      <h2>Karte der erfassten Orte</h2>
+      <p><span id="mapCount">–</span> Orte mit Koordinaten im aktuellen Filter. Marker anklicken markiert Einträge; Bezirksflächen anklicken setzt den Bezirkfilter.</p>
+      <div id="placesMap"><div class="map-consent"><div class="map-consent-inner"><p class="map-consent-text">Die Karte lädt Leaflet von unpkg (Cloudflare, USA – DPF-zertifiziert) und Karten-Kacheln von CARTO (USA/Spanien – ohne DPF-Zertifizierung). Dabei werden IP-Adresse und Browserinformationen an diese Anbieter übertragen. Für CARTO fehlen ein Angemessenheitsbeschluss und Standardvertragsklauseln; ein dem EU-Recht gleichwertiges Datenschutzniveau ist nicht garantiert.</p><button id="mapConsentLoad" type="button" class="map-consent-btn">Karte laden</button><p class="map-consent-link">Einwilligung gilt nur für diese Sitzung. <a href="datenschutz.html">Details in der Datenschutzerklärung</a>.</p></div></div></div>
+      <div class="map-legend"><span><i class="legend-area"></i>Bezirk, klickbar</span><span><i class="legend-dot" style="background:#1f6f8b"></i>dein Standort</span><span><i class="legend-dot" style="background:#3c4e6b"></i>hoher Hinweis-Anteil</span><span><i class="legend-dot" style="background:#5b7b8e"></i>sichtbarer Hinweis</span><span><i class="legend-dot" style="background:#8a8e94"></i>kein sichtbarer Hinweis</span></div>
+    </section>
+
+    <nav class="tabs" aria-label="Tabellen-Presets">
+      <button class="tab" data-mode="removed">Höchste Spannen</button>
+      <button class="tab active" data-mode="ratio">Hinweis-Anteil</button>
+      <button class="tab" data-mode="worst">Worst-Case-Rating</button>
+      <button class="tab" data-mode="clean">Ohne Hinweis</button>
+      <button class="tab" data-mode="nearby">In meiner Nähe</button>
+    </nav>
+    <div class="sub-chips" id="subChips"></div>
+    <div class="nearby-status" id="nearbyStatus" role="status" aria-live="polite" hidden></div>
+
+    <div class="table-head"><strong id="tableTitle">Hinweis-Anteil</strong><span id="resultCount">–</span></div>
+    <section class="table-wrap" aria-label="Daten-Explorer">
+      <table id="placesTable">
+        <colgroup><col class="rank"><col class="name"><col class="bezirk"><col class="plz"><col class="rating"><col class="reviews"><col class="banner"><col class="removed"><col class="estimate"><col class="ratio"><col class="real"><col class="checked"><col class="category"></colgroup>
+        <thead><tr>
+          <th class="rank"><button data-sort="rank">Rang <span class="arrow"></span></button></th>
+          <th><button data-sort="name">Name / Google Maps <span class="arrow"></span></button></th>
+          <th><button data-sort="bezirkLabel">Bezirk <span class="arrow"></span></button></th>
+          <th><button data-sort="postcode">PLZ <span class="arrow"></span></button></th>
+          <th class="num"><button data-sort="rating">Rating <span class="arrow"></span></button></th>
+          <th class="num"><button data-sort="reviewCount">Rezensionen <span class="arrow"></span></button></th>
+          <th><button data-sort="hasBanner">Google-Hinweis <span class="arrow"></span></button></th>
+          <th class="num"><button data-sort="removedEstimate">Spanne <span class="arrow"></span></button></th>
+          <th class="num"><button data-sort="removedEstimate">Näherungswert <span class="arrow"></span></button></th>
+          <th class="num"><button data-sort="deletionRatioPct">Hinweis-Anteil <span class="arrow"></span></button></th>
+          <th class="num"><button data-sort="realRatingAdjusted" title="Hypothetische Modellrechnung: nimmt an, alle entfernten Bewertungen wären 1★ gewesen.">Worst-Case (hyp.) <span class="arrow"></span></button></th>
+          <th><button data-sort="readAt">Geprüft <span class="arrow"></span></button></th>
+          <th><button data-sort="category">Kategorie <span class="arrow"></span></button></th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+    <button class="show-more" id="showMoreRows" type="button" hidden>Mehr Zeilen anzeigen</button>
+
+    <section class="card related-dashboards" aria-label="Weitere regionale Dashboards">
+      <h2>Weitere regionale Dashboards</h2>
+      <p>Öffentlich verfügbare Dashboards anderer Regionen zum gleichen Google-Maps-Hinweis-Thema.</p>
+      <div class="related-grid">
+        <a class="related-link" href="https://bewertungsradar-saar.de/" target="_blank" rel="noopener noreferrer"><strong>Saarland</strong><span>bewertungsradar-saar.de</span></a>
+        <a class="related-link" href="https://nekronomekron.github.io/landshut-maps-review-removals/" target="_blank" rel="noopener noreferrer"><strong>Landshut</strong><span>nekronomekron.github.io</span></a>
+        <a class="related-link" href="https://cooljackgi.github.io/giessen-maps-review-removals/" target="_blank" rel="noopener noreferrer"><strong>Gießen</strong><span>cooljackgi.github.io</span></a>
+        <a class="related-link" href="https://berlintrustindex.com/" target="_blank" rel="noopener noreferrer"><strong>Berlin Trust Index</strong><span>berlintrustindex.com</span></a>
+        <a class="related-link" href="https://hermes7654.github.io/ibbenbueren-review-removals/" target="_blank" rel="noopener noreferrer"><strong>Ibbenbüren / Münster</strong><span>hermes7654.github.io</span></a>
+      </div>
+    </section>
+
+    <footer>
+      <div>Journalistische Recherche-Momentaufnahme; keine Rezensionstexte und keine Rohdaten-CSV in dieser Veröffentlichung. Dashboard basiert auf der MIT-lizenzierten Vorlage von Manuel Boll.</div>
+      <div>Quelle: Google Maps, öffentlich sichtbare Hinweise. „Kein Hinweis“ heißt nur: im Abruf war kein passender Hinweis sichtbar. Datenabruf: 27.05.2026.</div>
+
+      <div class="footer-privacy"><a href="methodik.html">Methodik</a> · <a href="korrektur.html">Korrektur melden</a> · <a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></div>
+      <div class="footer-credit">© 2026 Manuel Boll · <a href="https://mboll.eu" target="_blank" rel="noopener noreferrer">mboll.eu</a></div>
+    </footer>
+  </main>
+
+  <script id="dashboardConfig" type="application/json">{"city":"Karlsruhe"}</script>
+  <script id="placesData" type="application/json">{"d":[["76133","76227","76137","76185","76131","76149","76139"],[""],["Restaurant","Café","Bar","Hotel","Pizzeria","Friseur","Fitnessstudio","Döner","Club","Bäckerei","Apotheke","Sushi"],["Gastronomie","Nachtleben","Beherbergung","Beauty \u0026 Wellness","Gesundheit"],["21–50","11–20","51–200","1–10"]],"r":[["ChIJ_demo_ka_001","Demo Restaurant Innenstadt",0,940,-259560,0,4.2,450,0,0,"Kaiserstraße 100",29664600,0,35.5,8.5,3.8],["ChIJ_demo_ka_002","Demo Café Marktplatz",0,900,-259600,0,4.5,280,1,0,"Marktplatz 5",29664600],["ChIJ_demo_ka_003","Demo Bar Weststadt",0,550,-260800,0,4,180,2,1,"Sophienstraße 42",29664600,1,15.5,7.8,3.6],["ChIJ_demo_ka_004","Demo Hotel Durlach",1,100,-252900,0,4.3,520,3,2,"Pfinztalstraße 80",29664600,2,125.5,19.4,3.2],["ChIJ_demo_ka_005","Demo Pizzeria Südstadt",2,-200,-259800,0,4.1,320,4,0,"Rüppurrer Straße 15",29664600,3,5.5,2.5,4],["ChIJ_demo_ka_006","Demo Friseur Mühlburg",3,1200,-263200,0,4.6,150,5,3,"Rheinstraße 25",29664600],["ChIJ_demo_ka_007","Demo Fitnessstudio Oststadt",4,1100,-258200,0,3.9,280,6,3,"Haid-und-Neu-Straße 12",29664600,0,35.5,11.2,3.4],["ChIJ_demo_ka_008","Demo Döner Nordstadt",0,1800,-260200,0,4.4,890,7,0,"Erzbergerstraße 55",29664600,2,125.5,12.3,3.9],["ChIJ_demo_ka_009","Demo Club Innenstadt",0,880,-259450,0,3.8,420,8,1,"Kreuzstraße 8",29664600,0,35.5,7.7,3.5],["ChIJ_demo_ka_010","Demo Bäckerei Neureut",5,3500,-262800,0,4.7,210,9,0,"Neureuter Hauptstraße 120",29664600],["ChIJ_demo_ka_011","Demo Apotheke Waldstadt",6,2200,-256800,0,4.5,95,10,4,"Königsberger Straße 45",29664600],["ChIJ_demo_ka_012","Demo Sushi Südweststadt",2,200,-261200,0,4.3,380,11,0,"Karlstraße 88",29664600,1,15.5,4.1,4.1]]}</script>
+  <script id="bezirkData" type="application/json">[]</script>
+  <script>
+const COORD_SCALE = 100000;
+const CONFIG = JSON.parse(document.getElementById('dashboardConfig').textContent);
+const DASHBOARD_CITY = CONFIG.city || 'Nürnberg';
+const placesPayload = JSON.parse(document.getElementById('placesData').textContent);
+const DATA = placesPayload.r.map((row, index) => decodePlaceRow(row, index, placesPayload.d));
+let BEZIRKE = null;
+DATA.forEach(row => { row._search = buildSearchText(row); });
+const valid = DATA.filter(row => Number.isFinite(row.rating) && Number.isFinite(row.reviewCount));
+const fmt = new Intl.NumberFormat('de-DE');
+const fmt1 = new Intl.NumberFormat('de-DE', { maximumFractionDigits: 1, minimumFractionDigits: 1 });
+const fmt2 = new Intl.NumberFormat('de-DE', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
+const fmtDateTime = new Intl.DateTimeFormat('de-DE', { dateStyle: 'short', timeStyle: 'short' });
+const TABLE_PAGE_SIZE = 500;
+let tableLimit = TABLE_PAGE_SIZE;
+let lastSortedRows = [];
+const state = { mode: 'ratio', sortKey: 'deletionRatioPct', sortDir: 'desc', userLocation: null };
+const els = {
+  themeToggle: document.getElementById('themeToggle'), controls: document.getElementById('dashboardFilterControls'), filterToggle: document.getElementById('filterToggle'), filterSummary: document.getElementById('filterSummary'), search: document.getElementById('searchInput'), postcode: document.getElementById('postcodeFilter'), bezirk: document.getElementById('bezirkFilter'), banner: document.getElementById('bannerFilter'), range: document.getElementById('rangeFilter'), category: document.getElementById('categoryFilter'), minReviews: document.getElementById('minReviews'), reset: document.getElementById('resetFilters'), tbody: document.querySelector('#placesTable tbody'), resultCount: document.getElementById('resultCount'), tableTitle: document.getElementById('tableTitle'), mapCount: document.getElementById('mapCount'), nearbyStatus: document.getElementById('nearbyStatus'), showMore: document.getElementById('showMoreRows')
+};
+const titles = { all: 'Alle Orte', removed: 'Höchste Hinweisspannen', ratio: 'Geschätzter Hinweis-Anteil', worst: 'Hypothetisches Worst-Case-Rating', clean: 'Orte ohne sichtbaren Hinweis', nearby: 'In meiner Nähe' };
+
+function finiteNumber(value) { return Number.isFinite(value) ? value : null; }
+function decodeCoord(base, offset) { return Number.isFinite(offset) ? base + offset / COORD_SCALE : null; }
+function dictValue(dicts, dictIndex, valueIndex) { return dicts[dictIndex][valueIndex] ?? ''; }
+function googleMapsURL(cidHex, name) {
+  if (cidHex && typeof BigInt === 'function') {
+    try { return 'https://www.google.com/maps?cid=' + BigInt('0x' + cidHex).toString(10); } catch (_) {}
+  }
+  return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent((name || DASHBOARD_CITY) + ' ' + DASHBOARD_CITY);
+}
+function decodeAddress(value, postcode) {
+  if (!value) return '';
+  if (value[0] === '!') return value.slice(1);
+  return value + ', ' + postcode + ' ' + DASHBOARD_CITY;
+}
+function decodePlaceRow(row, index, dicts) {
+  const postcode = dictValue(dicts, 0, row[2]);
+  const hasBanner = row.length > 12;
+  return {
+    id: String(index), name: row[1] || '', postcode, lat: decodeCoord(49, row[3]), lng: decodeCoord(11, row[4]), bezirkLabel: dictValue(dicts, 1, row[5]), rating: finiteNumber(row[6]), reviewCount: finiteNumber(row[7]), category: dictValue(dicts, 2, row[8]), parentCategory: dictValue(dicts, 3, row[9]), hasBanner, removedRange: hasBanner ? dictValue(dicts, 4, row[12]) : '', removedEstimate: hasBanner ? finiteNumber(row[13]) || 0 : 0, deletionRatioPct: hasBanner ? finiteNumber(row[14]) : null, realRatingAdjusted: hasBanner ? finiteNumber(row[15]) : null, address: decodeAddress(row[10] || '', postcode), readAt: Number.isFinite(row[11]) ? row[11] * 60000 : 0, url: googleMapsURL(row[0], row[1])
+  };
+}
+function getBezirke() {
+  if (!BEZIRKE) BEZIRKE = JSON.parse(document.getElementById('bezirkData').textContent).map(decodeBezirkRow);
+  return BEZIRKE;
+}
+function decodeBezirkRow(row) {
+  return { label: row[0] || '', polygons: (row[1] || []).map(flat => {
+    const points = [];
+    let latOffset = 0;
+    let lngOffset = 0;
+    for (let i = 0; i + 1 < flat.length; i += 2) {
+      if (i === 0) {
+        latOffset = flat[i];
+        lngOffset = flat[i + 1];
+      } else {
+        latOffset += flat[i];
+        lngOffset += flat[i + 1];
+      }
+      points.push([decodeCoord(49, latOffset), decodeCoord(11, lngOffset)]);
+    }
+    return points;
+  }) };
+}
+function buildSearchText(row) { return [row.name, row.postcode, row.bezirkLabel, row.category, row.parentCategory, row.removedRange, row.address].join(' ').toLowerCase(); }
+function debounce(fn, wait) {
+  let timer = 0;
+  return () => {
+    window.clearTimeout(timer);
+    timer = window.setTimeout(fn, wait);
+  };
+}
+function resetTableLimit() { tableLimit = TABLE_PAGE_SIZE; }
+function renderReset() { resetTableLimit(); render(); }
+
+let placesMap = null;
+let bezirkLayer = null;
+let markerLayer = null;
+let tileLayer = null;
+let mapUnavailable = false;
+let mapLoadStarted = false;
+let mapConsentGranted = false;
+let pendingMapRows = null;
+let pendingMapAllRows = null;
+let mapHintTimer = null;
+const activeMapKeys = new Set();
+const themeStorageKey = 'dashboardTheme';
+const prefersDark = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : { matches: false, addEventListener: null };
+
+function storedTheme() {
+  try {
+    const theme = localStorage.getItem(themeStorageKey);
+    return theme === 'dark' || theme === 'light' ? theme : '';
+  } catch (_) {
+    return '';
+  }
+}
+function currentTheme() {
+  const explicit = document.documentElement.dataset.theme;
+  if (explicit === 'dark' || explicit === 'light') return explicit;
+  return prefersDark.matches ? 'dark' : 'light';
+}
+function tileURL() { return 'https://{s}.basemaps.cartocdn.com/' + (currentTheme() === 'dark' ? 'dark_all' : 'light_all') + '/{z}/{x}/{y}{r}.png'; }
+function colorVar(name, fallback) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback; }
+function updateThemeToggle() {
+  const isDark = currentTheme() === 'dark';
+  els.themeToggle.setAttribute('aria-pressed', String(isDark));
+  els.themeToggle.setAttribute('aria-label', isDark ? 'Helles Design aktivieren' : 'Dunkles Design aktivieren');
+  els.themeToggle.querySelector('.theme-toggle-icon').textContent = isDark ? '☀' : '☾';
+  els.themeToggle.querySelector('.theme-toggle-text').textContent = isDark ? 'Hell' : 'Dunkel';
+}
+function updateMapTheme() {
+  if (tileLayer) tileLayer.setUrl(tileURL());
+}
+function setTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  try { localStorage.setItem(themeStorageKey, theme); } catch (_) {}
+  updateThemeToggle();
+  updateMapTheme();
+  if (placesMap) render();
+}
+
+function pct(value) { return Number.isFinite(value) ? fmt1.format(value) + '%' : '–'; }
+function rating(value, digits = 1) { return Number.isFinite(value) ? (digits === 2 ? fmt2.format(value) : fmt1.format(value)) : '–'; }
+function n(value) { return Number.isFinite(value) ? fmt.format(value) : '–'; }
+function distanceLabel(km) { return Number.isFinite(km) ? (km < 1 ? n(Math.round(km * 1000)) + ' m' : fmt1.format(km) + ' km') : '–'; }
+function readAtLabel(value) {
+  const timestamp = typeof value === 'number' ? value : Date.parse(value || '');
+  return Number.isFinite(timestamp) && timestamp > 0 ? fmtDateTime.format(new Date(timestamp)) : '–';
+}
+function distanceKm(lat1, lng1, lat2, lng2) {
+  const toRad = value => value * Math.PI / 180;
+  const dLat = toRad(lat2 - lat1);
+  const dLng = toRad(lng2 - lng1);
+  const a = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) ** 2;
+  return 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+function rowDistanceKm(row) {
+  if (!state.userLocation || !hasCoords(row)) return Infinity;
+  return distanceKm(state.userLocation.lat, state.userLocation.lng, row.lat, row.lng);
+}
+function esc(s) { return String(s ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])); }
+function searchText(row) { return row._search; }
+function matches(row) {
+  const q = els.search.value.trim().toLowerCase();
+  if (q && !searchText(row).includes(q)) return false;
+  if (els.postcode.value && row.postcode !== els.postcode.value) return false;
+  if (els.bezirk.value === '__none__' && row.bezirkLabel) return false;
+  if (els.bezirk.value && els.bezirk.value !== '__none__' && row.bezirkLabel !== els.bezirk.value) return false;
+  if (els.banner.value === 'banner' && !row.hasBanner) return false;
+  if (els.banner.value === 'clean' && row.hasBanner) return false;
+  if (els.range.value && row.removedRange !== els.range.value) return false;
+  if (els.category.value) {
+    const v = els.category.value;
+    if (v.startsWith('parent:')) {
+      if ((row.parentCategory || 'Sonstiges') !== v.slice(7)) return false;
+    } else {
+      if (row.category !== v) return false;
+    }
+  }
+  if (Number(row.reviewCount || 0) < Number(els.minReviews.value || 0)) return false;
+  return true;
+}
+function filtered() { return valid.filter(matches); }
+function selectedOptionLabel(select) { return select.selectedOptions && select.selectedOptions[0] ? select.selectedOptions[0].textContent : select.value; }
+function activeFilterSummary() {
+  const parts = [];
+  if (els.search.value.trim()) parts.push('Suche');
+  if (els.postcode.value) parts.push(els.postcode.value);
+  if (els.bezirk.value) parts.push(els.bezirk.value === '__none__' ? 'Ohne Bezirk' : selectedOptionLabel(els.bezirk));
+  if (els.banner.value !== 'all') parts.push(selectedOptionLabel(els.banner));
+  if (els.range.value) parts.push(els.range.value);
+  if (els.category.value) parts.push(selectedOptionLabel(els.category));
+  if (Number(els.minReviews.value || 0) > 0) parts.push('ab ' + n(Number(els.minReviews.value)) + ' Rezensionen');
+  return parts.length ? parts.join(' · ') : 'Keine aktiven Filter';
+}
+function updateFilterToggle() {
+  els.filterToggle.setAttribute('aria-expanded', String(!els.controls.classList.contains('is-collapsed')));
+  els.filterSummary.textContent = activeFilterSummary();
+}
+function nearbyButton() { return document.querySelector('.tab[data-mode="nearby"]'); }
+function setNearbyStatus(message, isError = false) {
+  els.nearbyStatus.textContent = message;
+  els.nearbyStatus.hidden = !message;
+  els.nearbyStatus.classList.toggle('error', isError);
+}
+function setNearbyPending(pending) {
+  const button = nearbyButton();
+  if (!button) return;
+  button.disabled = pending;
+  button.textContent = pending ? 'Standort …' : 'In meiner Nähe';
+}
+function geolocationErrorMessage(error) {
+  if (error && error.code === 1) return 'Standortfreigabe abgelehnt. Bitte im Browser erlauben, um „In meiner Nähe“ zu nutzen.';
+  if (error && error.code === 2) return 'Standort konnte nicht bestimmt werden.';
+  if (error && error.code === 3) return 'Standort-Anfrage hat zu lange gedauert.';
+  return 'Standort konnte nicht angefragt werden.';
+}
+function nearbySuccessStatus() {
+  const accuracy = state.userLocation && Number.isFinite(state.userLocation.accuracy) ? ' · Genauigkeit ca. ' + n(Math.round(state.userLocation.accuracy)) + ' m' : '';
+  return 'Standort gesetzt. Orte werden nach Entfernung sortiert.' + accuracy;
+}
+function requestUserLocation() {
+  if (!navigator.geolocation) {
+    setNearbyStatus('Standortzugriff ist nur per HTTPS oder localhost verfügbar.', true);
+    return;
+  }
+  setNearbyPending(true);
+  setNearbyStatus('Standort wird angefragt und nur lokal im Browser verwendet …');
+  navigator.geolocation.getCurrentPosition(position => {
+    state.userLocation = { lat: position.coords.latitude, lng: position.coords.longitude, accuracy: position.coords.accuracy };
+    setNearbyPending(false);
+    setNearbyStatus(nearbySuccessStatus());
+    activateMode('nearby');
+    render();
+    document.getElementById('placesTable').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, error => {
+    setNearbyPending(false);
+    setNearbyStatus(geolocationErrorMessage(error), true);
+  }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 });
+}
+const MIN_CLEAN_RANKING_REVIEWS = 100;
+function bannerRows(rows) { return rows.filter(row => row.hasBanner && Number.isFinite(row.removedEstimate)); }
+function cleanRows(rows) { return rows.filter(row => !row.hasBanner); }
+function cleanRankingRows(rows) { return cleanRows(rows).filter(row => Number.isFinite(row.rating) && Number.isFinite(row.reviewCount) && row.reviewCount >= MIN_CLEAN_RANKING_REVIEWS); }
+function defaultSortFor(mode) {
+  if (mode === 'removed') return ['removedEstimate', 'desc'];
+  if (mode === 'ratio') return ['deletionRatioPct', 'desc'];
+  if (mode === 'worst') return ['realRatingAdjusted', 'asc'];
+  if (mode === 'clean') return ['rating', 'desc'];
+  if (mode === 'nearby') return ['distanceKm', 'asc'];
+  return ['rank', 'asc'];
+}
+function modeRows(rows) {
+  if (state.mode === 'removed') return bannerRows(rows);
+  if (state.mode === 'ratio') return bannerRows(rows).filter(row => Number.isFinite(row.deletionRatioPct));
+  if (state.mode === 'worst') return bannerRows(rows).filter(row => Number.isFinite(row.realRatingAdjusted));
+  if (state.mode === 'clean') return cleanRows(rows);
+  if (state.mode === 'nearby') return rows.filter(hasCoords);
+  return rows;
+}
+function value(row, key, index) {
+  if (key === 'rank') return index + 1;
+  if (key === 'hasBanner') return row.hasBanner ? 1 : 0;
+  if (key === 'distanceKm') return rowDistanceKm(row);
+  if (key === 'readAt') return typeof row.readAt === 'number' ? row.readAt : Date.parse(row.readAt || '') || 0;
+  const v = row[key];
+  return typeof v === 'string' ? v.toLowerCase() : (Number.isFinite(v) ? v : -Infinity);
+}
+function sortRows(rows) {
+  return rows.map((row, index) => ({ row, index })).sort((a, b) => {
+    const av = value(a.row, state.sortKey, a.index);
+    const bv = value(b.row, state.sortKey, b.index);
+    const result = typeof av === 'string' ? av.localeCompare(bv, 'de') : av - bv;
+    return state.sortDir === 'asc' ? result : -result;
+  }).map(item => item.row);
+}
+function updateKpis(rows) {
+  const banners = bannerRows(rows);
+  const clean = cleanRows(rows);
+  const removedSum = banners.reduce((sum, row) => sum + row.removedEstimate, 0);
+  document.getElementById('kpiPlaces').textContent = n(rows.length);
+  document.getElementById('kpiBanners').textContent = n(banners.length);
+  document.getElementById('kpiBannerPct').textContent = pct((banners.length / Math.max(rows.length, 1)) * 100);
+  document.getElementById('kpiRemoved').textContent = n(Math.round(removedSum));
+  document.getElementById('kpiClean').textContent = n(clean.length);
+}
+function hasCoords(row) { return Number.isFinite(row.lat) && Number.isFinite(row.lng); }
+function markerColor(row) {
+  if (!row.hasBanner) return colorVar('--marker-clean', '#8a8e94');
+  if ((row.deletionRatioPct || 0) >= 10) return colorVar('--marker-high', '#3c4e6b');
+  return colorVar('--marker-mid', '#5b7b8e');
+}
+function markerMode(row) { return row.hasBanner ? 'ratio' : 'clean'; }
+function isMapModifier(event) { return event.ctrlKey || event.metaKey || event.altKey; }
+function setMapScrollMode(enabled) {
+  if (!placesMap) return;
+  const root = document.getElementById('placesMap');
+  if (enabled) {
+    placesMap.scrollWheelZoom.enable();
+    root.classList.add('map-active');
+    root.classList.remove('map-needs-key');
+  } else {
+    placesMap.scrollWheelZoom.disable();
+    root.classList.remove('map-active');
+  }
+}
+function flashMapHint() {
+  const root = document.getElementById('placesMap');
+  if (!root || root.classList.contains('map-active')) return;
+  root.classList.add('map-needs-key');
+  window.clearTimeout(mapHintTimer);
+  mapHintTimer = window.setTimeout(() => root.classList.remove('map-needs-key'), 1300);
+}
+function setupMapGestureGate(root) {
+  root.addEventListener('wheel', event => {
+    if (isMapModifier(event)) {
+      event.preventDefault();
+      setMapScrollMode(true);
+    } else {
+      flashMapHint();
+    }
+  }, { capture: true, passive: false });
+  root.addEventListener('touchstart', event => {
+    if (event.touches && event.touches.length > 1) root.classList.add('map-active');
+    else flashMapHint();
+  }, { passive: true });
+  root.addEventListener('touchend', () => root.classList.remove('map-active'), { passive: true });
+  window.addEventListener('keydown', event => {
+    if (['Control', 'Meta', 'Alt'].includes(event.key)) {
+      activeMapKeys.add(event.key);
+      setMapScrollMode(true);
+    }
+  });
+  window.addEventListener('keyup', event => {
+    if (['Control', 'Meta', 'Alt'].includes(event.key)) activeMapKeys.delete(event.key);
+    if (activeMapKeys.size === 0) setMapScrollMode(false);
+  });
+  window.addEventListener('blur', () => {
+    activeMapKeys.clear();
+    setMapScrollMode(false);
+  });
+}
+function loadLeaflet() {
+  if (typeof L !== 'undefined') return Promise.resolve();
+  return new Promise((resolve, reject) => {
+    if (!document.querySelector('link[data-leaflet-css]')) {
+      const link = document.createElement('link');
+      link.dataset.leafletCss = 'true';
+      link.rel = 'stylesheet';
+      link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+      document.head.insertBefore(link, document.querySelector('style'));
+    }
+    const existing = document.querySelector('script[data-leaflet-js]');
+    if (existing) {
+      existing.addEventListener('load', resolve, { once: true });
+      existing.addEventListener('error', reject, { once: true });
+      return;
+    }
+    const script = document.createElement('script');
+    script.dataset.leafletJs = 'true';
+    script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+    script.async = true;
+    script.onload = resolve;
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+}
+function startMapLoad(rows, allFilteredRows) {
+  pendingMapRows = rows;
+  pendingMapAllRows = allFilteredRows || rows;
+  if (placesMap || mapLoadStarted || mapUnavailable) return;
+  const root = document.getElementById('placesMap');
+  mapLoadStarted = true;
+  root.innerHTML = '<div class="map-empty">Karte wird geladen …</div>';
+  loadLeaflet().then(() => renderMap(pendingMapRows || [], pendingMapAllRows || pendingMapRows || [])).catch(() => {
+    mapUnavailable = true;
+    root.innerHTML = '<div class="map-empty">Karte konnte nicht geladen werden. Internetzugriff auf Leaflet/Kartenkacheln prüfen.</div>';
+  });
+}
+function setupMapConsent() {
+  const root = document.getElementById('placesMap');
+  if (!root) return;
+  root.addEventListener('click', event => {
+    const btn = event.target.closest('#mapConsentLoad');
+    if (!btn) return;
+    if (mapConsentGranted) return;
+    mapConsentGranted = true;
+    startMapLoad(pendingMapRows || [], pendingMapAllRows || pendingMapRows || []);
+  });
+}
+function initMap() {
+  if (placesMap || mapUnavailable) return Boolean(placesMap);
+  const root = document.getElementById('placesMap');
+  if (typeof L === 'undefined') return false;
+  root.innerHTML = '';
+  placesMap = L.map(root, { preferCanvas: true, scrollWheelZoom: false, touchZoom: true }).setView([49.4521, 11.0767], 12);
+  placesMap.createPane('bezirkPane');
+  placesMap.getPane('bezirkPane').style.zIndex = 350;
+  placesMap.createPane('placeMarkerPane');
+  placesMap.getPane('placeMarkerPane').style.zIndex = 650;
+  tileLayer = L.tileLayer(tileURL(), { maxZoom: 20, subdomains: 'abcd', attribution: '&copy; OpenStreetMap-Mitwirkende &copy; CARTO' }).addTo(placesMap);
+  bezirkLayer = L.layerGroup().addTo(placesMap);
+  markerLayer = L.layerGroup().addTo(placesMap);
+  setupMapGestureGate(root);
+  return true;
+}
+function selectedBezirkLabel() {
+  return els.bezirk.value && els.bezirk.value !== '__none__' ? els.bezirk.value : '';
+}
+function bezirkStats(rows) {
+  const stats = new Map();
+  for (const row of rows) {
+    if (!row.bezirkLabel) continue;
+    if (!stats.has(row.bezirkLabel)) stats.set(row.bezirkLabel, { rows: 0, banners: 0 });
+    const stat = stats.get(row.bezirkLabel);
+    stat.rows += 1;
+    if (row.hasBanner) stat.banners += 1;
+  }
+  return stats;
+}
+function bezirkBounds(label) {
+  if (!label || !placesMap) return null;
+  const district = getBezirke().find(item => item.label === label);
+  if (!district) return null;
+  const bounds = L.latLngBounds([]);
+  for (const polygon of district.polygons) {
+    for (const point of polygon) bounds.extend(point);
+  }
+  return bounds.isValid() ? bounds : null;
+}
+function renderBezirkLayer(rows) {
+  if (!bezirkLayer) return;
+  bezirkLayer.clearLayers();
+  const stats = bezirkStats(rows);
+  const selected = selectedBezirkLabel();
+  const red = colorVar('--red', '#cf2a1b');
+  const redDark = colorVar('--red-dark', '#8c4139');
+  const muted = colorVar('--muted', '#777');
+  const orange = colorVar('--orange', '#ef7d16');
+  const blue = colorVar('--blue', '#1f6f8b');
+  for (const district of getBezirke()) {
+    const stat = stats.get(district.label) || { rows: 0, banners: 0 };
+    const ratio = stat.banners / Math.max(stat.rows, 1) * 100;
+    const isSelected = district.label === selected;
+    const hasRows = stat.rows > 0;
+    const style = {
+      pane: 'bezirkPane',
+      color: isSelected ? red : (hasRows ? redDark : muted),
+      weight: isSelected ? 3 : 1,
+      opacity: isSelected ? .95 : .58,
+      dashArray: hasRows ? '' : '4 4',
+      fillColor: isSelected ? red : (ratio >= 15 ? red : ratio >= 8 ? orange : blue),
+      fillOpacity: isSelected ? .18 : (hasRows ? Math.min(.16, .035 + ratio / 120) : .018),
+      interactive: true
+    };
+    const tooltip = '<strong>' + esc(district.label) + '</strong><br>' + n(stat.rows) + ' Orte · ' + n(stat.banners) + ' Hinweise · ' + pct(ratio);
+    for (const polygon of district.polygons) {
+      const layer = L.polygon(polygon, style);
+      layer.bindTooltip(tooltip, { sticky: true, direction: 'top' });
+      layer.on('mouseover', () => layer.setStyle({ weight: Math.max(style.weight, 3), color: red, fillOpacity: Math.max(style.fillOpacity, .14) }));
+      layer.on('mouseout', () => layer.setStyle(style));
+      layer.on('click', () => {
+        els.bezirk.value = district.label;
+        renderReset();
+      });
+      layer.addTo(bezirkLayer);
+    }
+  }
+}
+function renderMap(rows, allFilteredRows) {
+  const mapped = rows.filter(hasCoords);
+  els.mapCount.textContent = n(mapped.length) + ' von ' + n(rows.length);
+  if (!mapConsentGranted && !placesMap) {
+    pendingMapRows = rows;
+    pendingMapAllRows = allFilteredRows || rows;
+    return;
+  }
+  if (typeof L === 'undefined' && !placesMap) {
+    startMapLoad(rows, allFilteredRows);
+    return;
+  }
+  if (!initMap()) return;
+  renderBezirkLayer(allFilteredRows || rows);
+  markerLayer.clearLayers();
+  if (state.mode === 'nearby') mapped.sort((a, b) => rowDistanceKm(a) - rowDistanceKm(b));
+  for (const row of mapped) {
+    const marker = L.circleMarker([row.lat, row.lng], { pane: 'placeMarkerPane', radius: row.hasBanner ? 7 : 5, color: '#fff', weight: 1.5, fillColor: markerColor(row), fillOpacity: .9 });
+    const distance = state.mode === 'nearby' ? ' · ' + distanceLabel(rowDistanceKm(row)) : '';
+    marker.bindTooltip(row.name + distance + (row.bezirkLabel ? ' · ' + row.bezirkLabel : '') + (row.hasBanner ? ' · ' + row.removedRange : ''), { direction: 'top' });
+    marker.on('click', () => {
+      activateMode(markerMode(row));
+      render();
+      requestAnimationFrame(() => focusEntry(row.id));
+    });
+    marker.addTo(markerLayer);
+  }
+  if (state.userLocation) {
+    L.circleMarker([state.userLocation.lat, state.userLocation.lng], { pane: 'placeMarkerPane', radius: 9, color: '#fff', weight: 2, fillColor: '#1f6f8b', fillOpacity: .95 }).bindTooltip('Dein Standort', { direction: 'top' }).addTo(markerLayer);
+  }
+  if (state.mode === 'nearby' && state.userLocation) {
+    const points = [[state.userLocation.lat, state.userLocation.lng], ...mapped.slice(0, 25).map(row => [row.lat, row.lng])];
+    if (points.length > 1) placesMap.fitBounds(L.latLngBounds(points).pad(0.18), { maxZoom: 15, animate: false });
+    else placesMap.setView([state.userLocation.lat, state.userLocation.lng], 14);
+  } else if (mapped.length) {
+    const bounds = L.latLngBounds(mapped.map(row => [row.lat, row.lng]));
+    placesMap.fitBounds(bounds.pad(0.12), { maxZoom: 14, animate: false });
+  } else {
+    const districtBounds = bezirkBounds(selectedBezirkLabel());
+    if (districtBounds) placesMap.fitBounds(districtBounds.pad(0.18), { maxZoom: 14, animate: false });
+    else placesMap.setView([49.4521, 11.0767], 12);
+  }
+}
+function renderBars(id, mode, rows, metric, label, color, maxValue) {
+  const root = document.getElementById(id);
+  const top = rows.slice(0, 8);
+  const max = maxValue ?? Math.max(1, ...top.map(metric));
+  root.innerHTML = top.map(row => '<a class="bar-row bar-link" href="#placesTable" data-mode="' + mode + '" data-entry-id="' + esc(row.id) + '"><div class="bar-name" title="' + esc(row.name) + '">' + esc(row.name) + '</div><div class="bar-value">' + label(row) + '</div><div class="track"><div class="fill ' + color + '" style="width:' + Math.max(2, Math.min(100, metric(row) / max * 100)) + '%"></div></div></a>').join('') || '<p>Keine Daten im Filter.</p>';
+}
+function renderDistribution(rows) {
+  const banners = bannerRows(rows);
+  const bins = ['über 250','201–250','151–200','101–150','51–100','21–50','11–20','6–10','2–5','1'];
+  const counts = bins.map(bin => ({ bin, count: banners.filter(row => row.removedRange === bin).length })).filter(item => item.count > 0);
+  const max = Math.max(1, ...counts.map(item => item.count));
+  document.getElementById('distribution').innerHTML = counts.map(item => '<div class="dist-row"><strong>' + esc(item.bin) + '</strong><div class="dist-track"><div class="dist-fill" style="width:' + (item.count / max * 100) + '%"></div></div><span>' + n(item.count) + '</span></div>').join('') || '<p>Keine Hinweise im Filter.</p>';
+}
+function renderRatioHistogram(rows) {
+  const root = document.getElementById('ratioHistogram');
+  if (!root) return;
+  const minReviews = 50;
+  const scoped = bannerRows(rows).filter(row => Number.isFinite(row.deletionRatioPct) && Number.isFinite(row.reviewCount) && row.reviewCount >= minReviews);
+  if (scoped.length === 0) {
+    root.innerHTML = '<p>Keine passenden Orte im Filter.</p>';
+    return;
+  }
+  const bins = [
+    { label: '< 1%', min: -Infinity, max: 1 },
+    { label: '1–2%', min: 1, max: 2 },
+    { label: '2–5%', min: 2, max: 5 },
+    { label: '5–10%', min: 5, max: 10 },
+    { label: '10–20%', min: 10, max: 20 },
+    { label: '> 20%', min: 20, max: Infinity }
+  ];
+  const counts = bins.map(bin => ({
+    label: bin.label,
+    count: scoped.filter(row => row.deletionRatioPct >= bin.min && row.deletionRatioPct < bin.max).length
+  }));
+  const max = Math.max(1, ...counts.map(item => item.count));
+  root.innerHTML = counts.map(item => '<div class="dist-row"><strong>' + esc(item.label) + '</strong><div class="dist-track"><div class="dist-fill" style="width:' + (item.count / max * 100) + '%"></div></div><span>' + n(item.count) + '</span></div>').join('') + '<p class="dist-note">' + n(scoped.length) + ' Orte in dieser Einordnung.</p>';
+}
+function renderBezirkSummary(rows) {
+  const groups = new Map();
+  for (const row of rows) {
+    const label = row.bezirkLabel || 'Ohne Bezirk';
+    if (!groups.has(label)) groups.set(label, { label, rows: 0, banners: 0, removed: 0 });
+    const group = groups.get(label);
+    group.rows += 1;
+    if (row.hasBanner) {
+      group.banners += 1;
+      group.removed += row.removedEstimate || 0;
+    }
+  }
+  const items = [...groups.values()].sort((a, b) => (a.label === 'Ohne Bezirk') - (b.label === 'Ohne Bezirk') || (b.banners / Math.max(b.rows, 1)) - (a.banners / Math.max(a.rows, 1)) || b.banners - a.banners || b.rows - a.rows).slice(0, 12);
+  document.getElementById('bezirkSummary').innerHTML = items.map(item => '<button type="button" class="bezirk-row" data-bezirk="' + esc(item.label) + '"><strong>' + esc(item.label) + '</strong><span>' + n(item.rows) + ' Orte</span><span>' + n(item.banners) + ' Hinweise</span><span>' + pct(item.banners / Math.max(item.rows, 1) * 100) + '</span></button>').join('') || '<p>Keine Bezirksdaten im Filter.</p>';
+}
+function renderParentSummary(rows) {
+  const groups = new Map();
+  for (const row of rows) {
+    const label = row.parentCategory || 'Sonstiges';
+    if (!groups.has(label)) groups.set(label, { label, rows: 0, banners: 0, removed: 0 });
+    const group = groups.get(label);
+    group.rows += 1;
+    if (row.hasBanner) {
+      group.banners += 1;
+      group.removed += row.removedEstimate || 0;
+    }
+  }
+  const items = [...groups.values()].sort((a, b) => (b.banners / Math.max(b.rows, 1)) - (a.banners / Math.max(a.rows, 1)) || b.banners - a.banners || b.rows - a.rows);
+  document.getElementById('parentSummary').innerHTML = items.map(item => '<div class="bezirk-row"><strong>' + esc(item.label) + '</strong><span>' + n(item.rows) + ' Orte</span><span>' + n(item.banners) + ' Hinweise</span><span>' + pct(item.banners / Math.max(item.rows, 1) * 100) + '</span></div>').join('') || '<p>Keine Kategorie-Daten im Filter.</p>';
+}
+function updatePanels(rows) {
+  const banners = bannerRows(rows);
+  renderBars('barsRemoved', 'removed', [...banners].sort((a,b) => b.removedEstimate - a.removedEstimate), row => row.removedEstimate, row => row.removedRange + ' · ' + n(row.removedEstimate), '', 300);
+  renderBars('barsRatio', 'ratio', [...banners].sort((a,b) => (b.deletionRatioPct ?? -1) - (a.deletionRatioPct ?? -1)), row => row.deletionRatioPct || 0, row => pct(row.deletionRatioPct), '', Math.max(10, ...banners.map(row => row.deletionRatioPct || 0)));
+  renderBars('barsWorst', 'worst', [...banners].filter(row => Number.isFinite(row.realRatingAdjusted)).sort((a,b) => a.realRatingAdjusted - b.realRatingAdjusted), row => 5 - row.realRatingAdjusted, row => rating(row.rating) + '★ → ' + rating(row.realRatingAdjusted, 2) + '★', 'orange', 4);
+  renderBars('barsClean', 'clean', [...cleanRankingRows(rows)].sort((a,b) => b.rating - a.rating || b.reviewCount - a.reviewCount), row => row.rating, row => rating(row.rating) + '★ · ' + n(row.reviewCount) + ' Rezensionen', 'green', 5);
+  renderDistribution(rows);
+  renderRatioHistogram(rows);
+}
+function renderTable(rows) {
+  const scoped = modeRows(rows);
+  const sorted = sortRows(scoped);
+  const visible = sorted.slice(0, tableLimit);
+  const clipped = visible.length < sorted.length;
+  const shownText = clipped ? ' · ' + n(visible.length) + ' angezeigt' : '';
+  lastSortedRows = sorted;
+  if (state.mode === 'nearby' && state.userLocation) {
+    const accuracy = Number.isFinite(state.userLocation.accuracy) ? ' · Standortgenauigkeit ca. ' + n(Math.round(state.userLocation.accuracy)) + ' m' : '';
+    const sortText = state.sortKey === 'distanceKm' ? ' · sortiert nach Entfernung' : '';
+    els.resultCount.textContent = n(sorted.length) + ' Orte mit Koordinaten im aktuellen Filter' + sortText + accuracy + shownText;
+  } else {
+    els.resultCount.textContent = n(sorted.length) + ' von ' + n(rows.length) + ' Orten im aktuellen Filter' + shownText;
+  }
+  els.tableTitle.textContent = titles[state.mode];
+  els.showMore.hidden = !clipped;
+  if (clipped) {
+    const next = Math.min(TABLE_PAGE_SIZE, sorted.length - visible.length);
+    els.showMore.textContent = 'Weitere ' + n(next) + ' Zeilen anzeigen (' + n(visible.length) + ' von ' + n(sorted.length) + ')';
+  }
+  els.tbody.innerHTML = visible.map((row, index) => {
+    const rank = index + 1;
+    const distance = state.mode === 'nearby' ? '<span class="entry-address">Entfernung: ' + esc(distanceLabel(rowDistanceKm(row))) + '</span>' : '';
+    const address = row.address ? '<span class="entry-address">' + esc(row.address) + '</span>' : '';
+    return '<tr data-entry-id="' + esc(row.id) + '"><td class="rank">' + rank + '</td><td class="name"><a href="' + esc(row.url) + '" target="_blank" rel="noopener noreferrer">' + esc(row.name) + '</a>' + distance + address + '</td><td>' + esc(row.bezirkLabel || '–') + '</td><td>' + esc(row.postcode) + '</td><td class="num">' + rating(row.rating) + '</td><td class="num">' + n(row.reviewCount) + '</td><td>' + (row.hasBanner ? '<span class="pill bad">Google-Hinweis</span>' : '<span class="pill">kein Hinweis</span>') + '</td><td class="num">' + (row.hasBanner ? esc(row.removedRange) : '–') + '</td><td class="num">' + (row.hasBanner ? rating(row.removedEstimate) : '–') + '</td><td class="num">' + pct(row.deletionRatioPct) + '</td><td class="num">' + rating(row.realRatingAdjusted, 2) + '</td><td>' + esc(readAtLabel(row.readAt)) + '</td><td>' + esc(row.category) + '</td></tr>';
+  }).join('');
+  document.querySelectorAll('th button[data-sort]').forEach(button => {
+    const active = button.dataset.sort === state.sortKey;
+    button.classList.toggle('active', active);
+    button.querySelector('.arrow').textContent = active ? (state.sortDir === 'asc' ? '▲' : '▼') : '';
+  });
+}
+function render() {
+  const rows = filtered();
+  updateKpis(rows);
+  updatePanels(rows);
+  renderBezirkSummary(rows);
+  renderParentSummary(rows);
+  updateSubChips(state.mode);
+  renderMap(modeRows(rows), rows);
+  renderTable(rows);
+  updateFilterToggle();
+}
+function activateMode(mode) {
+  resetTableLimit();
+  state.mode = mode;
+  [state.sortKey, state.sortDir] = defaultSortFor(mode);
+  if (mode !== 'nearby' && !els.nearbyStatus.classList.contains('error')) setNearbyStatus('');
+  document.querySelectorAll('.tab').forEach(tab => tab.classList.toggle('active', tab.dataset.mode === mode));
+}
+function focusEntry(entryId) {
+  let row = Array.from(els.tbody.rows).find(tr => tr.dataset.entryId === entryId);
+  if (!row) {
+    const index = lastSortedRows.findIndex(item => item.id === entryId);
+    if (index >= tableLimit) {
+      tableLimit = Math.ceil((index + 1) / TABLE_PAGE_SIZE) * TABLE_PAGE_SIZE;
+      renderTable(filtered());
+      row = Array.from(els.tbody.rows).find(tr => tr.dataset.entryId === entryId);
+    }
+  }
+  if (!row) return;
+  document.querySelectorAll('tbody tr.target-row').forEach(tr => tr.classList.remove('target-row'));
+  row.classList.add('target-row');
+  row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  window.setTimeout(() => row.classList.remove('target-row'), 2800);
+}
+document.querySelectorAll('.bars').forEach(root => root.addEventListener('click', event => {
+  const link = event.target.closest('.bar-link');
+  if (!link) return;
+  event.preventDefault();
+  activateMode(link.dataset.mode);
+  render();
+  requestAnimationFrame(() => focusEntry(link.dataset.entryId));
+}));
+document.getElementById('bezirkSummary').addEventListener('click', event => {
+  const row = event.target.closest('.bezirk-row');
+  if (!row) return;
+  els.bezirk.value = row.dataset.bezirk === 'Ohne Bezirk' ? '__none__' : row.dataset.bezirk;
+  renderReset();
+  document.getElementById('placesTable').scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+document.querySelectorAll('.tab').forEach(button => button.addEventListener('click', () => {
+  if (button.dataset.mode === 'nearby' && !state.userLocation) {
+    requestUserLocation();
+    return;
+  }
+  if (button.dataset.mode === 'nearby') setNearbyStatus(nearbySuccessStatus());
+  activateMode(button.dataset.mode);
+  render();
+}));
+document.querySelectorAll('th button[data-sort]').forEach(button => button.addEventListener('click', () => {
+  const next = button.dataset.sort;
+  if (next === state.sortKey) state.sortDir = state.sortDir === 'asc' ? 'desc' : 'asc';
+  else { state.sortKey = next; state.sortDir = ['name','postcode','bezirkLabel','category','rank'].includes(next) ? 'asc' : 'desc'; }
+  resetTableLimit();
+  renderTable(filtered());
+}));
+els.showMore.addEventListener('click', () => {
+  tableLimit += TABLE_PAGE_SIZE;
+  renderTable(filtered());
+});
+els.themeToggle.addEventListener('click', () => setTheme(currentTheme() === 'dark' ? 'light' : 'dark'));
+if (prefersDark.addEventListener) {
+  prefersDark.addEventListener('change', () => {
+    if (storedTheme() || document.documentElement.dataset.theme) return;
+    updateThemeToggle();
+    updateMapTheme();
+    if (placesMap) render();
+  });
+}
+els.filterToggle.addEventListener('click', () => {
+  els.controls.classList.toggle('is-collapsed');
+  updateFilterToggle();
+});
+const renderDebounced = debounce(renderReset, 140);
+[els.search, els.minReviews].forEach(input => input.addEventListener('input', renderDebounced));
+[els.postcode, els.bezirk, els.banner, els.range, els.category].forEach(input => input.addEventListener('change', renderReset));
+els.reset.addEventListener('click', () => {
+  els.search.value = ''; els.postcode.value = ''; els.bezirk.value = ''; els.banner.value = 'all'; els.range.value = ''; els.category.value = ''; els.minReviews.value = 0;
+  activateMode('ratio');
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  render();
+});
+
+document.querySelector('.chips').addEventListener('click', event => {
+  const chip = event.target.closest('.chip');
+  if (!chip) return;
+  const action = chip.dataset.chip;
+  const isActive = chip.classList.contains('active');
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  els.search.value = ''; els.postcode.value = ''; els.bezirk.value = ''; els.banner.value = 'all'; els.range.value = ''; els.category.value = ''; els.minReviews.value = 0;
+  if (!isActive) {
+    chip.classList.add('active');
+    switch (action) {
+      case 'banner': els.banner.value = 'banner'; break;
+      case 'gastro': els.category.value = 'parent:Gastronomie'; break;
+      case 'nachtleben': els.category.value = 'parent:Nachtleben'; break;
+      case 'beauty': els.category.value = 'parent:Beauty & Wellness'; break;
+      case 'hotels': els.category.value = 'parent:Beherbergung'; break;
+      case 'gesundheit': els.category.value = 'parent:Gesundheit'; break;
+      case 'altstadt': els.bezirk.value = 'Altstadt, St. Lorenz'; break;
+    }
+  }
+  renderReset();
+});
+
+function updateSubChips(mode) {
+  const configs = {
+    all: [
+      { label: '🔴 Mit Hinweis', test: () => els.banner.value === 'banner', apply: v => { els.banner.value = v ? 'banner' : 'all'; } },
+      { label: '🗺️ Altstadt', test: () => els.bezirk.value === 'Altstadt, St. Lorenz', apply: v => { els.bezirk.value = v ? 'Altstadt, St. Lorenz' : ''; } },
+    ],
+    ratio: [
+      { label: 'Min. 50 Rez.', test: () => Number(els.minReviews.value) === 50, apply: v => { els.minReviews.value = v ? 50 : 0; } },
+      { label: 'Min. 100 Rez.', test: () => Number(els.minReviews.value) === 100, apply: v => { els.minReviews.value = v ? 100 : 0; } },
+      { label: 'Min. 200 Rez.', test: () => Number(els.minReviews.value) === 200, apply: v => { els.minReviews.value = v ? 200 : 0; } },
+      { label: '🍽️ Nur Gastro', test: () => els.category.value === 'parent:Gastronomie', apply: v => { els.category.value = v ? 'parent:Gastronomie' : ''; } },
+      { label: '🎉 Nur Nachtleben', test: () => els.category.value === 'parent:Nachtleben', apply: v => { els.category.value = v ? 'parent:Nachtleben' : ''; } },
+      { label: '💇 Nur Beauty', test: () => els.category.value === 'parent:Beauty & Wellness', apply: v => { els.category.value = v ? 'parent:Beauty & Wellness' : ''; } },
+    ],
+    removed: [
+      { label: 'Min. 50 Rez.', test: () => Number(els.minReviews.value) === 50, apply: v => { els.minReviews.value = v ? 50 : 0; } },
+      { label: 'Min. 100 Rez.', test: () => Number(els.minReviews.value) === 100, apply: v => { els.minReviews.value = v ? 100 : 0; } },
+      { label: 'Min. 200 Rez.', test: () => Number(els.minReviews.value) === 200, apply: v => { els.minReviews.value = v ? 200 : 0; } },
+      { label: '🍽️ Nur Gastro', test: () => els.category.value === 'parent:Gastronomie', apply: v => { els.category.value = v ? 'parent:Gastronomie' : ''; } },
+      { label: '🏨 Nur Hotels', test: () => els.category.value === 'parent:Beherbergung', apply: v => { els.category.value = v ? 'parent:Beherbergung' : ''; } },
+      { label: '> 50 Näherungswert', test: () => els.range.value === '51–100', apply: v => { els.range.value = v ? '51–100' : ''; } },
+    ],
+    worst: [
+      { label: 'Min. 50 Rez.', test: () => Number(els.minReviews.value) === 50, apply: v => { els.minReviews.value = v ? 50 : 0; } },
+      { label: 'Min. 100 Rez.', test: () => Number(els.minReviews.value) === 100, apply: v => { els.minReviews.value = v ? 100 : 0; } },
+      { label: 'Min. 200 Rez.', test: () => Number(els.minReviews.value) === 200, apply: v => { els.minReviews.value = v ? 200 : 0; } },
+      { label: '🍽️ Nur Gastro', test: () => els.category.value === 'parent:Gastronomie', apply: v => { els.category.value = v ? 'parent:Gastronomie' : ''; } },
+    ],
+    clean: [
+      { label: 'Min. 200 Rez.', test: () => Number(els.minReviews.value) === 200, apply: v => { els.minReviews.value = v ? 200 : 0; } },
+      { label: 'Min. 500 Rez.', test: () => Number(els.minReviews.value) === 500, apply: v => { els.minReviews.value = v ? 500 : 0; } },
+      { label: '🍽️ Nur Gastro', test: () => els.category.value === 'parent:Gastronomie', apply: v => { els.category.value = v ? 'parent:Gastronomie' : ''; } },
+      { label: '🏨 Nur Hotels', test: () => els.category.value === 'parent:Beherbergung', apply: v => { els.category.value = v ? 'parent:Beherbergung' : ''; } },
+      { label: '🗺️ Altstadt', test: () => els.bezirk.value === 'Altstadt, St. Lorenz', apply: v => { els.bezirk.value = v ? 'Altstadt, St. Lorenz' : ''; } },
+    ],
+    nearby: [
+      { label: '🔴 Nur mit Hinweis', test: () => els.banner.value === 'banner', apply: v => { els.banner.value = v ? 'banner' : 'all'; } },
+      { label: '🍽️ Nur Gastro', test: () => els.category.value === 'parent:Gastronomie', apply: v => { els.category.value = v ? 'parent:Gastronomie' : ''; } },
+    ],
+  };
+  const chips = configs[mode] || [];
+  const root = document.getElementById('subChips');
+  if (chips.length === 0) { root.innerHTML = ''; return; }
+  root.innerHTML = chips.map((c, i) => '<button type="button" class="sub-chip' + (c.test() ? ' active' : '') + '" data-idx="' + i + '">' + c.label + '</button>').join('');
+  root.querySelectorAll('.sub-chip').forEach(btn => btn.addEventListener('click', () => {
+    const idx = Number(btn.dataset.idx);
+    const chip = chips[idx];
+    chip.apply(!chip.test());
+    renderReset();
+  }));
+}
+
+updateThemeToggle();
+setupMapConsent();
+render();
+
+  </script>
+</body>
+</html>

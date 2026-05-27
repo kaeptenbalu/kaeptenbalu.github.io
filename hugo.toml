@@ -32,14 +32,19 @@ theme = 'maverick'
     weight = 3
 
   [[menu.main]]
+    name = "Karlsruhe Trust Index"
+    url = "/karlsruhetrustindex/"
+    weight = 4
+
+  [[menu.main]]
     name = "Data Sharing"
     url = "/sharing/"
-    weight = 4
+    weight = 5
 
   [[menu.main]]
     name = "About"
     url = "/about/"
-    weight = 5
+    weight = 6
 
 [params]
   items = 10
