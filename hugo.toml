@@ -37,14 +37,9 @@ theme = 'maverick'
     weight = 4
 
   [[menu.main]]
-    name = "Data Sharing"
-    url = "/sharing/"
-    weight = 5
-
-  [[menu.main]]
     name = "About"
     url = "/about/"
-    weight = 6
+    weight = 5
 
 [params]
   items = 10
