@@ -156,30 +156,6 @@
     .filter-btn:hover { border-color: #000; }
     .filter-btn.active { background: #000; color: #fff; border-color: #000; }
 
-    /* Stats Display */
-    .stats-display {
-      margin-top: 24px;
-      padding: 16px;
-      background: #f9f9f9;
-      border-radius: 8px;
-    }
-
-    .stats-display h3 {
-      font-size: 0.9rem;
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-
-    .stat-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 6px 0;
-      font-size: 0.85rem;
-      border-bottom: 1px solid #eee;
-    }
-
-    .stat-row:last-child { border-bottom: none; }
-    .stat-value { font-weight: 600; }
 
     /* Index Legend */
     .index-legend {
@@ -416,21 +392,6 @@
         </div>
       </div>
 
-      <div class="stats-display">
-        <h3>Statistiken</h3>
-        <div class="stat-row">
-          <span>Angezeigte Orte:</span>
-          <span class="stat-value" id="statCount">-</span>
-        </div>
-        <div class="stat-row">
-          <span>Gesamte Entfernungen:</span>
-          <span class="stat-value" id="statRemovals">-</span>
-        </div>
-        <div class="stat-row">
-          <span>Durchschn. Quote:</span>
-          <span class="stat-value" id="statAvgRatio">-</span>
-        </div>
-      </div>
     </aside>
   </div>
 
@@ -563,7 +524,6 @@
       filteredVenues.sort((a, b) => b.removedEstimate - a.removedEstimate);
 
       updateMarkers();
-      updateStats();
     }
 
     // Update map markers
@@ -628,18 +588,6 @@
       `;
     }
 
-    // Update statistics display
-    function updateStats() {
-      const count = filteredVenues.length;
-      const totalRemovals = filteredVenues.reduce((sum, v) => sum + v.removedEstimate, 0);
-      const avgRatio = count > 0
-        ? filteredVenues.reduce((sum, v) => sum + v.removalRatio, 0) / count
-        : 0;
-
-      document.getElementById('statCount').textContent = count;
-      document.getElementById('statRemovals').textContent = Math.round(totalRemovals).toLocaleString('de-DE');
-      document.getElementById('statAvgRatio').textContent = avgRatio.toFixed(1) + '%';
-    }
 
 
     // Escape HTML
