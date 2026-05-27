@@ -85,6 +85,23 @@
     color: var(--text-muted);
 }
 
+/* Dark Mode Burger Menu */
+[data-theme="dark"] .burger span {
+    background: #fff;
+}
+
+[data-theme="dark"] .nav-menu {
+    background: var(--bg);
+}
+
+[data-theme="dark"] .nav-menu ul li {
+    border-bottom-color: var(--border);
+}
+
+[data-theme="dark"] header a {
+    color: var(--text);
+}
+
 [data-theme="dark"] th {
     background-color: var(--surface);
 }
