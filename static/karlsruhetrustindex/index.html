@@ -6,7 +6,7 @@
   <title>Karlsruhe Google-Maps-Bewertungen: Dashboard zu Google-Hinweisen</title>
   <meta name="description" content="Interaktives Karlsruhe-Dashboard zu öffentlich sichtbaren Google-Maps-Hinweisen auf entfernte Bewertungen: Spannen, Näherungswerte, Karte und Daten-Explorer.">
   <meta name="robots" content="index,follow,max-image-preview:large">
-  <meta name="author" content="Manuel Boll">
+  <meta name="author" content="Patrick Wozniak">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0e0c0b" media="(prefers-color-scheme: dark)">
   <link rel="canonical" href="https://www.mboll.eu/karlsruhetrustindex/">
@@ -22,7 +22,7 @@
   <meta property="og:image:width" content="1800">
   <meta property="og:image:height" content="2500">
   <meta property="og:image:alt" content="Diagramm zur Auswertung sichtbarer Google-Maps-Hinweise in Karlsruhe">
-  <meta property="og:updated_time" content="2026-05-27T10:00:00Z">
+  <meta property="og:updated_time" content="2026-05-27T08:44:13Z">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Karlsruhe Google-Maps-Bewertungen: Dashboard zu Google-Hinweisen">
   <meta name="twitter:description" content="Interaktives Karlsruhe-Dashboard zu öffentlich sichtbaren Google-Maps-Hinweisen auf entfernte Bewertungen: Spannen, Näherungswerte, Karte und Daten-Explorer.">
@@ -39,8 +39,8 @@
         "name": "Karlsruhe Maps Review Removals",
         "publisher": {
           "@type": "Person",
-          "name": "Manuel Boll",
-          "url": "https://mboll.eu"
+          "name": "Patrick Wozniak",
+          "url": "https://patwoz.dev"
         },
         "url": "https://www.mboll.eu/karlsruhetrustindex/"
       },
@@ -68,8 +68,8 @@
         "@type": "Dataset",
         "creator": {
           "@type": "Person",
-          "name": "Manuel Boll",
-          "url": "https://mboll.eu"
+          "name": "Patrick Wozniak",
+          "url": "https://patwoz.dev"
         },
         "dateModified": "2026-05-27",
         "description": "Interaktives Karlsruhe-Dashboard zu öffentlich sichtbaren Google-Maps-Hinweisen auf entfernte Bewertungen: Spannen, Näherungswerte, Karte und Daten-Explorer.",
@@ -82,7 +82,7 @@
         ],
         "measurementTechnique": "Scrape öffentlich sichtbarer Google-Maps-Ortsseiten",
         "name": "Karlsruhe Google-Maps-Bewertungen mit sichtbaren Google-Hinweisen",
-        "size": "12 Orte, 8 sichtbare Google-Hinweise",
+        "size": "30 Orte, 5 sichtbare Google-Hinweise",
         "spatialCoverage": {
           "@type": "City",
           "name": "Karlsruhe"
@@ -464,11 +464,11 @@
     <section class="controls is-collapsed" id="dashboardFilterControls" aria-label="Dashboard-Filter">
       <button class="filter-toggle" id="filterToggle" type="button" aria-expanded="false" aria-controls="dashboardFilterControls"><span><strong>Filter</strong><span class="filter-summary" id="filterSummary">Keine aktiven Filter</span></span><span class="filter-toggle-icon" aria-hidden="true">▾</span></button>
       <div class="control search"><label for="searchInput">Suche</label><input id="searchInput" type="search" placeholder="Name, PLZ, Kategorie, Hinweisbereich …" autocomplete="off"></div>
-      <div class="control"><label for="postcodeFilter">PLZ</label><select id="postcodeFilter"><option value="">Alle PLZ</option><option value="76131">76131</option><option value="76133">76133</option><option value="76137">76137</option><option value="76139">76139</option><option value="76149">76149</option><option value="76185">76185</option><option value="76227">76227</option></select></div>
+      <div class="control"><label for="postcodeFilter">PLZ</label><select id="postcodeFilter"><option value="">Alle PLZ</option><option value="76131">76131</option></select></div>
       <div class="control"><label for="bezirkFilter">Bezirk</label><select id="bezirkFilter"><option value="">Alle Bezirke</option><option value="__none__">Ohne Bezirk</option></select></div>
       <div class="control"><label for="bannerFilter">Hinweis</label><select id="bannerFilter"><option value="all">Alle</option><option value="banner">Mit Hinweis</option><option value="clean">Ohne Hinweis</option></select></div>
-      <div class="control"><label for="rangeFilter">Spanne</label><select id="rangeFilter"><option value="">Alle Bereiche</option><option value="51–200">51–200</option><option value="21–50">21–50</option><option value="11–20">11–20</option><option value="1–10">1–10</option></select></div>
-      <div class="control"><label for="categoryFilter">Kategorie</label><select id="categoryFilter"><option value="">Alle Kategorien</option><option value="parent:Gastronomie">Gastronomie</option><option value="Restaurant">&nbsp;&nbsp;Restaurant</option><option value="Café">&nbsp;&nbsp;Café</option><option value="Pizzeria">&nbsp;&nbsp;Pizzeria</option><option value="Döner">&nbsp;&nbsp;Döner</option><option value="Bäckerei">&nbsp;&nbsp;Bäckerei</option><option value="Sushi">&nbsp;&nbsp;Sushi</option><option value="parent:Beauty &amp; Wellness">Beauty &amp; Wellness</option><option value="Friseur">&nbsp;&nbsp;Friseur</option><option value="Fitnessstudio">&nbsp;&nbsp;Fitnessstudio</option><option value="parent:Nachtleben">Nachtleben</option><option value="Bar">&nbsp;&nbsp;Bar</option><option value="Club">&nbsp;&nbsp;Club</option><option value="parent:Beherbergung">Beherbergung</option><option value="Hotel">&nbsp;&nbsp;Hotel</option><option value="parent:Gesundheit">Gesundheit</option><option value="Apotheke">&nbsp;&nbsp;Apotheke</option></select></div>
+      <div class="control"><label for="rangeFilter">Spanne</label><select id="rangeFilter"><option value="">Alle Bereiche</option><option value="151–200">151–200</option><option value="51–100">51–100</option><option value="1">1</option></select></div>
+      <div class="control"><label for="categoryFilter">Kategorie</label><select id="categoryFilter"><option value="">Alle Kategorien</option><option value="parent:Gastronomie">Gastronomie</option><option value="Café / Konditorei">&nbsp;&nbsp;Café / Konditorei</option><option value="Restaurant">&nbsp;&nbsp;Restaurant</option><option value="Asiatisch">&nbsp;&nbsp;Asiatisch</option><option value="Imbiss">&nbsp;&nbsp;Imbiss</option><option value="Sushi">&nbsp;&nbsp;Sushi</option></select></div>
       <div class="control"><label for="minReviews">Min. Rezensionen</label><input id="minReviews" type="number" min="0" step="1" value="0"></div>
       <button class="reset" id="resetFilters" type="button">Reset</button>
     </section>
@@ -485,13 +485,13 @@
       <h2 id="data-overview-title">Datenstand: Google-Maps-Bewertungen und Google-Hinweise in Karlsruhe</h2>
       <p>Dieses Dashboard macht öffentlich sichtbare Hinweise auf wegen Diffamierungsbeschwerden entfernte Google-Maps-Bewertungen in Karlsruhe durchsuchbar. Die Karte, Filter und Ranglisten zeigen sichtbare Google-Hinweise, öffentlich angezeigte Spannen, Näherungswerte, Hinweis-Anteile und Worst-Case-Ratings je Ort.</p>
       <ul class="seo-facts">
-        <li><strong>12</strong> erfasste Orte</li>
-        <li><strong>8</strong> mit sichtbarem Google-Hinweis</li>
-        <li><strong>398</strong> Näherungswert aus Spannen</li>
-        <li><strong>4</strong> ohne sichtbaren Hinweis</li>
+        <li><strong>30</strong> erfasste Orte</li>
+        <li><strong>5</strong> mit sichtbarem Google-Hinweis</li>
+        <li><strong>330</strong> Näherungswert aus Spannen</li>
+        <li><strong>25</strong> ohne sichtbaren Hinweis</li>
       </ul>
       <p class="seo-meta">Datenstand: 27.05.2026. Kein sichtbarer Hinweis bedeutet nur, dass beim Abruf kein passender Hinweis sichtbar war.</p>
-<div class="seo-top"><h3>Kurzüberblick: Orte mit den höchsten Hinweisspannen</h3><ol><li><a href="https://maps.google.com/?cid=demo008" target="_blank" rel="noopener noreferrer nofollow">Demo Döner Nordstadt</a> <span class="seo-meta">Spanne 51–200 · PLZ 76133 · Näherungswert ca. 126</span></li><li><a href="https://maps.google.com/?cid=demo004" target="_blank" rel="noopener noreferrer nofollow">Demo Hotel Durlach</a> <span class="seo-meta">Spanne 51–200 · PLZ 76227 · Näherungswert ca. 126</span></li><li><a href="https://maps.google.com/?cid=demo009" target="_blank" rel="noopener noreferrer nofollow">Demo Club Innenstadt</a> <span class="seo-meta">Spanne 21–50 · PLZ 76133 · Näherungswert ca. 36</span></li><li><a href="https://maps.google.com/?cid=demo007" target="_blank" rel="noopener noreferrer nofollow">Demo Fitnessstudio Oststadt</a> <span class="seo-meta">Spanne 21–50 · PLZ 76131 · Näherungswert ca. 36</span></li><li><a href="https://maps.google.com/?cid=demo001" target="_blank" rel="noopener noreferrer nofollow">Demo Restaurant Innenstadt</a> <span class="seo-meta">Spanne 21–50 · PLZ 76133 · Näherungswert ca. 36</span></li><li><a href="https://maps.google.com/?cid=demo003" target="_blank" rel="noopener noreferrer nofollow">Demo Bar Weststadt</a> <span class="seo-meta">Spanne 11–20 · PLZ 76133 · Näherungswert ca. 16</span></li><li><a href="https://maps.google.com/?cid=demo012" target="_blank" rel="noopener noreferrer nofollow">Demo Sushi Südweststadt</a> <span class="seo-meta">Spanne 11–20 · PLZ 76137 · Näherungswert ca. 16</span></li><li><a href="https://maps.google.com/?cid=demo005" target="_blank" rel="noopener noreferrer nofollow">Demo Pizzeria Südstadt</a> <span class="seo-meta">Spanne 1–10 · PLZ 76137 · Näherungswert ca. 6</span></li></ol></div>
+<div class="seo-top"><h3>Kurzüberblick: Orte mit den höchsten Hinweisspannen</h3><ol><li><a href="https://www.google.com/maps/place/Kani+Restaurant/data=!4m7!3m6!1s0x479707d21a35f301:0xb3a8efac94e3d831!8m2!3d49.00964!4d8.41061!16s%2Fg%2F11q88w0y__!19sChIJAfM1GtIHl0cRMdjjlKzvqLM?authuser=0&amp;hl=de&amp;rclk=1" target="_blank" rel="noopener noreferrer nofollow">Kani Restaurant</a> <span class="seo-meta">Spanne 151–200 · PLZ 76131 · Näherungswert ca. 176</span></li><li><a href="https://www.google.com/maps/place/Erste+Fracht+Braugasthaus/data=!4m7!3m6!1s0x4797066bde0a1b8b:0x3202fdb2a041ca52!8m2!3d48.9948422!4d8.4002253!16s%2Fg%2F11gbn792zp!19sChIJixsK3msGl0cRUspBoLL9AjI?authuser=0&amp;hl=de&amp;rclk=1" target="_blank" rel="noopener noreferrer nofollow">Erste Fracht Braugasthaus</a> <span class="seo-meta">Spanne 51–100 · PLZ 76131 · Näherungswert ca. 76</span></li><li><a href="https://www.google.com/maps/place/Restaurant+Terra+Mare/data=!4m7!3m6!1s0x479706436267a229:0xfe6cb8212d314d78!8m2!3d49.0038922!4d8.3983323!16s%2Fg%2F11bbwyty_0!19sChIJKaJnYkMGl0cReE0xLSG4bP4?authuser=0&amp;hl=de&amp;rclk=1" target="_blank" rel="noopener noreferrer nofollow">Restaurant Terra Mare</a> <span class="seo-meta">Spanne 51–100 · PLZ 76131 · Näherungswert ca. 76</span></li><li><a href="https://www.google.com/maps/place/Carls+Wirtshaus+Karlsruhe/data=!4m7!3m6!1s0x47970626339223a3:0x9711828a33c5c6bb!8m2!3d49.0055065!4d8.4315888!16s%2Fg%2F11bvv4_h5h!19sChIJoyOSMyYGl0cRu8bFM4qCEZc?authuser=0&amp;hl=de&amp;rclk=1" target="_blank" rel="noopener noreferrer nofollow">Carls Wirtshaus Karlsruhe</a> <span class="seo-meta">Spanne 1 · PLZ 76131 · Näherungswert ca. 1</span></li><li><a href="https://www.google.com/maps/place/Restaurant+Stilbruch/data=!4m7!3m6!1s0x479707ac1ed58a1d:0xd15dce1ea7fb92b9!8m2!3d49.0065359!4d8.3815609!16s%2Fg%2F11jbc7qy0g!19sChIJHYrVHqwHl0cRuZL7px7OXdE?authuser=0&amp;hl=de&amp;rclk=1" target="_blank" rel="noopener noreferrer nofollow">Restaurant Stilbruch</a> <span class="seo-meta">Spanne 1 · PLZ 76131 · Näherungswert ca. 1</span></li></ol></div>
     </section>
 
     <section class="grid panel-grid" aria-label="Top-Rankings">
@@ -566,16 +566,16 @@
     </section>
 
     <footer>
-      <div>Journalistische Recherche-Momentaufnahme; keine Rezensionstexte und keine Rohdaten-CSV in dieser Veröffentlichung. Dashboard basiert auf der MIT-lizenzierten Vorlage von Manuel Boll.</div>
+      <div>Journalistische Recherche-Momentaufnahme; keine Rezensionstexte und keine Rohdaten-CSV in dieser Veröffentlichung. Dashboard basiert auf der MIT-lizenzierten Vorlage von Patrick Wozniak.</div>
       <div>Quelle: Google Maps, öffentlich sichtbare Hinweise. „Kein Hinweis“ heißt nur: im Abruf war kein passender Hinweis sichtbar. Datenabruf: 27.05.2026.</div>
 
       <div class="footer-privacy"><a href="methodik.html">Methodik</a> · <a href="korrektur.html">Korrektur melden</a> · <a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></div>
-      <div class="footer-credit">© 2026 Manuel Boll · <a href="https://mboll.eu" target="_blank" rel="noopener noreferrer">mboll.eu</a></div>
+      <div class="footer-credit">© 2026 Patrick Wozniak · <a href="https://patwoz.dev" target="_blank" rel="noopener noreferrer">patwoz.dev</a></div>
     </footer>
   </main>
 
   <script id="dashboardConfig" type="application/json">{"city":"Karlsruhe"}</script>
-  <script id="placesData" type="application/json">{"d":[["76133","76227","76137","76185","76131","76149","76139"],[""],["Restaurant","Café","Bar","Hotel","Pizzeria","Friseur","Fitnessstudio","Döner","Club","Bäckerei","Apotheke","Sushi"],["Gastronomie","Nachtleben","Beherbergung","Beauty \u0026 Wellness","Gesundheit"],["21–50","11–20","51–200","1–10"]],"r":[["ChIJ_demo_ka_001","Demo Restaurant Innenstadt",0,940,-259560,0,4.2,450,0,0,"Kaiserstraße 100",29664600,0,35.5,8.5,3.8],["ChIJ_demo_ka_002","Demo Café Marktplatz",0,900,-259600,0,4.5,280,1,0,"Marktplatz 5",29664600],["ChIJ_demo_ka_003","Demo Bar Weststadt",0,550,-260800,0,4,180,2,1,"Sophienstraße 42",29664600,1,15.5,7.8,3.6],["ChIJ_demo_ka_004","Demo Hotel Durlach",1,100,-252900,0,4.3,520,3,2,"Pfinztalstraße 80",29664600,2,125.5,19.4,3.2],["ChIJ_demo_ka_005","Demo Pizzeria Südstadt",2,-200,-259800,0,4.1,320,4,0,"Rüppurrer Straße 15",29664600,3,5.5,2.5,4],["ChIJ_demo_ka_006","Demo Friseur Mühlburg",3,1200,-263200,0,4.6,150,5,3,"Rheinstraße 25",29664600],["ChIJ_demo_ka_007","Demo Fitnessstudio Oststadt",4,1100,-258200,0,3.9,280,6,3,"Haid-und-Neu-Straße 12",29664600,0,35.5,11.2,3.4],["ChIJ_demo_ka_008","Demo Döner Nordstadt",0,1800,-260200,0,4.4,890,7,0,"Erzbergerstraße 55",29664600,2,125.5,12.3,3.9],["ChIJ_demo_ka_009","Demo Club Innenstadt",0,880,-259450,0,3.8,420,8,1,"Kreuzstraße 8",29664600,0,35.5,7.7,3.5],["ChIJ_demo_ka_010","Demo Bäckerei Neureut",5,3500,-262800,0,4.7,210,9,0,"Neureuter Hauptstraße 120",29664600],["ChIJ_demo_ka_011","Demo Apotheke Waldstadt",6,2200,-256800,0,4.5,95,10,4,"Königsberger Straße 45",29664600],["ChIJ_demo_ka_012","Demo Sushi Südweststadt",2,200,-261200,0,4.3,380,11,0,"Karlstraße 88",29664600,1,15.5,4.1,4.1]]}</script>
+  <script id="placesData" type="application/json">{"d":[["76131"],[""],["Café / Konditorei","Restaurant","Asiatisch","Imbiss","Sushi"],["Gastronomie"],["1","51–100","151–200"]],"r":[["9dd0878e02ca9182","Caffè Bar TILU",0,947,-258197,0,5,44,0,0,"",29664522],["b91a22def9783dc2","Café Bertis",0,941,-257737,0,4.7,306,0,0,"",29664522],["9e48d7618e3d00e","Café Easy",0,86,-259408,0,4.8,99,0,0,"",29664523],["7fc5c5c47b0fb95d","Café Wohnzimmer",0,873,-259114,0,4.7,354,0,0,"",29664523],["d5d6ac9a7ca71901","Cantina Majolika",0,1913,-259867,0,4.6,605,1,0,"",29664521],["9711828a33c5c6bb","Carls Wirtshaus Karlsruhe",0,551,-256841,0,4.4,2314,1,0,"",29664520,0,1,0.04,4.399],["3202fdb2a041ca52","Erste Fracht Braugasthaus",0,-516,-259977,0,4.5,3110,1,0,"",29664520,1,75.5,2.37,4.417],["688491f9c031810f","Jon Café",0,1027,-257413,0,4.9,121,0,0,"",29664522],["e28ea281c38c8336","Kaisergarten",0,1039,-261878,0,4.4,1555,1,0,"",29664520],["b3a8efac94e3d831","Kani Restaurant",0,964,-258939,0,4.4,337,1,0,"",29664519,2,175.5,34.24,3.236],["c7091048b5e5fc1e","Lehners Wirtshaus Karlsruhe",0,906,-260476,0,4.5,3640,1,0,"",29664521],["c2091db121f98588","Little Base",0,788,-257878,0,4.5,225,0,0,"",29664523],["fff4ba5e8c675427","MaiGarden Karlsruhe",0,910,-260103,0,4.8,2042,2,0,"",29664518],["845ac7c33ca2802d","Mauritius Restaurant Karlsruhe",0,1085,-259709,0,4.4,1908,1,0,"",29664521],["a4e696de41c5b2fe","Omonia",0,1068,-260356,0,4.5,1244,1,0,"",29664519],["33da979a9d0256b","PURiNO Karlsruhe",0,344,-257361,0,4.1,4757,1,0,"",29664519],["47f6e519d0d13a34","Pforzheimer Kaffeerösterei Schwarzmeier e.K.",0,-10403,-239724,0,4.6,24,0,0,"",29664522],["7fee656e86382ea1","Plaza Kitchen Karlsruhe",0,534,-258983,0,5,2,1,0,"",29664520],["b0d7f455f9f32807","Restaurant Casa do José",0,581,-259310,0,4.6,871,1,0,"",29664520],["204351bf49575b6d","Restaurant DJK-Ost",0,2575,-258698,0,4.6,26,3,0,"",29664521],["d15dce1ea7fb92b9","Restaurant Stilbruch",0,654,-261844,0,4.8,183,1,0,"",29664519,0,1,0.54,4.779],["fe6cb8212d314d78","Restaurant Terra Mare",0,389,-260167,0,4.8,936,1,0,"",29664518,1,75.5,7.46,4.516],["8fa42dd9074faec8","Soki Garden",0,1064,-260232,0,4.4,2515,2,0,"",29664521],["7f135635d37b1e0f","TA Izakaya Restaurant",0,959,-259459,0,4.6,971,4,0,"",29664518],["2aeb8c18218d813a","VietAroma Restaurant",0,764,-258104,0,4.7,739,2,0,"",29664518],["7bfdd24b73da3daf","Werkbank",0,1008,-257170,0,4.6,530,1,0,"",29664522],["94f3476f9086bc13","drei\u0026zwanzig",0,829,-260363,0,4.8,489,0,0,"",29664523],["5c7f9e2f85c9fcf0","eat and greet im alten Schlachthof",0,611,-256899,0,4.4,239,1,0,"",29664519],["c4253d1944c6b352","iaro Ost",0,1098,-257643,0,4.4,203,0,0,"",29664524],["7731b38628f05663","tostino",0,440,-257028,0,4.7,579,0,0,"",29664524]]}</script>
   <script id="bezirkData" type="application/json">[]</script>
   <script>
 const COORD_SCALE = 100000;
