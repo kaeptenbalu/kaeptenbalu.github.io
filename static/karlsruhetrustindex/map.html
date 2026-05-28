@@ -171,10 +171,33 @@
       z-index: 1000;
     }
 
+    .index-legend.collapsed .legend-content {
+      display: none;
+    }
+
     .index-legend h4 {
       font-size: 0.8rem;
       margin-bottom: 8px;
       font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .index-legend h4::after {
+      content: "▼";
+      font-size: 0.6rem;
+      transition: transform 0.2s;
+    }
+
+    .index-legend.collapsed h4 {
+      margin-bottom: 0;
+    }
+
+    .index-legend.collapsed h4::after {
+      transform: rotate(-90deg);
     }
 
     .legend-item {
@@ -369,22 +392,24 @@
     <div class="map-area">
       <div id="map"></div>
 
-      <div class="index-legend">
-        <h4>Anzahl der Entfernungen</h4>
-        <div class="legend-item"><span class="legend-dot dot-1"></span> 1</div>
-        <div class="legend-item"><span class="legend-dot dot-2-5"></span> 2–5</div>
-        <div class="legend-item"><span class="legend-dot dot-6-10"></span> 6–10</div>
-        <div class="legend-item"><span class="legend-dot dot-11-20"></span> 11–20</div>
-        <div class="legend-item"><span class="legend-dot dot-21-50"></span> 21–50</div>
-        <div class="legend-item"><span class="legend-dot dot-51-100"></span> 51–100</div>
-        <div class="legend-item"><span class="legend-dot dot-101-150"></span> 101–150</div>
-        <div class="legend-item"><span class="legend-dot dot-151-200"></span> 151–200</div>
-        <div class="legend-item"><span class="legend-dot dot-201-250"></span> 201–250</div>
-        <div class="legend-item"><span class="legend-dot dot-over-250"></span> über 250</div>
-        <div class="legend-note">Von Google offengelegt.<br>Kein Hinweis auf Fehlverhalten.</div>
-        <label class="cluster-toggle">
-          <input type="checkbox" id="clusterToggle"> Nahe Betriebe gruppieren
-        </label>
+      <div class="index-legend" id="indexLegend">
+        <h4 id="legendToggle">Anzahl der Entfernungen</h4>
+        <div class="legend-content">
+          <div class="legend-item"><span class="legend-dot dot-1"></span> 1</div>
+          <div class="legend-item"><span class="legend-dot dot-2-5"></span> 2–5</div>
+          <div class="legend-item"><span class="legend-dot dot-6-10"></span> 6–10</div>
+          <div class="legend-item"><span class="legend-dot dot-11-20"></span> 11–20</div>
+          <div class="legend-item"><span class="legend-dot dot-21-50"></span> 21–50</div>
+          <div class="legend-item"><span class="legend-dot dot-51-100"></span> 51–100</div>
+          <div class="legend-item"><span class="legend-dot dot-101-150"></span> 101–150</div>
+          <div class="legend-item"><span class="legend-dot dot-151-200"></span> 151–200</div>
+          <div class="legend-item"><span class="legend-dot dot-201-250"></span> 201–250</div>
+          <div class="legend-item"><span class="legend-dot dot-over-250"></span> über 250</div>
+          <div class="legend-note">Von Google offengelegt.<br>Kein Hinweis auf Fehlverhalten.</div>
+          <label class="cluster-toggle">
+            <input type="checkbox" id="clusterToggle"> Nahe Betriebe gruppieren
+          </label>
+        </div>
       </div>
     </div>
 
@@ -686,6 +711,11 @@
     document.getElementById('clusterToggle').addEventListener('change', (e) => {
       clusteringEnabled = e.target.checked;
       updateMarkers();
+    });
+
+    // Legend toggle
+    document.getElementById('legendToggle').addEventListener('click', function() {
+      document.getElementById('indexLegend').classList.toggle('collapsed');
     });
 
     // Initialize
