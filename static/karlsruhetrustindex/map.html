@@ -190,10 +190,16 @@
       border-radius: 50%;
     }
 
-    .dot-rare { background: #28a745; }
-    .dot-repeated { background: #ffc107; }
-    .dot-significant { background: #fd7e14; }
-    .dot-extreme { background: #dc3545; }
+    .dot-1 { background: #28a745; }
+    .dot-2-5 { background: #5cb85c; }
+    .dot-6-10 { background: #8bc34a; }
+    .dot-11-20 { background: #cddc39; }
+    .dot-21-50 { background: #ffc107; }
+    .dot-51-100 { background: #ff9800; }
+    .dot-101-150 { background: #fd7e14; }
+    .dot-151-200 { background: #f44336; }
+    .dot-201-250 { background: #e91e63; }
+    .dot-over-250 { background: #dc3545; }
 
     .legend-note {
       margin-top: 10px;
@@ -329,10 +335,16 @@
       color: #fff;
     }
 
-    .marker-rare { background: #28a745; }
-    .marker-repeated { background: #ffc107; color: #333; }
-    .marker-significant { background: #fd7e14; }
-    .marker-extreme { background: #dc3545; }
+    .marker-1 { background: #28a745; }
+    .marker-2-5 { background: #5cb85c; }
+    .marker-6-10 { background: #8bc34a; }
+    .marker-11-20 { background: #cddc39; color: #333; }
+    .marker-21-50 { background: #ffc107; color: #333; }
+    .marker-51-100 { background: #ff9800; }
+    .marker-101-150 { background: #fd7e14; }
+    .marker-151-200 { background: #f44336; }
+    .marker-201-250 { background: #e91e63; }
+    .marker-over-250 { background: #dc3545; }
     .marker-clean { background: #6c757d; }
   </style>
 </head>
@@ -359,10 +371,16 @@
 
       <div class="index-legend">
         <h4>Anzahl der Entfernungen</h4>
-        <div class="legend-item"><span class="legend-dot dot-rare"></span> 1–20 Entfernungen</div>
-        <div class="legend-item"><span class="legend-dot dot-repeated"></span> 21–100 Entfernungen</div>
-        <div class="legend-item"><span class="legend-dot dot-significant"></span> 101–250 Entfernungen</div>
-        <div class="legend-item"><span class="legend-dot dot-extreme"></span> über 250 Entfernungen</div>
+        <div class="legend-item"><span class="legend-dot dot-1"></span> 1</div>
+        <div class="legend-item"><span class="legend-dot dot-2-5"></span> 2–5</div>
+        <div class="legend-item"><span class="legend-dot dot-6-10"></span> 6–10</div>
+        <div class="legend-item"><span class="legend-dot dot-11-20"></span> 11–20</div>
+        <div class="legend-item"><span class="legend-dot dot-21-50"></span> 21–50</div>
+        <div class="legend-item"><span class="legend-dot dot-51-100"></span> 51–100</div>
+        <div class="legend-item"><span class="legend-dot dot-101-150"></span> 101–150</div>
+        <div class="legend-item"><span class="legend-dot dot-151-200"></span> 151–200</div>
+        <div class="legend-item"><span class="legend-dot dot-201-250"></span> 201–250</div>
+        <div class="legend-item"><span class="legend-dot dot-over-250"></span> über 250</div>
         <div class="legend-note">Von Google offengelegt.<br>Kein Hinweis auf Fehlverhalten.</div>
         <label class="cluster-toggle">
           <input type="checkbox" id="clusterToggle"> Nahe Betriebe gruppieren
@@ -450,13 +468,19 @@
       });
     }
 
-    // Get severity from removals count (aligned with Google's categories)
+    // Get severity from removals count (10 levels matching filters)
     function getSeverity(removals) {
       if (!removals || removals === 0) return 'clean';
-      if (removals <= 20) return 'rare';        // 1, 2–5, 6–10, 11–20
-      if (removals <= 100) return 'repeated';   // 21–50, 51–100
-      if (removals <= 250) return 'significant'; // 101–150, 151–200, 201–250
-      return 'extreme';                          // über 250
+      if (removals === 1) return '1';
+      if (removals <= 5) return '2-5';
+      if (removals <= 10) return '6-10';
+      if (removals <= 20) return '11-20';
+      if (removals <= 50) return '21-50';
+      if (removals <= 100) return '51-100';
+      if (removals <= 150) return '101-150';
+      if (removals <= 200) return '151-200';
+      if (removals <= 250) return '201-250';
+      return 'over-250';
     }
 
     // Load data from main page's embedded JSON
