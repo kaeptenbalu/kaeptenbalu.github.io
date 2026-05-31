@@ -1,7 +1,7 @@
 ![manuel.png](https://github.com/kaeptenbalu/kaeptenbalu.github.io/blob/main/assets/img/manuel.png?raw=true)
 
-I’m a Threat Hunter who loves digging into logs and exploring raw data. My go-to tools depends on the use case are Kusto, Kibana, MISP, Yara, Ghidra, SleuthKid, Bulk Extraktor, Plaso & WSL2. I also work as a freelancer, offering consulting in Threat Hunting and Image Forensics. I have experience with DAX companies, medium-sized businesses, and small businesses, providing customized solutions to fit their needs.
+I'm an IT Security enthusiast passionate about dissecting logs and uncovering insights from raw data. As a freelance consultant, I specialize in Threat Hunting, Image Forensics, and Malware Analysis, delivering tailored solutions across the enterprise spectrum — from DAX corporations to mid-market businesses and specialized SMEs.
 
-Outside of work, I enjoy participating in Capture the Flag (CTF) competitions, trying out new cocktail recipes, and spending time outdoors—whether it’s mountain biking in the summer or snowboarding in the winter.
+Beyond the Work, I'm an active CTF competitor, craft cocktail enthusiast, and outdoor adventurer. Whether shredding technical trails on my enduro mountain bike or carving lines through fresh powder, I'm always chasing the next challenge.
 
-If you’re interested in collaborating, feel free to reach out!
+Interested in collaboration? Let's connect and explore how I can elevate your security posture.
