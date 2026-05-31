@@ -1,5 +1,5 @@
-## Hi there! 👋
+## Hi World!
 
-Welcome to my blog — a place for IT-Security that cuts through the noise.
+Welcome to my blog — a place for IT Security and other fascinating, compelling insights that cut through the noise.
 
-Here you'll find concise, focused analysis of adversary behavior and malicious infrastructure. No lengthy posts, no fluff — just direct insights that get straight to the point without compromising depth.
+Here you'll find concise, incisive analysis of adversary behavior and malicious infrastructure. No lengthy dissertations, no filler — just sharp, penetrating insights delivered with precision and depth.
