@@ -18,21 +18,17 @@
               </div>
               {{ end }}
               <div class="post-card-content">
+                {{ with (index .Params.tags 0) }}
+                <span class="post-card-tag">{{ . }}</span>
+                {{ end }}
                 <h2 class="post-card-title">{{ .Title }}</h2>
                 {{ if .Description }}
                 <p class="post-card-description">{{ .Description }}</p>
                 {{ else }}
-                <p class="post-card-description">{{ .Summary | plainify | truncate 150 }}</p>
+                <p class="post-card-description">{{ .Summary | plainify | truncate 180 }}</p>
                 {{ end }}
                 <div class="post-card-meta">
-                  <time datetime="{{ dateFormat "2006-01-02" .Date }}">{{ dateFormat "January 2, 2006" .Date }}</time>
-                  {{ if .Params.tags }}
-                  <span class="post-tags">
-                    {{ range first 3 .Params.tags }}
-                      <span class="tag-item">{{ . }}</span>
-                    {{ end }}
-                  </span>
-                  {{ end }}
+                  <time datetime="{{ dateFormat "2006-01-02" .Date }}">{{ dateFormat "Jan 2, 2006" .Date }}</time>
                 </div>
               </div>
             </a>

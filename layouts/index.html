@@ -24,14 +24,17 @@
                 </div>
                 {{ end }}
                 <div class="post-card-content">
+                  {{ with (index .Params.tags 0) }}
+                  <span class="post-card-tag">{{ . }}</span>
+                  {{ end }}
                   <h3 class="post-card-title">{{ .Title }}</h3>
                   {{ if .Description }}
                   <p class="post-card-description">{{ .Description }}</p>
                   {{ else }}
-                  <p class="post-card-description">{{ .Summary | plainify | truncate 120 }}</p>
+                  <p class="post-card-description">{{ .Summary | plainify | truncate 160 }}</p>
                   {{ end }}
                   <div class="post-card-meta">
-                    <time datetime="{{ dateFormat "2006-01-02" .Date }}">{{ dateFormat "January 2, 2006" .Date }}</time>
+                    <time datetime="{{ dateFormat "2006-01-02" .Date }}">{{ dateFormat "Jan 2, 2006" .Date }}</time>
                   </div>
                 </div>
               </a>
