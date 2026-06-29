@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="'Bricolage Grotesque','Comic Sans MS',sans-serif">
+  <rect width="800" height="500" fill="#f5efe0"/>
+
+  <text x="400" y="48" font-size="24" font-weight="900" text-anchor="middle" fill="#1a1a1a">
+    WITNESS: "I'M 100% SURE IT WAS THEM!"
+  </text>
+  <text x="400" y="78" font-size="18" font-weight="700" text-anchor="middle" fill="#777">
+    The 47,000 people sharing CGNAT IP 1.2.3.4:
+  </text>
+
+  <!-- Lineup wall -->
+  <g transform="translate(40,110)">
+    <rect width="720" height="280" fill="#fff" stroke="#1a1a1a" stroke-width="3"/>
+
+    <!-- Height markers -->
+    <g stroke="#bbb" stroke-width="1">
+      <line x1="0" y1="50" x2="720" y2="50"/>
+      <line x1="0" y1="100" x2="720" y2="100"/>
+      <line x1="0" y1="150" x2="720" y2="150"/>
+      <line x1="0" y1="200" x2="720" y2="200"/>
+      <line x1="0" y1="250" x2="720" y2="250"/>
+    </g>
+    <g font-size="9" fill="#999">
+      <text x="6" y="48">6'</text>
+      <text x="6" y="98">5'</text>
+      <text x="6" y="148">4'</text>
+      <text x="6" y="198">3'</text>
+    </g>
+
+    <!-- Many identical stick figures -->
+    <g stroke="#1a1a1a" stroke-width="2.5" fill="none" stroke-linecap="round">
+      <!-- 12 figures in a row -->
+      <g transform="translate(70,80)">
+        <circle cx="0" cy="0" r="12" fill="#fff"/>
+        <line x1="0" y1="12" x2="0" y2="90"/>
+        <line x1="0" y1="40" x2="-16" y2="65"/>
+        <line x1="0" y1="40" x2="16" y2="65"/>
+        <line x1="0" y1="90" x2="-12" y2="125"/>
+        <line x1="0" y1="90" x2="12" y2="125"/>
+      </g>
+      <use href="#none"/>
+    </g>
+    <g id="stick" stroke="#1a1a1a" stroke-width="2.5" fill="none" stroke-linecap="round" display="none">
+      <circle cx="0" cy="0" r="12" fill="#fff"/>
+      <line x1="0" y1="12" x2="0" y2="90"/>
+      <line x1="0" y1="40" x2="-16" y2="65"/>
+      <line x1="0" y1="40" x2="16" y2="65"/>
+      <line x1="0" y1="90" x2="-12" y2="125"/>
+      <line x1="0" y1="90" x2="12" y2="125"/>
+    </g>
+
+    <!-- replicate stick figures -->
+    <g stroke="#1a1a1a" stroke-width="2.5" fill="#fff" stroke-linecap="round">
+      <g transform="translate(125,90)">
+        <circle cx="0" cy="0" r="12"/>
+        <line x1="0" y1="12" x2="0" y2="90" fill="none"/>
+        <line x1="0" y1="40" x2="-16" y2="65" fill="none"/>
+        <line x1="0" y1="40" x2="16" y2="65" fill="none"/>
+        <line x1="0" y1="90" x2="-12" y2="125" fill="none"/>
+        <line x1="0" y1="90" x2="12" y2="125" fill="none"/>
+      </g>
+      <g transform="translate(180,90)">
+        <circle cx="0" cy="0" r="12"/>
+        <line x1="0" y1="12" x2="0" y2="90" fill="none"/>
+        <line x1="0" y1="40" x2="-16" y2="65" fill="none"/>
+        <line x1="0" y1="40" x2="16" y2="65" fill="none"/>
+        <line x1="0" y1="90" x2="-12" y2="125" fill="none"/>
+        <line x1="0" y1="90" x2="12" y2="125" fill="none"/>
+      </g>
+      <g transform="translate(235,90)">
+        <circle cx="0" cy="0" r="12"/>
+        <line x1="0" y1="12" x2="0" y2="90" fill="none"/>
+        <line x1="0" y1="40" x2="-16" y2="65" fill="none"/>
+        <line x1="0" y1="40" x2="16" y2="65" fill="none"/>
+        <line x1="0" y1="90" x2="-12" y2="125" fill="none"/>
+        <line x1="0" y1="90" x2="12" y2="125" fill="none"/>
+      </g>
+      <g transform="translate(290,90)">
+        <circle cx="0" cy="0" r="12"/>
+        <line x1="0" y1="12" x2="0" y2="90" fill="none"/>
+        <line x1="0" y1="40" x2="-16" y2="65" fill="none"/>
+        <line x1="0" y1="40" x2="16" y2="65" fill="none"/>
+        <line x1="0" y1="90" x2="-12" y2="125" fill="none"/>
+        <line x1="0" y1="90" x2="12" y2="125" fill="none"/>
+      </g>
+      <g transform="translate(345,90)">
+        <circle cx="0" cy="0" r="12"/>
+        <line x1="0" y1="12" x2="0" y2="90" fill="none"/>
+        <line x1="0" y1="40" x2="-16" y2="65" fill="none"/>
+        <line x1="0" y1="40" x2="16" y2="65" fill="none"/>
+        <line x1="0" y1="90" x2="-12" y2="125" fill="none"/>
+        <line x1="0" y1="90" x2="12" y2="125" fill="none"/>
+      </g>
+      <g transform="translate(400,90)">
+        <circle cx="0" cy="0" r="12"/>
+        <line x1="0" y1="12" x2="0" y2="90" fill="none"/>
+        <line x1="0" y1="40" x2="-16" y2="65" fill="none"/>
+        <line x1="0" y1="40" x2="16" y2="65" fill="none"/>
+        <line x1="0" y1="90" x2="-12" y2="125" fill="none"/>
+        <line x1="0" y1="90" x2="12" y2="125" fill="none"/>
+      </g>
+      <g transform="translate(455,90)">
+        <circle cx="0" cy="0" r="12"/>
+        <line x1="0" y1="12" x2="0" y2="90" fill="none"/>
+        <line x1="0" y1="40" x2="-16" y2="65" fill="none"/>
+        <line x1="0" y1="40" x2="16" y2="65" fill="none"/>
+        <line x1="0" y1="90" x2="-12" y2="125" fill="none"/>
+        <line x1="0" y1="90" x2="12" y2="125" fill="none"/>
+      </g>
+      <g transform="translate(510,90)">
+        <circle cx="0" cy="0" r="12"/>
+        <line x1="0" y1="12" x2="0" y2="90" fill="none"/>
+        <line x1="0" y1="40" x2="-16" y2="65" fill="none"/>
+        <line x1="0" y1="40" x2="16" y2="65" fill="none"/>
+        <line x1="0" y1="90" x2="-12" y2="125" fill="none"/>
+        <line x1="0" y1="90" x2="12" y2="125" fill="none"/>
+      </g>
+      <g transform="translate(565,90)">
+        <circle cx="0" cy="0" r="12"/>
+        <line x1="0" y1="12" x2="0" y2="90" fill="none"/>
+        <line x1="0" y1="40" x2="-16" y2="65" fill="none"/>
+        <line x1="0" y1="40" x2="16" y2="65" fill="none"/>
+        <line x1="0" y1="90" x2="-12" y2="125" fill="none"/>
+        <line x1="0" y1="90" x2="12" y2="125" fill="none"/>
+      </g>
+      <g transform="translate(620,90)">
+        <circle cx="0" cy="0" r="12"/>
+        <line x1="0" y1="12" x2="0" y2="90" fill="none"/>
+        <line x1="0" y1="40" x2="-16" y2="65" fill="none"/>
+        <line x1="0" y1="40" x2="16" y2="65" fill="none"/>
+        <line x1="0" y1="90" x2="-12" y2="125" fill="none"/>
+        <line x1="0" y1="90" x2="12" y2="125" fill="none"/>
+      </g>
+      <g transform="translate(675,90)">
+        <circle cx="0" cy="0" r="12"/>
+        <line x1="0" y1="12" x2="0" y2="90" fill="none"/>
+        <line x1="0" y1="40" x2="-16" y2="65" fill="none"/>
+        <line x1="0" y1="40" x2="16" y2="65" fill="none"/>
+        <line x1="0" y1="90" x2="-12" y2="125" fill="none"/>
+        <line x1="0" y1="90" x2="12" y2="125" fill="none"/>
+      </g>
+    </g>
+
+    <!-- "and 46,988 more..." -->
+    <text x="360" y="245" font-size="22" font-weight="700" text-anchor="middle" fill="#1a1a1a">...and 46,988 more</text>
+  </g>
+
+  <!-- IP -->
+  <text x="400" y="430" font-size="24" font-weight="900" text-anchor="middle" fill="#d2401a">
+    Suspect IP: 1.2.3.4
+  </text>
+  <text x="400" y="465" font-size="15" font-style="italic" text-anchor="middle" fill="#777">
+    Detective: "Great. Narrowed down to a city."
+  </text>
+</svg>

@@ -3,6 +3,7 @@ title: "Volt Typhoon – Constructed Intelligence or Defeated Adversary?"
 date: 2025-08-04
 author: "Manuel Boll"
 tags: ["TI", "commentary"]
+image: "/img/posts/volt_typhoon.svg"
 ---
 
 

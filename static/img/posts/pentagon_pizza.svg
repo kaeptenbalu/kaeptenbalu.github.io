@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="'Bricolage Grotesque','Comic Sans MS',sans-serif">
+  <rect width="800" height="500" fill="#f5efe0"/>
+
+  <text x="400" y="50" font-size="24" font-weight="900" text-anchor="middle" fill="#1a1a1a">
+    EARLY WARNING INDICATORS OF WW III
+  </text>
+  <text x="400" y="78" font-size="14" font-weight="700" text-anchor="middle" fill="#777">
+    (according to OSINT in 2025)
+  </text>
+
+  <!-- Pie chart -->
+  <g transform="translate(280,290)">
+    <!-- pizza-style circle -->
+    <!-- The 97% slice (pepperoni) -->
+    <path d="M 0 0 L 130 0 A 130 130 0 1 1 -1 -130 Z" fill="#d2401a" stroke="#1a1a1a" stroke-width="3"/>
+    <!-- The small 3% slice -->
+    <path d="M 0 0 L -1 -130 A 130 130 0 0 1 130 0 Z" fill="#fffaf0" stroke="#1a1a1a" stroke-width="3"/>
+
+    <!-- pepperoni circles -->
+    <circle cx="40" cy="-40" r="10" fill="#7a1c0c"/>
+    <circle cx="70" cy="30" r="10" fill="#7a1c0c"/>
+    <circle cx="-50" cy="50" r="10" fill="#7a1c0c"/>
+    <circle cx="-40" cy="-30" r="10" fill="#7a1c0c"/>
+    <circle cx="30" cy="80" r="10" fill="#7a1c0c"/>
+    <circle cx="-80" cy="0" r="10" fill="#7a1c0c"/>
+    <circle cx="20" cy="-80" r="9" fill="#7a1c0c"/>
+
+    <!-- label callouts -->
+    <text x="20" y="0" font-size="14" font-weight="900" text-anchor="middle" fill="#fff">97%</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(470,180)" font-size="16" font-weight="700" fill="#1a1a1a">
+    <rect x="0" y="0" width="22" height="22" fill="#d2401a" stroke="#1a1a1a" stroke-width="2"/>
+    <text x="32" y="17">Pizza deliveries near</text>
+    <text x="32" y="38">the Pentagon (97%)</text>
+
+    <rect x="0" y="65" width="22" height="22" fill="#fffaf0" stroke="#1a1a1a" stroke-width="2"/>
+    <text x="32" y="82">Literally every other</text>
+    <text x="32" y="103">intelligence indicator (3%)</text>
+  </g>
+
+  <text x="400" y="460" font-size="22" font-weight="900" text-anchor="middle" fill="#1a1a1a">
+    DEFCON 1? MORE LIKE
+    <tspan fill="#d2401a">DEFCON DEEP-DISH.</tspan>
+  </text>
+</svg>

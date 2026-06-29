@@ -3,6 +3,7 @@ title: "Slices of Suspicion – The Pentagon Pizza Theory"
 date: 2025-06-02
 author: "Manuel Boll"
 tags: ["Foo", "Pentagon", "TI", "commentary"]
+image: "/img/posts/pentagon_pizza.svg"
 ---
 
 

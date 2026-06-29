@@ -18,6 +18,11 @@
           {{ range (first 4 (where .Site.RegularPages "Section" "posts" ).ByDate.Reverse) }}
             <article class="post-card">
               <a href="{{ .Permalink }}" class="post-card-link">
+                {{ with .Params.image }}
+                <div class="post-card-image">
+                  <img src="{{ . | relURL }}" alt="" loading="lazy">
+                </div>
+                {{ end }}
                 <div class="post-card-content">
                   <h3 class="post-card-title">{{ .Title }}</h3>
                   {{ if .Description }}

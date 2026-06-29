@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="'Bricolage Grotesque','Comic Sans MS',sans-serif">
+  <rect width="800" height="500" fill="#f5efe0"/>
+
+  <!-- Top meme caption -->
+  <text x="400" y="55" font-size="28" font-weight="900" text-anchor="middle" fill="#1a1a1a">
+    ME TRYING TO FIGURE OUT IF VOLT TYPHOON
+  </text>
+  <text x="400" y="90" font-size="28" font-weight="900" text-anchor="middle" fill="#1a1a1a">
+    IS ONE THREAT ACTOR
+  </text>
+
+  <!-- Detective with magnifying glass -->
+  <g stroke="#1a1a1a" stroke-width="3" fill="none" stroke-linecap="round">
+    <!-- head -->
+    <circle cx="220" cy="220" r="28" fill="#fffcf3"/>
+    <!-- hat -->
+    <path d="M192 210 L248 210 L240 188 L200 188 Z" fill="#1a1a1a"/>
+    <rect x="184" y="208" width="72" height="6" fill="#1a1a1a"/>
+    <!-- confused eyes -->
+    <text x="210" y="222" font-size="16" fill="#1a1a1a" stroke="none">?</text>
+    <text x="226" y="222" font-size="16" fill="#1a1a1a" stroke="none">?</text>
+    <!-- body -->
+    <line x1="220" y1="250" x2="220" y2="330"/>
+    <!-- arm with magnifier -->
+    <line x1="220" y1="275" x2="280" y2="260"/>
+    <circle cx="305" cy="250" r="22" fill="rgba(255,255,255,0.4)"/>
+    <line x1="320" y1="265" x2="340" y2="285"/>
+    <!-- other arm -->
+    <line x1="220" y1="275" x2="180" y2="310"/>
+    <!-- legs -->
+    <line x1="220" y1="330" x2="200" y2="380"/>
+    <line x1="220" y1="330" x2="240" y2="380"/>
+  </g>
+
+  <!-- Four "router" boxes labelled with overlapping names -->
+  <g font-size="13" font-weight="700" fill="#1a1a1a" text-anchor="middle">
+    <g transform="translate(440,180)">
+      <rect width="120" height="60" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2"/>
+      <circle cx="14" cy="14" r="3" fill="#d2401a"/>
+      <circle cx="26" cy="14" r="3" fill="#d2401a"/>
+      <text x="60" y="38" >Volt Typhoon</text>
+      <text x="60" y="52" font-size="10" fill="#777">(maybe?)</text>
+    </g>
+    <g transform="translate(590,180)">
+      <rect width="120" height="60" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2"/>
+      <circle cx="14" cy="14" r="3" fill="#d2401a"/>
+      <circle cx="26" cy="14" r="3" fill="#d2401a"/>
+      <text x="60" y="38" >Brass Typhoon</text>
+      <text x="60" y="52" font-size="10" fill="#777">(definitely!)</text>
+    </g>
+    <g transform="translate(440,270)">
+      <rect width="120" height="60" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2"/>
+      <circle cx="14" cy="14" r="3" fill="#d2401a"/>
+      <circle cx="26" cy="14" r="3" fill="#d2401a"/>
+      <text x="60" y="38" >BlackTech</text>
+      <text x="60" y="52" font-size="10" fill="#777">(or was it?)</text>
+    </g>
+    <g transform="translate(590,270)">
+      <rect width="120" height="60" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2"/>
+      <circle cx="14" cy="14" r="3" fill="#d2401a"/>
+      <circle cx="26" cy="14" r="3" fill="#d2401a"/>
+      <text x="60" y="38" >Brad</text>
+      <text x="60" y="52" font-size="10" fill="#777">(from accounting)</text>
+    </g>
+  </g>
+
+  <!-- Bottom meme caption -->
+  <text x="400" y="430" font-size="28" font-weight="900" text-anchor="middle" fill="#1a1a1a">
+    OR JUST FIVE LABELS
+  </text>
+  <text x="400" y="465" font-size="28" font-weight="900" text-anchor="middle" fill="#d2401a">
+    IN A TRENCH COAT
+  </text>
+</svg>

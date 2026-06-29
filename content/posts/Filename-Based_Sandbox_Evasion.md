@@ -3,6 +3,7 @@ title: "Brilliant and Simple - Filename-Based Sandbox Evasion"
 date: 2025-07-04
 author: "Manuel Boll"
 tags: ["Sandbox", "Reverse Engineering", "Blue Team"]
+image: "/img/posts/filename_sandbox.svg"
 ---
 
 
