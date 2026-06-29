@@ -1,0 +1,3 @@
+<a href="{{ .Destination | safeURL }}" target="_blank" rel="noopener" class="post-img-link" title="Open full size in new tab">
+  <img src="{{ .Destination | safeURL }}" alt="{{ .Text }}"{{ with .Title }} title="{{ . }}"{{ end }} loading="lazy">
+</a>

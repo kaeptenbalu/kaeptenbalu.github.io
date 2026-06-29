@@ -155,6 +155,46 @@
     max-width: 90ch;
 }
 
+/* Post body: widen container so screenshots can render at native (~760px) size */
+@media (min-width: 900px) {
+    body:not(.homepage-body) .content {
+        max-width: 900px;
+    }
+}
+
+/* Inline images inside post body: full width of container, sharp, click-to-zoom */
+.content .post-img-link {
+    display: block;
+    margin: 1.75rem 0;
+    line-height: 0;
+    cursor: zoom-in;
+}
+
+.content .post-img-link img,
+.content p > img,
+.content article img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #d8d8d8;
+    border-radius: 6px;
+    background: #fff;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.content .post-img-link:hover img {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    transform: translateY(-1px);
+}
+
+[data-theme="dark"] .content .post-img-link img,
+[data-theme="dark"] .content p > img,
+[data-theme="dark"] .content article img {
+    border-color: var(--border);
+    background: var(--surface);
+}
+
 .homepage-intro {
     margin-bottom: 3rem;
 }
