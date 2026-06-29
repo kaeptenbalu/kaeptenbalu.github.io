@@ -3,14 +3,14 @@ title: "Reading Pointers Backwards Since 1985 — A MIPS Mirai Variant Up Close"
 date: 2026-06-29
 author: "Manuel Boll"
 tags: ["Reverse Engineering", "Malware Analysis", "MIPS", "Mirai", "IoT", "Blue Team"]
-description: "Reverse engineering a MIPS Mirai/CondiBot variant called ohshit.mips: decoding the single-byte XOR strings, mapping a 21-slot function pointer table that only houses four real attack handlers, and tracing how genddos.st ends up as a DNS amplification payload instead of a C2 domain."
+description: "Beginner-friendly walkthrough of a MIPS Mirai/CondiBot variant called ohshit.mips: decoding the single-byte XOR strings, mapping a 21-slot function pointer table that turns out to be mostly unrelated to the C2 attack vocabulary, and tracing how genddos.st ends up as a DNS amplification payload instead of a C2 domain."
 image: "/img/posts/ohshit_mips.svg"
 ---
 
 
 MIPS turned forty last year. The R2000 shipped in 1985 with big-endian byte ordering as its native dialect, and the architecture has been stubbornly powering routers, set-top boxes, and security cameras ever since. The downside of all that durability is that whenever a Mirai variant lands on your desk, there is a non-trivial chance you have to read pointers backwards — most significant byte first — and remember that forty-year-old architecture quirks still very much apply.
 
-This is one of those samples. The file is called `ohshit.mips`, which is either an unusually honest gesture from its author or just an accurate label of what is about to happen to whatever embedded device pulls it down. It is 174 KB, statically linked, big-endian MIPS32, and ships with a function pointer table containing twenty-one entries — only four of which actually do any DDoS work. The other seventeen are statically-linked libc functions, syscall wrappers, and a few corrupt slots that never made it past the compiler. The string section is "encrypted" with a single-byte XOR (`0x22`), which is roughly as much security as putting a sticky note over your password.
+This is one of those samples. The file is called `ohshit.mips`, which is either an unusually honest gesture from its author or just an accurate label of what is about to happen to whatever embedded device pulls it down. It is 174 KB, statically linked, big-endian MIPS32. The interesting bits are well hidden behind a `.rodata` string table that is "encrypted" with a single-byte XOR (`0x22`) — roughly as much security as putting a sticky note over your password — and behind a function pointer table in `.data` that looks at first glance like an attack-type jump table but turns out to be something else entirely. The actual DDoS handlers (four of them) live in `.text` and are reached through a separate dispatcher.
 
 This post is meant as a **beginner-friendly walkthrough**. The sample is small, the obfuscation is shallow, and almost everything interesting can be discovered by hand in Malcat with two or three keyboard shortcuts. If you have never reversed a MIPS binary before, this is a comfortable place to start: you will touch the ELF header, decode XOR strings, find a function pointer table, and follow a real DDoS handler all the way from the C2 vocabulary to the actual outbound packet. Every step lists the exact hotkeys and addresses, so you can follow along even if you have only ever opened a disassembler once.
 
@@ -44,7 +44,7 @@ MD5:    f46d6f12245effbc5162c077ee1203b9
 SHA1:   da7910d7cd36c83e0da9434fd6f0f814f243af9e
 ```
 
-Malcat will also tell you that the binary is **statically linked**. Translation: every libc function the malware needs — `socket`, `connect`, `send`, `memset`, the lot — is baked into the binary. There is no Imports tab to lean on. You will not see a list of function names that immediately reveals what each block of code does. Every function is a `sub_XXXXXX` until you reverse it. That same property has a second consequence we will come back to in section seven, when the function pointer table turns out to be full of unrelated library functions instead of attack handlers.
+Malcat will also tell you that the binary is **statically linked**. Translation: every libc function the malware needs — `socket`, `connect`, `send`, `memset`, the lot — is baked into the binary. There is no Imports tab to lean on. You will not see a list of function names that immediately reveals what each block of code does. Every function is a `sub_XXXXXX` until you reverse it. That same property has a second consequence we will come back to in section nine, when the function pointer table we find in `.data` turns out to be mostly unrelated to the C2 attack vocabulary.
 
 - - -
 
@@ -92,7 +92,7 @@ What you are looking at is the CRT0 startup stub:
 004002b4  jalr   $t9
 ```
 
-This is standard libc plumbing. It sets up `$gp` (global pointer) the MIPS way, loads pointers to `_init`, `_fini`, and a `main` function into the argument registers, then jumps to `__libc_start_main` which in turn calls `main`. We do not need to read every instruction here. What we care about is: there is a `main` somewhere, and the GOT entry being loaded at `004002ac` minus a small offset gives us a reasonable cross-reference to find it later. For now, it lives at `sub_411968` — we will meet it again in section eight.
+This is standard libc plumbing. It sets up `$gp` (global pointer) the MIPS way, loads pointers to `_init`, `_fini`, and a `main` function into the argument registers, then jumps to `__libc_start_main` which in turn calls `main`. We do not need to read every instruction here. What we care about is: there is a `main` somewhere, and the GOT entry being loaded at `004002ac` minus a small offset gives us a reasonable cross-reference to find it later. For now, it lives at `sub_411968` — we will meet it again in section seven.
 
 - - -
 
@@ -164,7 +164,7 @@ The decoded view is the entire personality of the malware laid out in clear:
 The grouping looks roughly like this:
 
 ```
-genddos.st                       <- variant marker, also a payload (see section 9)
+genddos.st                       <- variant marker, also a payload (see section 10)
 Bruh why again                   <- author's editorial voice
 
 qtxbot                           <- rival botnets to evict from the host
@@ -194,11 +194,11 @@ server: dosarrest
 server: cloudflare-nginx
 ```
 
-A few things worth noting here that go beyond "what the strings are":
+A few observations:
 
-- The kill list is six rival botnets. The IoT real estate market is, evidently, quite competitive.
-- `/dev/watchdog` and `/dev/misc/watchdog` are not probed; they are written to with a `magic close` pattern so the kernel does not reset the device if the malware hangs.
-- `Bruh why again` is in the binary verbatim. Whoever wrote this had thoughts about their own code.
+- The kill list contains six rival botnet names. The IoT real estate market is, evidently, quite competitive.
+- `/dev/watchdog` and `/etc/rc.d/rc.local` are present as strings. Mirai-family code typically silences the watchdog and writes itself into `rc.local` for persistence, but the actual code paths that do this are not analysed in this walkthrough — only that the strings exist is established here.
+- `Bruh why again` sits in the binary verbatim. Whoever wrote this had thoughts about their own code.
 
 - - -
 
@@ -209,43 +209,38 @@ Strings being XOR-encrypted means something in the code has to decode them at ru
 
 ![Anomalies panel showing XorInLoop hits](/img/posts/ohshit/06_xorinloop_anomaly.png)
 
-Picking one of those entries and hitting `F4` for the decompiler view gets us a compact view of the actual logic:
-
-![Decompiled XOR decoder sub_413900](/img/posts/ohshit/07_xor_decoder_func.png)
-
-The decompilation cleans up to something like:
+Picking one of those entries and hitting `F4` for the decompiler view gets you the actual logic. Malcat's raw output is harder to read than it should be — it groups the byte loads from MIPS `lbu`/`sb` instructions in ways that look like the same byte is being XOR'd four times in a row, which would be a no-op. Cleaned up by hand, the function is doing this:
 
 ```c
-void sub_413900(uint32_t param_1)
-{
-    uint32_t *piVar4  = (param_1 & 0xff) * 8 + 0x46a3cc;
-    uint8_t   uVar1   = *0x46a314;       // = 0x22
-    int       iVar3   = 0;
-    char     *str_ptr = *piVar4;
-    int       length  = *(piVar4 + 1);
+// In-place XOR decoder. Index points into the string table at 0x46a3cc;
+// each table entry is 8 bytes: (heap pointer, length).
+void xor_decode_string(uint32_t index) {
+    uint32_t *entry  = (uint32_t*)((index & 0xff) * 8 + 0x46a3cc);
+    uint32_t  key32  = *(uint32_t*)0x46a314;   // value: 0x22222222
+    uint8_t   key    = key32 & 0xff;           // every byte of key32 is 0x22
+    char     *s      = (char*)entry[0];
+    uint32_t  length = entry[1];
 
-    if (length > 0) {
-        do {
-            str_ptr[iVar3]     = uVar1 ^ str_ptr[iVar3];
-            str_ptr[iVar3 + 1] = uVar1 ^ str_ptr[iVar3 + 1];
-            str_ptr[iVar3 + 2] = uVar1 ^ str_ptr[iVar3 + 2];
-            str_ptr[iVar3 + 3] = uVar1 ^ str_ptr[iVar3 + 3];
-            iVar3 += 4;
-        } while (iVar3 < length);
+    for (uint32_t i = 0; i < length; i++) {
+        s[i] ^= key;
     }
 }
 ```
 
-Unrolled four bytes per iteration for speed, key fetched from a global at `0x46a314`. That global is set to `0x22` once at program start, which means the XOR key is technically configurable but in practice never changes — it is exactly the byte we already extracted from the null-terminator trick.
+The key is loaded as a 32-bit word from the global at `0x46a314`. That word holds `0x22222222`, which is just the byte `0x22` repeated four times — the same byte we already pulled out of the null-terminator trick.
 
-There is also a second decoder, `sub_4139e4`, which does the same in-place XOR but takes an index into a table at `0x46a3cc` instead of a pointer. That table is where this gets interesting.
+There is also a sibling function, `sub_4139e4`, which behaves the same way. The `0x46a3cc` table it references is where this gets interesting.
 
 - - -
 
 7\. The String Table Is on the Heap
 -----------------------------------
 
-The XOR-encrypted bytes never get decoded in place inside `.rodata`. The binary keeps `.rodata` read-only and copies each string into the heap before doing anything with it. The function responsible for that copy is `sub_413ac8`, and it gets called exactly once from `main` (`sub_411968`):
+The XOR-encrypted bytes never get decoded in place inside `.rodata`. The binary keeps `.rodata` read-only and copies each string into the heap before doing anything with it. The function responsible for that copy is `sub_413ac8`, and it gets called exactly once from `main` (`sub_411968`).
+
+![Decompiled sub_413ac8 — one heap allocation and one memcpy per string entry, repeated for the full table](/img/posts/ohshit/07_string_table_init.png)
+
+The full decompilation is several hundred lines of the same pattern. Trimmed down:
 
 ```c
 void sub_413ac8(void) {                       // string table init
@@ -277,7 +272,7 @@ sub_4139e4(0);                   // in-place XOR decode using key 0x22
 // s now points at "genddos.st\0"
 ```
 
-There are two practical implications. First, decoded strings are never written back into `.rodata`, so a memory dump of the running process will show plaintext on the heap and ciphertext on the read-only segment — useful to know if you ever need to spot this thing in a forensic image. Second, every consumer of these strings goes through the same getter, which gives you a clean cross-reference target: find everyone who calls `sub_4138cc` or `sub_4139e4` and you have a complete list of code that touches the string table. That cross-reference is how we will find the actual users in section nine.
+There are two practical implications. First, decoded strings are never written back into `.rodata`, so a memory dump of the running process will show plaintext on the heap and ciphertext on the read-only segment — useful to know if you ever need to spot this thing in a forensic image. Second, every consumer of these strings goes through the same getter, which gives you a clean cross-reference target: find everyone who calls `sub_4138cc` or `sub_4139e4` and you have a complete list of code that touches the string table. That cross-reference is how we will find the actual users in section ten.
 
 - - -
 
@@ -327,42 +322,47 @@ Repeat for the next twenty entries. You end up with twenty-one virtual addresses
 
 - - -
 
-9\. Twenty-One Slots, Four Handlers
+9\. The Twenty-One-Slot Red Herring
 -----------------------------------
 
-If you assume every entry in this table is an attack handler, you immediately notice a few problems. `0x0046A588` sits inside `.got`, not `.text`. `0x00000000` is obviously a NULL. `0x73747274` is the ASCII string `"strt"` somehow getting reinterpreted as a pointer. That cannot all be handlers.
+If you assume every entry in this table is an attack handler, you immediately notice a few problems. `0x0046A588` sits inside `.got`, not `.text`. `0x00000000` is obviously a NULL. `0x00400094` is below the start of `.text` (which begins at `0x00400120`) — it lands in the ELF headers, not in code. Those cannot all be handlers.
 
-Decode each pointer, jump to its target with `Ctrl+G`, drop into the decompiler with `F4`, and look at what is there. Here is the complete classification:
+Walking the rest of the pointers — decode the bytes, `Ctrl+G` to the address, `F4` for the decompiler, look at what is there — leaves you with a partial classification. Some entries land on functions we can identify; most of the rest land somewhere inside `.text` but the specific role of each is beyond the scope of this walkthrough.
 
-| Type | VA          | What it actually is             | Notes                                                  |
-|------|-------------|---------------------------------|--------------------------------------------------------|
-| 0    | 0x0040C9CC  | **UDP Generic Flood**           | `SOCK_DGRAM`, random payload, no spoofing              |
-| 1    | 0x0041CAD4  | _libc_ — not an attack          | utility                                                |
-| 2    | 0x0046A588  | invalid — outside `.text`       | corrupt slot                                           |
-| 3    | 0x0041B180  | _libc_                          | utility                                                |
-| 4    | 0x0041D670  | _libc_ `memset`                 | optimised 32-bit writes                                |
-| 5    | 0x0041AF28  | utility — bitmap set-bit        |                                                        |
-| 6    | 0x0046C6A0  | invalid — outside `.text`       | corrupt slot                                           |
-| 7    | 0x0041327C  | utility — attack dispatcher     | the function that actually picks the real handler      |
-| 8    | 0x0041A850  | _libc_ `scanf`                  | format-string parsing                                  |
-| 9    | 0x004203A0  | _libc_ `vsprintf`               | format-string formatting                               |
-| 10   | 0x0040BC28  | **DNS Amplification**           | `SOCK_RAW`, spoofed source, see section 10             |
-| 11   | 0x0041BBE0  | _libc_ `fread` buffer mgmt      |                                                        |
-| 12   | 0x00400094  | invalid — outside `.text`       | corrupt slot (lands in the ELF header)                 |
-| 13   | 0x00000000  | NULL                            | disabled / never wired up                              |
-| 14   | 0x0041D500  | utility — callback dispatcher   |                                                        |
-| 15   | 0x00419250  | _libc_ `fseek`                  |                                                        |
-| 16   | 0x0041DAB0  | utility — array lookup          |                                                        |
-| 17   | 0x0041EC18  | _libc_ — stdin/stdout getter    |                                                        |
-| 18   | 0x004162C0  | utility — parameter validation  |                                                        |
-| 19   | 0x0040E908  | utility — string/pattern search |                                                        |
-| 20   | 0x0041AB90  | **HTTP POST Flood**             | `SOCK_STREAM`, 12 User-Agent variants                  |
+| Pos | VA          | What it is                                                          |
+|-----|-------------|---------------------------------------------------------------------|
+| 0   | 0x0040C9CC  | **UDP Generic Flood** (real DDoS handler — `SOCK_DGRAM`, no spoofing)|
+| 1   | 0x0041CAD4  | inside `.text` — role unconfirmed                                   |
+| 2   | 0x0046A588  | invalid — sits in `.got`, not `.text`                               |
+| 3   | 0x0041B180  | inside `.text` — role unconfirmed                                   |
+| 4   | 0x0041D670  | inside `.text` — role unconfirmed                                   |
+| 5   | 0x0041AF28  | utility — bitmap set-bit                                            |
+| 6   | 0x0046C6A0  | invalid — outside `.text`                                           |
+| 7   | 0x0041327C  | inside `.text` — role unconfirmed                                   |
+| 8   | 0x0041A850  | inside `.text` — role unconfirmed                                   |
+| 9   | 0x004203A0  | inside `.text` — role unconfirmed                                   |
+| 10  | 0x0040BC28  | **DNS Amplification** (real DDoS handler — `SOCK_RAW`, spoofed source) |
+| 11  | 0x0041BBE0  | inside `.text` — role unconfirmed                                   |
+| 12  | 0x00400094  | invalid — below `.text` start, lands in ELF headers                 |
+| 13  | 0x00000000  | NULL — never wired up                                               |
+| 14  | 0x0041D500  | inside `.text` — role unconfirmed                                   |
+| 15  | 0x00419250  | inside `.text` — role unconfirmed                                   |
+| 16  | 0x0041DAB0  | inside `.text` — role unconfirmed                                   |
+| 17  | 0x0041EC18  | libc `scanf` (statically linked)                                    |
+| 18  | 0x004162C0  | inside `.text` — role unconfirmed                                   |
+| 19  | 0x0040E908  | inside `.text` — role unconfirmed                                   |
+| 20  | 0x0041AB90  | inside `.text` — role unconfirmed                                   |
 
-Four of the twenty-one slots are real DDoS handlers. The rest is static linking residue: libc functions, internal utilities, and three corrupt pointers that the compiler quietly left in place. The reason is the same property we noted at the start. A statically-linked binary embeds all of libc, and the compiler generates function pointer tables for several purposes — vtable-style dispatch, signal handlers, callback registration. They all end up in `.data` at adjacent offsets, and from a flat hex view they look identical. The Mirai dispatcher only ever indexes into a specific contiguous window. We just happened to dump a larger window than the dispatcher actually uses.
+So out of twenty-one slots:
 
-For completeness, the fourth attack handler is **Type 1 — TCP SYN/ACK Flood** at `0x0040C2FC` (2,848 bytes, `SOCK_RAW`, spoofed source). It is reached through a separate dispatcher path rather than this table, which is the other half of the answer to "why are there only four here."
+- **Two** are real DDoS handlers (positions 0 and 10).
+- **Four** are invalid or NULL (positions 2, 6, 12, 13).
+- **Two** could be identified positively (the bitmap utility at position 5 and a statically-linked `scanf` at position 17).
+- **Thirteen** point into `.text` but going through each one individually would turn this walkthrough into a different kind of post.
 
-The real attack dispatcher is `sub_402E08` (Type 7 in the table). It fork()s a child and uses a separate, smaller inner table keyed on the C2-supplied attack ID. That inner table is what holds the four entries you would intuitively expect. The big table in `.data` is a red herring. Or, more charitably, an exercise in what static linking does to your binary layout.
+That is enough to draw the relevant conclusion: this is not the C2's attack-handler table. The binary is statically linked, the compiler emits function pointer tables for plenty of reasons that have nothing to do with malware (vtables, callback registrations, signal handlers, static initialisers), and we have stumbled into one of those. The fact that two attack handlers also live here is the kind of coincidence that comes from "the linker puts things where it wants to put things."
+
+The other two real DDoS handlers live elsewhere in `.text` entirely and are **not** in this table: `0x0040C2FC` (TCP SYN/ACK Flood, `SOCK_RAW`, spoofed source) and `0x00406B84` (HTTP POST Flood, `SOCK_STREAM`, rotates through twelve User-Agent strings). Finding *those* the same way we found the DNS handler — by following cross-references off the string getter `sub_4138cc` — is left as a follow-up exercise; section ten covers one of them in detail and the others mirror its structure.
 
 - - -
 
@@ -371,7 +371,11 @@ The real attack dispatcher is `sub_402E08` (Type 7 in the table). It fork()s a c
 
 `genddos.st` looks like a C2 domain. It has the shape of one, lands at index 0 in the string table, gets pulled into the heap on startup. If you stop there, you write it down as a C2 indicator and move on. That would be wrong.
 
-Cross-reference `sub_4138cc` (the getter) and `sub_4139e4` (the in-place decoder) and you find a small set of common callers. The interesting one is `sub_40F250` — a long function (~500 lines), not in the function pointer table we just decoded, but reached through the dispatcher's inner table. What it does, in cleaned-up form:
+Cross-reference `sub_4138cc` (the getter) and `sub_4139e4` (the in-place decoder) and you find a small set of common callers. One is `main` itself, calling the string table init at startup. The rest are functions that pull individual strings out of the table when they need them — including the function this section is about.
+
+![Callers of the string-table getter sub_4138cc — main plus a handful of consumers, one of which is sub_40f250](/img/posts/ohshit/09_string_getter_callers.png)
+
+The interesting one in that list is `sub_40F250` — a long function (~500 lines) that turns out to be the place where `genddos.st` actually gets used. What it does, in cleaned-up form:
 
 ```c
 void sub_40f250_dns_flood(uint32_t count, target_t *targets, ...) {
@@ -421,11 +425,11 @@ void sub_40f250_dns_flood(uint32_t count, target_t *targets, ...) {
 
 `genddos.st` is not a C2 endpoint. It is a **payload** — the domain name the bot stuffs into a spoofed DNS ANY query so that some upstream resolver answers a large response (NXDOMAIN with SOA records, typically 3 KB) to the spoofed source, which is the victim's IP. Classic DNS reflection/amplification, about 47× volume gain on a 64-byte query.
 
-The proof that this is what is happening shows up on the receiving end. Running the sample against an instrumented DNS resolver gives you log lines like these:
+This is what a DNS ANY amplification attack looks like from the resolver's side. The log lines below are not from running this sample — they are from an unrelated incident captured on an exposed recursive resolver, included here only to illustrate the pattern:
 
-![DNS server logs showing the spoofed-source genddos.st queries during a live run](/img/posts/ohshit/10_dns_amp_logs.png)
+![Example DNS server log from an unrelated DNS ANY amplification attack — same mechanic as what ohshit.mips generates, different query name](/img/posts/ohshit/10_dns_amp_logs.png)
 
-Each line is a DNS query coming in with `2ler.org` as the question name and `146.56.180.42` as the supposed client. The actual sender — the infected device — never appears in the logs at all. The DNS server has no reason to suspect the source is forged, dutifully answers, and the answer goes to `146.56.180.42`. From the victim's perspective, you are being hit by a stranger DNS server you never asked anything from. From the resolver's perspective, you are being abused as an amplifier and never quite notice. (In our sample the query string is `genddos.st`; the screenshot is from a test rig that used a different label, but the mechanic is identical.)
+Every line is a DNS query coming in with a domain (`2ler.org` in this example) as the question name and a fixed client IP `146.56.180.42` as the supposed source. The actual sender — the infected device — never appears in the logs at all. The DNS server has no reason to suspect the source is forged, dutifully answers, and the answer goes to `146.56.180.42`. From the victim's perspective you are being hit by a stranger DNS server you never asked anything from. From the resolver's perspective you are being abused as an amplifier and never quite notice. The `ohshit.mips` sample produces exactly this traffic shape; the only thing different in its own run would be the query name, which the disassembly says is `genddos.st`.
 
 So if you find `genddos.st` in your environment as a DNS query name, the relevant question is not "is my user trying to reach this domain". It is "is this device's source IP being forged by something locally, and is that something an IoT bot."
 
@@ -434,18 +438,25 @@ So if you find `genddos.st` in your environment as a DNS query name, the relevan
 11\. What This Sample Actually Is
 ---------------------------------
 
-Pulling everything together, `ohshit.mips` is a Mirai derivative carrying the CondiBot lineage in its strings:
+Pulling everything together, here is what is **directly verified** by this walkthrough versus what is only **suggested** by strings:
 
-- **Target.** MIPS routers and embedded Linux devices.
-- **Persistence.** `/etc/rc.d/rc.local`.
-- **Self-defense.** Silences `/dev/watchdog` and `/dev/misc/watchdog` so the device cannot reset itself out of the infection. Kills a hard-coded list of competing botnets so they cannot share the host.
-- **Obfuscation.** Single-byte XOR with key `0x22` on all `.rodata` strings.
-- **C2 vocab.** IRC-shaped — `PRIVMSG`, `KILLATTK`, `GETLOCALIP`.
-- **Attack capability.** Four real handlers — UDP Generic, TCP SYN/ACK, DNS Amplification, HTTP POST. Spread across UDP, raw TCP, raw UDP, and stream sockets respectively. Two of them spoof their source IP.
-- **Amplification.** ~47× via DNS ANY queries for `genddos.st`. Not a C2 indicator. A payload.
-- **Family marker.** `genddos.st` (also the payload), plus the author's own editorial line `Bruh why again` sitting in `.rodata` like a sigh.
+Verified:
 
-Reverse engineering on MIPS in 2026 looks essentially the same as it did when the architecture was new in the late eighties. Pointers are still big-endian. Function pointer tables still get generated by the linker for reasons unrelated to whatever the malware is trying to do, which is good for paranoia and bad for first impressions. The hard part is not the cryptography — there isn't any — it is being patient enough to walk every pointer and confirm what is on the other end. If you do that work, what is left is not particularly sophisticated. It is just thorough enough to be annoying.
+- **Target.** MIPS32 big-endian, statically linked — fits the routers-and-set-top-boxes profile (ELF header).
+- **Obfuscation.** Single-byte XOR with key `0x22` on all `.rodata` strings. Decoder at `sub_4139e4`/`sub_413900`; key loaded from the global at `0x46a314` (`0x22222222`).
+- **String table.** Initialised once at startup by `sub_413ac8` (called from `main` = `sub_411968`). Each entry is `(heap pointer, length)`. `genddos.st` is index 0.
+- **Attack capability.** Four real DDoS handlers identified by the broader analysis — UDP Generic (`0x0040C9CC`), TCP SYN/ACK (`0x0040C2FC`), DNS Amplification (`0x0040BC28`), HTTP POST (`0x00406B84`). Two of them (UDP, DNS) happen to be referenced from the `.data` pointer table at positions 0 and 10; the other two are reached via the dispatcher but not via that table.
+- **Amplification.** ~47× via spoofed-source DNS ANY queries built around `genddos.st`. `genddos.st` is **not** a C2 endpoint — it is the question name in the amplification payload.
+
+Suggested by strings only (not verified in this walkthrough):
+
+- **Persistence.** `/etc/rc.d/rc.local` is present in `.rodata`. Mirai-family code commonly writes itself into `rc.local`, but the code path that does this here is not analysed in this post.
+- **Self-defense — watchdog.** `/dev/watchdog` and `/dev/misc/watchdog` are present in `.rodata`. The expected behaviour is silencing the kernel watchdog so the device cannot reboot itself out of the infection, but this is again strings only.
+- **Self-defense — rival eviction.** Names of six rival botnets are present in `.rodata` (`qtxbot`, `hakai`, `dvrHelper`, `NiGGeR69xd`, `1337SoraLOADER`, `GhostWuzHere666`). The expected behaviour is process-killing, but the matching code is not walked here.
+- **C2 protocol shape.** The strings `PRIVMSG`, `GETLOCALIP`, `KILLATTK` suggest an IRC-style command vocabulary, but the actual networking and parser are not analysed here.
+- **Family marker.** `genddos.st` is the obvious one. The author's own line `Bruh why again` sits next to it in `.rodata`.
+
+Reverse engineering on MIPS in 2026 looks essentially the same as it did when the architecture was new in the mid eighties. Pointers are still big-endian. Function pointer tables still get generated by the linker for reasons unrelated to whatever the malware is trying to do, which is good for paranoia and bad for first impressions. The hard part is not the cryptography — there isn't any — it is being patient enough to walk every pointer and confirm what is on the other end. If you do that work, what is left is not particularly sophisticated. It is just thorough enough to be annoying.
 
 - - -
 
