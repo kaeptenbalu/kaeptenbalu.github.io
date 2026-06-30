@@ -2,7 +2,7 @@
 title: "Ping Me Maybe - When SubCrawl Started Talking to Teams"
 date: 2025-09-30
 author: "Manuel Boll"
-tags: ["Subcrawl", "TI", "Blue Team", "Teams", "OpenSource"]
+tags: ["Threat Intelligence","Subcrawl", "TI", "Blue Team", "Teams", "OpenSource"]
 image: "/img/posts/subcrawl_teams.svg"
 ---
 
