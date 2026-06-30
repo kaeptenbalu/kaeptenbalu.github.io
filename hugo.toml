@@ -27,19 +27,14 @@ theme = 'maverick'
     weight = 2
 
   [[menu.main]]
-    name = "Karlsruhe Trust Index"
-    url = "/karlsruhetrustindex/"
-    weight = 3
-
-  [[menu.main]]
     name = "howweak"
     url = "https://www.howweak.de"
-    weight = 4
+    weight = 3
 
   [[menu.main]]
     name = "About"
     url = "/about/"
-    weight = 5
+    weight = 4
 
 [params]
   items = 10
