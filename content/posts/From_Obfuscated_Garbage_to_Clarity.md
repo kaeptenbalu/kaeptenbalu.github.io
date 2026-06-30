@@ -2,7 +2,7 @@
 title: "From Obfuscated Garbage to Clarity"
 date: 2025-05-15
 author: "Manuel Boll"
-tags: ["PowerShell", "Malware Analysis", "Reverse Engineering", "Blue Team"]
+tags: ["Malware-Analysis","PowerShell", "Reverse Engineering", "Blue Team"]
 image: "/img/posts/obfuscated_garbage.svg"
 ---
 
