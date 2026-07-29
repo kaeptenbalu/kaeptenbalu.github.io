@@ -6,7 +6,7 @@ title: "API"
 
 A read-only REST API providing structured threat intelligence on **Telegram bots abused by malware**
 
-> **Classification: TLP:AMBER+STRICT.** The data may be used **only within your own organization** on a need-to-know basis and **must not be shared onward** — not with clients, partners, or the public. Use is permitted for lawful defensive and research purposes only.
+> **Classification: TLP:AMBER+STRICT.** The data may be used **only within your own organization** on a need-to-know basis and **must not be shared onward**. Use is permitted for lawful defensive and research purposes only.
 
 ## Requesting access
 
@@ -23,14 +23,12 @@ After approval you receive **your personal endpoint URL** and **your personal AP
 
 ## Understanding the data
 
-This feed maps the **Telegram malware ecosystem**: malware families — infostealers, RATs, clippers, loaders — that use Telegram bots for command-and-control and to exfiltrate stolen data. A sample embeds a **bot token** and a target **chat**; at runtime it ships the loot to that bot, which posts into a chat/channel controlled by the operator.
-
-The collection is a **flat, denormalized feed**: **one record ≈ one observed link between a bot and a malware sample**, plus enrichment. There are no separate bot/sample/chat tables — you reconstruct relationships by grouping on shared fields. Current scale: ~12,200 records, ~11,800 distinct bots, ~11,900 distinct samples, ~7,000 distinct chats.
+The collection is a **flat, denormalized feed**: **one record ≈ one observed link between a bot and a malware sample**, plus enrichment.
 
 ### Relationships (many-to-many)
 
-- **Sample ↔ Bot** — a single sample may ship several tokens (fallback / rotation), and a single bot is reused across many builds and samples. Both `malware_file_hash` and `bot_token` recur across records. Observed extremes: one sample linked to **12** bots; one bot linked to **16** samples.
-- **Bot ↔ Chat** — bots exfiltrate to a `source_chat_id`; operators funnel **many bots into one chat/channel** (observed: **15** bots on a single chat). A shared chat clusters a campaign / operator.
+- **Sample ↔ Bot** — a single sample may ship several tokens (fallback / rotation), and a single bot is reused across many builds and samples. Both `malware_file_hash` and `bot_token` recur across records.
+- **Bot ↔ Chat** — bots exfiltrate to a `source_chat_id`; operators funnel **many bots into one chat/channel**.
 - **Operator ↔ Bots** — the same creator (`admins`) runs many bots.
 
 ### How to pivot / cluster
