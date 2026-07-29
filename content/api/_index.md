@@ -1,0 +1,129 @@
+---
+title: "API"
+---
+
+# Telegram Threat-Intelligence Feed — API
+
+A read-only REST API providing structured threat intelligence on **Telegram bots abused by malware** — credential stealers, RATs, loaders and other families that use Telegram for command-and-control and data exfiltration. Each record links an observed malware bot to the sample(s) that used it, enriched with VirusTotal family and category data.
+
+> **Classification: TLP:AMBER+STRICT.** The data may be used **only within your own organization** on a need-to-know basis and **must not be shared onward** — not with clients, partners, or the public. Use is permitted for lawful defensive and research purposes only.
+
+## Requesting access
+
+The API is **not public**. Access is granted to **vetted, trustworthy partners** only.
+
+To request access, email **telegram@mboll.eu** with who you are and your intended use:
+
+| Use case | Cost |
+|---|---|
+| **Research / non-commercial** | free of charge |
+| **Commercial** | paid — contact for terms |
+
+In both cases you must be a trustworthy partner, accept the **TLP:AMBER+STRICT** handling, and confirm the data will **not** be used for any unlawful purpose. After approval you receive **your personal endpoint URL** and **your personal API key** by email. The endpoint is intentionally not published here.
+
+## Authentication
+
+Every request must include your key in the `X-API-Key` header. The API is **read-only** (only `GET` is allowed).
+
+```bash
+curl -H "X-API-Key: YOUR_API_KEY" \
+  "https://YOUR-ENDPOINT/api/collections/Telegram/records?perPage=50"
+```
+
+- Missing / invalid key → `403 Forbidden`
+- Rate limit exceeded → `429 Too Many Requests` (default: 120 requests/minute per key)
+- Any non-`GET` method or other path → `403`
+
+## Endpoint
+
+```
+GET  https://YOUR-ENDPOINT/api/collections/Telegram/records
+GET  https://YOUR-ENDPOINT/api/collections/Telegram/records/{id}
+```
+
+`YOUR-ENDPOINT` is provided to you by email. All responses are JSON.
+
+## Pagination
+
+Results are paged — use `page` and `perPage` (max **500**).
+
+```bash
+curl -H "X-API-Key: YOUR_API_KEY" \
+  "https://YOUR-ENDPOINT/api/collections/Telegram/records?page=1&perPage=200"
+```
+
+Envelope: `{ "page", "perPage", "totalItems", "totalPages", "items": [...] }`. Iterate `page` from `1` to `totalPages`.
+
+## Filtering
+
+Use the `filter` query parameter (PocketBase filter syntax). Values are safely parameterized — no SQL injection. Pass it URL-encoded, e.g. with `curl -G --data-urlencode`.
+
+Operators: `=`  `!=`  `>`  `>=`  `<`  `<=`  `~` (contains); combine with `&&` / `||`; date macros `@now`, `@todayStart`, `@monthStart`, `@yearStart`.
+
+```bash
+# records added to the feed today
+curl -G "https://YOUR-ENDPOINT/api/collections/Telegram/records" \
+  -H "X-API-Key: YOUR_API_KEY" \
+  --data-urlencode 'filter=created >= @todayStart'
+
+# samples first seen on/after a date
+curl -G "https://YOUR-ENDPOINT/api/collections/Telegram/records" \
+  -H "X-API-Key: YOUR_API_KEY" \
+  --data-urlencode 'filter=first_seen >= "2026-07-01 00:00:00"'
+
+# a specific malware family, newest first
+curl -G "https://YOUR-ENDPOINT/api/collections/Telegram/records" \
+  -H "X-API-Key: YOUR_API_KEY" \
+  --data-urlencode 'filter=families ~ "asyncrat"' \
+  --data-urlencode 'sort=-created'
+```
+
+Rolling windows (e.g. "last 10 days") cannot be expressed as arithmetic in the filter — compute the date on your side and pass it as an absolute value.
+
+## Sorting & field selection
+
+- `sort=-created` (newest first) or `sort=first_seen`
+- `fields=bot_name,bot_token,families,first_seen` to limit returned fields
+
+## Field reference
+
+| Field | Description |
+|---|---|
+| `bot_name` | Telegram bot username |
+| `bot_token` | Observed bot API token (`bot<id>:<secret>`) |
+| `malware_file_hash` | SHA-256 of the malware sample using the bot |
+| `source_chat_id` | Chat/channel the bot exfiltrates to, when observed |
+| `families` | Malware family/families, e.g. `trojan.msil/asyncrat` |
+| `threat_categories` | Category, e.g. `trojan`, `stealer` |
+| `first_seen` | First submission of the sample to VirusTotal (sample age — **not** our discovery date) |
+| `chat_name`, `admins`, `commands`, `webhook`, `bot_description`, `permissions`, `user_count`, `group_name` | Bot / chat metadata where available |
+| `created` / `updated` | When the record entered / last changed in this feed |
+
+## Example response
+
+```json
+{
+  "page": 1,
+  "perPage": 2,
+  "totalItems": 12100,
+  "totalPages": 6050,
+  "items": [
+    {
+      "bot_name": "anuZSteel_bot",
+      "bot_token": "bot8122935411:AAH...",
+      "families": "trojan.msil/asyncrat",
+      "threat_categories": "trojan",
+      "first_seen": "2025-05-10 20:58:16.000Z"
+    }
+  ]
+}
+```
+
+## Terms of use (summary)
+
+- **TLP:AMBER+STRICT** — internal use within your organization only; **no onward disclosure**.
+- Lawful **defensive / research** use only; any unlawful use terminates access immediately.
+- Do not share your API key. Access is per-partner and can be revoked at any time.
+- **Commercial** use requires a paid agreement; **research / non-commercial** use is free for vetted partners.
+
+Access requests and questions: **telegram@mboll.eu**

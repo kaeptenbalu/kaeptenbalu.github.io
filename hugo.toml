@@ -27,8 +27,8 @@ theme = 'maverick'
     weight = 2
 
   [[menu.main]]
-    name = "howweak"
-    url = "https://www.howweak.de"
+    name = "API"
+    url = "/api/"
     weight = 3
 
   [[menu.main]]
