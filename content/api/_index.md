@@ -4,7 +4,7 @@ title: "API"
 
 # Telegram Threat-Intelligence Feed — API
 
-A read-only REST API providing structured threat intelligence on **Telegram bots abused by malware** — credential stealers, RATs, loaders and other families that use Telegram for command-and-control and data exfiltration. Each record links an observed malware bot to the sample(s) that used it, enriched with VirusTotal family and category data.
+A read-only REST API providing structured threat intelligence on **Telegram bots abused by malware**
 
 > **Classification: TLP:AMBER+STRICT.** The data may be used **only within your own organization** on a need-to-know basis and **must not be shared onward** — not with clients, partners, or the public. Use is permitted for lawful defensive and research purposes only.
 
@@ -19,7 +19,38 @@ To request access, email **telegram@mboll.eu** with who you are and your intende
 | **Research / non-commercial** | free of charge |
 | **Commercial** | paid — contact for terms |
 
-In both cases you must be a trustworthy partner, accept the **TLP:AMBER+STRICT** handling, and confirm the data will **not** be used for any unlawful purpose. After approval you receive **your personal endpoint URL** and **your personal API key** by email. The endpoint is intentionally not published here.
+After approval you receive **your personal endpoint URL** and **your personal API key** by email. The endpoint is intentionally not published here.
+
+## Understanding the data
+
+This feed maps the **Telegram malware ecosystem**: malware families — infostealers, RATs, clippers, loaders — that use Telegram bots for command-and-control and to exfiltrate stolen data. A sample embeds a **bot token** and a target **chat**; at runtime it ships the loot to that bot, which posts into a chat/channel controlled by the operator.
+
+The collection is a **flat, denormalized feed**: **one record ≈ one observed link between a bot and a malware sample**, plus enrichment. There are no separate bot/sample/chat tables — you reconstruct relationships by grouping on shared fields. Current scale: ~12,200 records, ~11,800 distinct bots, ~11,900 distinct samples, ~7,000 distinct chats.
+
+### Relationships (many-to-many)
+
+- **Sample ↔ Bot** — a single sample may ship several tokens (fallback / rotation), and a single bot is reused across many builds and samples. Both `malware_file_hash` and `bot_token` recur across records. Observed extremes: one sample linked to **12** bots; one bot linked to **16** samples.
+- **Bot ↔ Chat** — bots exfiltrate to a `source_chat_id`; operators funnel **many bots into one chat/channel** (observed: **15** bots on a single chat). A shared chat clusters a campaign / operator.
+- **Operator ↔ Bots** — the same creator (`admins`) runs many bots.
+
+### How to pivot / cluster
+
+| Group by | Gives you |
+|---|---|
+| `malware_file_hash` | all bots a given sample used |
+| `bot_token` | all samples / builds using that bot (campaign lineage) |
+| `source_chat_id` | bots sharing a drop channel → same operator / campaign |
+| `admins` | operator attribution across bots |
+
+Because bots, samples and chats repeat, treat the feed as an **edge list of a graph** (sample —uses→ bot —exfiltrates-to→ chat), not a flat table, when clustering campaigns or attributing operators.
+
+### Caveats
+
+- A `bot_token` may already be **dead / revoked** by the time you read it (tokens are validated when first collected).
+- `first_seen` is the sample's **first VirusTotal submission** (its age) — not when we discovered it (that is `created`).
+- Bot / chat metadata (`chat_name`, `admins`, `commands`, `webhook`, …) is present only where the bot was live and could be queried.
+
+Background on the ecosystem: [The Telegram Malware Ecosystem (ransom-isac.com)](https://ransom-isac.com/blog/the-telegram-malware-ecosystem/).
 
 ## Authentication
 
@@ -56,7 +87,7 @@ Envelope: `{ "page", "perPage", "totalItems", "totalPages", "items": [...] }`. I
 
 ## Filtering
 
-Use the `filter` query parameter (PocketBase filter syntax). Values are safely parameterized — no SQL injection. Pass it URL-encoded, e.g. with `curl -G --data-urlencode`.
+Use the `filter` query parameter. Pass it URL-encoded, e.g. with `curl -G --data-urlencode`.
 
 Operators: `=`  `!=`  `>`  `>=`  `<`  `<=`  `~` (contains); combine with `&&` / `||`; date macros `@now`, `@todayStart`, `@monthStart`, `@yearStart`.
 
@@ -84,6 +115,16 @@ Rolling windows (e.g. "last 10 days") cannot be expressed as arithmetic in the f
 
 - `sort=-created` (newest first) or `sort=first_seen`
 - `fields=bot_name,bot_token,families,first_seen` to limit returned fields
+
+## Rate limits
+
+Each API key is limited to **120 requests per minute**. Budgets are per key and independent of other partners. Exceeding the limit returns **`429 Too Many Requests`** — back off and retry after roughly 60 seconds.
+
+To stay well within the limit:
+- page with `perPage=500` (a full pull of the feed is only ~25 requests), and
+- for updates, query incrementally, e.g. `filter=created >= "<your last sync timestamp>"`.
+
+Need a higher limit for your use case? Contact **telegram@mboll.eu**.
 
 ## Field reference
 
