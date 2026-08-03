@@ -4,7 +4,7 @@ title: "Blogroll"
 
 # Blogroll
 
-The internet is a big place. These are the corners I keep coming back to — people whose curiosity keeps mine burning, tools I actually trust, and communities that push our craft forward. All highly recommended.
+The internet is huge. These are the spots I keep coming back to. People I learn from, tools I actually use, and communities worth being part of. All worth your time.
 
 ---
 
@@ -12,7 +12,7 @@ The internet is a big place. These are the corners I keep coming back to — peo
 
 **[juergen.loehel.de/weblog](https://juergen.loehel.de/weblog/)**
 
-If Juergen's heart had a boot loader, it would `chainload` straight into open source — and somehow he still finds cycles to run CTFs with me. Deeply technical, endlessly generous with what he knows. Absolute must-read.
+If Juergen's heart had a boot loader, it would `chainload` straight into open source. And somehow he still finds time to run CTFs with me. Deeply technical, and shares everything he knows. Definitely worth following.
 
 ---
 
@@ -20,15 +20,15 @@ If Juergen's heart had a boot loader, it would `chainload` straight into open so
 
 **[cocomelonc.github.io](https://cocomelonc.github.io/)**
 
-If offensive security had a required-reading list, cocomelonc would be on it. A red-teaming veteran with a genius touch — the write-ups are relentless, technical, and dense with the kind of tradecraft you usually only see whispered in private channels. One of the best public red-teaming blogs on the internet.
+cocomelonc has been red-teaming for years and casually drops the kind of stuff you'd normally only hear in closed Signal groups. The write-ups are technical, dense, and occasionally make you wonder if this should really be public. Probably the best red-teaming blog on the open internet.
 
 ---
 
 ## Ransom-ISAC
 
-**[ransom-isac.com/blog](https://ransom-isac.com/blog/)**
+**[ransom-isac.com](https://ransom-isac.com/blog/)**
 
-Think Michelin stars — but for ransomware researchers. Ransom-ISAC's L.O.C.K. S.T.A.R. framework hands out real recognition to the folks quietly bending the ransomware curve, and the blog is where the community drops the freshest, spiciest threat intel long before it trickles into the mainstream feeds. Massively community-driven and refreshingly ungatekept.
+Think Michelin stars, but for ransomware researchers. Ransom-ISAC's L.O.C.K. S.T.A.R. framework hands out real credit to the folks actually pushing back against ransomware. The blog is where the community drops fresh threat intel long before it hits the mainstream feeds. Community-driven and refreshingly not gatekept.
 
 ---
 
@@ -36,13 +36,13 @@ Think Michelin stars — but for ransomware researchers. Ransom-ISAC's L.O.C.K. 
 
 **[malcat.fr](https://malcat.fr/)**
 
-Reverse engineering with Malcat sometimes feels like cheating. Full stop. A static-analysis Swiss-army knife that quietly does more than half the heavy lifting before you even fire up a debugger. Watch your backs, IDA and Binary Ninja — Malcat is coming for you!
+Reverse engineering with Malcat feels a little bit like cheating. It does more than half the work statically before you even open a debugger. Watch your backs, IDA and Binary Ninja, Malcat is coming for you!
 
 ---
 
 ## Inlyse
 
-**[inlyse.com/blog](https://www.inlyse.com/blog/)**
+**[inlyse.com](https://www.inlyse.com/blog/)**
 
-Back when "AI" was still just two suspicious letters on a marketing slide, the Inlyse crew were already bolting neural nets onto antivirus engines. One of the rare shops where AI isn't a shiny sticker slapped on the box — it's the actual product. If you want to see what happens when people who eat, sleep, and breathe AV get their hands on machine learning years ahead of the hype curve, this is the blog to read.
+Back when nobody had heard of "AI" yet, the Inlyse folks were already bolting neural nets onto antivirus engines. One of the few shops where AI isn't just a shiny sticker on the box, it's the actual product. If you want to see what happens when AV veterans got their hands on machine learning years before everyone else jumped on the hype train, Inlyse is the place to go.
 
