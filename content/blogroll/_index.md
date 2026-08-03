@@ -44,5 +44,5 @@ Reverse engineering with Malcat feels a little bit like cheating. It does more t
 
 **[inlyse.com](https://www.inlyse.com/blog/)**
 
-Back when nobody had heard of "AI" yet, the Inlyse folks were already bolting neural nets onto antivirus engines. One of the few shops where AI isn't just a shiny sticker on the box, it's the actual product. If you want to see what happens when AV veterans got their hands on machine learning years before everyone else jumped on the hype train, Inlyse is the place to go.
+Back when nobody had heard of "AI" yet, the Inlyse folks were already bolting neural nets onto antivirus engines. One of the very few companies where AI isn't just fluffy buzzword marketing, it's the actual product. If you want to see what happens when AV veterans got their hands on machine learning years before everyone else jumped on the hype train, Inlyse is the place to go.
 
