@@ -12,7 +12,7 @@ The internet is a big place. These are the corners I keep coming back to — peo
 
 **[juergen.loehel.de/weblog](https://juergen.loehel.de/weblog/)**
 
-Jürgen is a machine. If his heart had a boot loader it would `chainload` straight into open source — and somehow he still finds cycles to run CTFs with me at 2 a.m. and out-laugh the rest of the team. Deeply technical, endlessly generous with what he knows, and funny in that dry way that sneaks up on you three commits later. Absolute must-read.
+If Juergen's heart had a boot loader, it would `chainload` straight into open source — and somehow he still finds cycles to run CTFs with me. Deeply technical, endlessly generous with what he knows. Absolute must-read.
 
 ---
 
@@ -20,7 +20,7 @@ Jürgen is a machine. If his heart had a boot loader it would `chainload` straig
 
 **[cocomelonc.github.io](https://cocomelonc.github.io/)**
 
-If offensive security had a required-reading list, cocomelonc would be on it. A red-teaming veteran with a genius touch — the write-ups are relentless, technical, and dense with the kind of tradecraft you usually only see whispered in private channels. One of the best public red-team blogs on the planet, no exaggeration.
+If offensive security had a required-reading list, cocomelonc would be on it. A red-teaming veteran with a genius touch — the write-ups are relentless, technical, and dense with the kind of tradecraft you usually only see whispered in private channels. One of the best public red-teaming blogs on the internet.
 
 ---
 
@@ -28,7 +28,7 @@ If offensive security had a required-reading list, cocomelonc would be on it. A 
 
 **[ransom-isac.com/blog](https://ransom-isac.com/blog/)**
 
-Massively community-driven reverse engineering. If you want to see what happens when RE nerds actually *collaborate* instead of hoarding samples, this is the place. Deep, hands-on posts on real malware, real infrastructure, and real defender problems.
+Think Michelin stars — but for ransomware researchers. Ransom-ISAC's L.O.C.K. S.T.A.R. framework hands out real recognition to the folks quietly bending the ransomware curve, and the blog is where the community drops the freshest, spiciest threat intel long before it trickles into the mainstream feeds. Massively community-driven and refreshingly ungatekept.
 
 ---
 
@@ -36,4 +36,13 @@ Massively community-driven reverse engineering. If you want to see what happens 
 
 **[malcat.fr](https://malcat.fr/)**
 
-Probably the best reverse engineering tool far and wide. Full stop. A static-analysis Swiss-army knife that quietly does more than half the heavy lifting before you even fire up a debugger. If IDA and Binary Ninja are the household names, Malcat is the tool that everyone who's tried it refuses to work without.
+Reverse engineering with Malcat sometimes feels like cheating. Full stop. A static-analysis Swiss-army knife that quietly does more than half the heavy lifting before you even fire up a debugger. Watch your backs, IDA and Binary Ninja — Malcat is coming for you!
+
+---
+
+## Inlyse
+
+**[inlyse.com/blog](https://www.inlyse.com/blog/)**
+
+Back when "AI" was still just two suspicious letters on a marketing slide, the Inlyse crew were already bolting neural nets onto antivirus engines. One of the rare shops where AI isn't a shiny sticker slapped on the box — it's the actual product. If you want to see what happens when people who eat, sleep, and breathe AV get their hands on machine learning years ahead of the hype curve, this is the blog to read.
+
