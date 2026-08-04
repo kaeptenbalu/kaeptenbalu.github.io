@@ -4,6 +4,7 @@ date: 2025-06-02
 author: "Manuel Boll"
 tags: ["Foo", "Pentagon", "TI", "commentary"]
 image: "/img/posts/pentagon_pizza.svg"
+images: ["/img/posts/pentagon_pizza.png"]
 ---
 
 

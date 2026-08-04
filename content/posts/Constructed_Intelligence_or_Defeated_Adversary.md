@@ -4,6 +4,7 @@ date: 2025-08-04
 author: "Manuel Boll"
 tags: ["Threat Intelligence","TI", "commentary"]
 image: "/img/posts/volt_typhoon.svg"
+images: ["/img/posts/volt_typhoon.png"]
 ---
 
 

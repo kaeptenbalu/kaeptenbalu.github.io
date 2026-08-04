@@ -44,6 +44,7 @@ theme = 'maverick'
 [params]
   items = 10
   author = "Manuel Boll"
+  images = ["/img/og-default.png"]
 
 [params.Author]
   name = "Manuel Boll"

@@ -4,6 +4,7 @@ date: 2025-09-12
 author: "Manuel Boll"
 tags: ["Threat Hunting", "commentary", "Blue Team"]
 image: "/img/posts/one_ip_500_suspects.svg"
+images: ["/img/posts/one_ip_500_suspects.png"]
 ---
 
 

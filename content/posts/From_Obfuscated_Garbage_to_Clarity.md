@@ -4,6 +4,7 @@ date: 2025-05-15
 author: "Manuel Boll"
 tags: ["Malware-Analysis","PowerShell", "Reverse Engineering", "Blue Team"]
 image: "/img/posts/obfuscated_garbage.svg"
+images: ["/img/posts/obfuscated_garbage.png"]
 ---
 
 

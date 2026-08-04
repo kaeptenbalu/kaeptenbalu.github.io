@@ -4,6 +4,7 @@ date: 2025-07-04
 author: "Manuel Boll"
 tags: ["Malware-Analysis","Sandbox", "Reverse Engineering", "Blue Team"]
 image: "/img/posts/filename_sandbox.svg"
+images: ["/img/posts/filename_sandbox.png"]
 ---
 
 

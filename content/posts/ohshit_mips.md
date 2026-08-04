@@ -5,6 +5,7 @@ author: "Manuel Boll"
 tags: ["Malware-Analysis","Reverse Engineering", "MIPS", "Mirai", "IoT"]
 description: "Beginner-friendly walkthrough of a MIPS Mirai/CondiBot variant called ohshit.mips: decoding the single-byte XOR strings, mapping a 21-slot function pointer table that turns out to be mostly unrelated to the C2 attack vocabulary, and tracing how genddos.st ends up as a DNS amplification payload instead of a C2 domain."
 image: "/img/posts/ohshit_mips.svg"
+images: ["/img/posts/ohshit_mips.png"]
 ---
 
 
