@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="'Bricolage Grotesque','Comic Sans MS',sans-serif">
+  <rect width="800" height="500" fill="#f5efe0"/>
+
+  <text x="400" y="44" font-size="22" font-weight="900" text-anchor="middle" fill="#1a1a1a">
+    TELESHIM WOULD LIKE TO SEND A TELEGRAM.
+  </text>
+
+  <!-- The telegram form itself — slightly tilted like it was slid onto the desk -->
+  <g transform="translate(160,80) rotate(-3 240 160)">
+    <!-- paper -->
+    <rect x="0" y="0" width="480" height="330" fill="#fff8ea" stroke="#1a1a1a" stroke-width="3"/>
+    <!-- torn top edge simulated by inner shadow line -->
+    <line x1="0" y1="6" x2="480" y2="6" stroke="#e5dcc0" stroke-width="2"/>
+
+    <!-- header bar -->
+    <rect x="0" y="0" width="480" height="46" fill="#d2401a" stroke="#1a1a1a" stroke-width="3"/>
+    <text x="20" y="30" font-size="20" font-weight="900" fill="#fff8ea">✉  TELEGRAM</text>
+    <text x="460" y="30" font-size="12" font-weight="700" text-anchor="end" fill="#fff8ea">NO. 8731536541</text>
+
+    <!-- address fields -->
+    <g font-family="ui-monospace, 'Courier New', monospace" font-size="13" font-weight="700" fill="#1a1a1a">
+      <text x="20" y="72">FROM ...........: TELESHIM  (AsTaskSched.dll)</text>
+      <text x="20" y="92">TO   ...........: [YOUR HOST]</text>
+      <text x="20" y="112">VIA  ...........: api.telegram.org</text>
+      <text x="20" y="132">CIPHER .........: base64 + circular xor  (44 bytes)</text>
+    </g>
+
+    <!-- dashed separator -->
+    <line x1="20" y1="150" x2="460" y2="150" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="4 4"/>
+
+    <!-- message body — the decrypted token / chat id -->
+    <g font-family="ui-monospace, 'Courier New', monospace" font-size="12" font-weight="700" fill="#1a1a1a">
+      <text x="20" y="176">= MESSAGE BEGINS =</text>
+      <text x="20" y="204">8731536541:AAFYBCyZRph55NYb6By4_qM2</text>
+      <text x="20" y="222">BI2oYchULMg    STOP</text>
+      <text x="20" y="248">chat_id 8269292188    STOP</text>
+      <text x="20" y="274">await instructions    STOP</text>
+      <text x="20" y="298">= MESSAGE ENDS =</text>
+    </g>
+
+    <!-- red COPIED stamp -->
+    <g transform="translate(345,180) rotate(-14)">
+      <rect x="-2" y="-2" width="120" height="52" fill="none" stroke="#d2401a" stroke-width="3"/>
+      <text x="58" y="19" font-size="16" font-weight="900" text-anchor="middle" fill="#d2401a">COPIED</text>
+      <text x="58" y="38" font-size="10" font-weight="700" text-anchor="middle" fill="#d2401a">FROM .rdata</text>
+    </g>
+  </g>
+
+  <!-- Pencil across the top-right of the paper — nods to the title -->
+  <g transform="translate(560,85) rotate(38)">
+    <!-- pencil body -->
+    <rect x="0" y="0" width="180" height="14" fill="#f0c020" stroke="#1a1a1a" stroke-width="2"/>
+    <!-- eraser end -->
+    <rect x="-24" y="0" width="24" height="14" fill="#d2401a" stroke="#1a1a1a" stroke-width="2"/>
+    <rect x="-32" y="0" width="8" height="14" fill="#8b8b8b" stroke="#1a1a1a" stroke-width="2"/>
+    <!-- pencil tip -->
+    <polygon points="180,0 208,7 180,14" fill="#f5e6c8" stroke="#1a1a1a" stroke-width="2"/>
+    <polygon points="196,3 208,7 196,11" fill="#1a1a1a"/>
+    <!-- wood band lines -->
+    <line x1="30" y1="0" x2="30" y2="14" stroke="#1a1a1a" stroke-width="1"/>
+    <line x1="170" y1="0" x2="170" y2="14" stroke="#1a1a1a" stroke-width="1"/>
+  </g>
+
+  <!-- Bottom tagline -->
+  <text x="400" y="458" font-size="17" font-weight="900" text-anchor="middle" fill="#d2401a">
+    sharpen your pencil.
+  </text>
+  <text x="400" y="482" font-size="13" font-style="italic" text-anchor="middle" fill="#777">
+    the bot token was in .rdata all along STOP
+  </text>
+</svg>
