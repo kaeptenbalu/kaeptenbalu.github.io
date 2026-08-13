@@ -60,7 +60,7 @@ curl -H "X-API-Key: YOUR_API_KEY" \
 ```
 
 - Missing / invalid key → `403 Forbidden`
-- Rate limit exceeded → `429 Too Many Requests` (default: 120 requests/minute per key)
+- Rate limit exceeded → `429 Too Many Requests` (default: 30 requests/minute per key — one request every 2 seconds)
 - Any non-`GET` method or other path → `403`
 
 ## Endpoint
@@ -116,10 +116,10 @@ Rolling windows (e.g. "last 10 days") cannot be expressed as arithmetic in the f
 
 ## Rate limits
 
-Each API key is limited to **120 requests per minute**. Budgets are per key and independent of other partners. Exceeding the limit returns **`429 Too Many Requests`** — back off and retry after roughly 60 seconds.
+Each API key is limited to **30 requests per minute** — one request every 2 seconds. Budgets are per key and independent of other partners. Exceeding the limit returns **`429 Too Many Requests`** — back off and retry after roughly 60 seconds.
 
 To stay well within the limit:
-- page with `perPage=500` (a full pull of the feed is only ~25 requests), and
+- page with `perPage=500` — a full pull of the feed is only ~25 requests, comfortably inside one minute at the current volume, and
 - for updates, query incrementally, e.g. `filter=created >= "<your last sync timestamp>"`.
 
 Need a higher limit for your use case? Contact **telegram@mboll.eu**.
