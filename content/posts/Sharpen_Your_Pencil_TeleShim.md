@@ -2,7 +2,7 @@
 title: "Sharpen Your Pencil, We're Copying TeleShim's Telegram"
 date: 2026-08-05
 author: "Manuel Boll"
-tags: ["Malware-Analysis", "Reverse Engineering", "Malcat", "Telegram", "DLL Sideloading", "TeleShim"]
+tags: ["Learning RE Series","Malware-Analysis", "Reverse Engineering", "Malcat", "Telegram", "DLL Sideloading", "TeleShim"]
 description: "Beginner-friendly Malcat walkthrough of a 32-bit sideloader that pretends to be a task-scheduler helper for ASUS, hides its config as base64 wrapped in a circular XOR, and uses api.telegram.org as its command channel. Covers the summary view, section entropy, exports, strings, anomalies, config decryption, and the getUpdates/sendMessage/sendDocument flow — all statically, without ever executing the sample."
 image: "/img/posts/teleshim.svg"
 images: ["/img/posts/teleshim.png"]
