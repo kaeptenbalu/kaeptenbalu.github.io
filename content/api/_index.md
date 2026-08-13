@@ -35,6 +35,7 @@ The collection is a **flat, denormalized feed**: **one record ≈ one observed l
 
 | Group by | Gives you |
 |---|---|
+| `campaign_id` | pre-computed cluster label — every record with the same value is part of the same campaign (Union-Find over the joins below, run daily on our side) |
 | `malware_file_hash` | all bots a given sample used |
 | `bot_token` | all samples / builds using that bot (campaign lineage) |
 | `source_chat_id` | bots sharing a drop channel → same operator / campaign |
@@ -47,8 +48,35 @@ Because bots, samples and chats repeat, treat the feed as an **edge list of a gr
 - A `bot_token` may already be **dead / revoked** by the time you read it (tokens are validated when first collected).
 - `first_seen` is the sample's **first VirusTotal submission** (its age) — not when we discovered it (that is `created`).
 - Bot / chat metadata (`chat_name`, `admins`, `commands`, `webhook`, …) is present only where the bot was live and could be queried.
+- `campaign_id` is **not stable across runs.** The Union-Find pass re-numbers every cluster from 1 on each run, so the record that was `campaign_id = 549` last week may be `312` this week. Use it to group records within a single response, not as a persistent identifier — if you need a stable handle for a campaign, pin it to one of the natural join keys (a chat, a creator ID, or a shared webhook).
 
 Background on the ecosystem: [The Telegram Malware Ecosystem (ransom-isac.com)](https://ransom-isac.com/blog/the-telegram-malware-ecosystem/).
+
+## Update schedule
+
+The pipeline that produces this feed runs **once per day, starting at 15:00 Europe/Berlin (13:00 UTC)**, as a single chain launched by cron. In order, it:
+
+1. Pulls new candidate files from VirusTotal (VT search + per-file `contacted_urls`).
+2. Extracts bot tokens and destination `chat_id`s, validates each token against `getMe`, writes new rows to PocketBase.
+3. Runs `remove_dublkicate` — collapses rows that ended up duplicated across the earlier stages.
+4. Enriches records with VirusTotal family / category labels and tria.ge links (with a 10-minute wait so triggered rescans can finish).
+5. Fetches per-chat metadata via the Bot API (`getChat`, `getChatAdministrators`, `getMyCommands`, …) for bots that are still live.
+6. **Recomputes `campaign_id`** from scratch across the entire collection (Union-Find over every join key), then writes the new integer labels back.
+
+**Chain runtime is variable.** In a typical week the whole thing finishes between 17:30 and 20:00 Berlin (2.5 – 5 h). On days with a large VT backlog it can run into the night and, in the worst case observed so far, until roughly 11:00 the following day. `campaign_id` is only complete after the *last* step, which is the very last stage of the chain.
+
+### When to pull
+
+- **Safe window: 12:00 – 14:59 Europe/Berlin** (10:00 – 12:59 UTC), i.e. a couple of hours before the next chain kicks off at 15:00. At that point the previous day's chain is guaranteed to have finished on all observed runs, deduplication has completed, and `campaign_id` reflects the current state of the collection.
+- **Avoid pulling between 15:00 and ~20:00 Berlin.** During the run you may see rows with missing `families` / `threat_categories` (pre-enrichment), duplicates (pre-dedup), or a mix of old and new `campaign_id` values (pre- or mid-clustering).
+- **Incremental pulls (`filter=created >= "<last sync>"`) are fine at any time** *if you only care about new rows and do your own correlation locally*. New rows are complete metadata-wise once step 4 has passed them; only `campaign_id` is a moving target across the day.
+
+### If you need stable campaign IDs
+
+Because the Union-Find pass re-labels every cluster from `1` on each run, the `campaign_id` you saw yesterday is not the same number as today's. Two options:
+
+- **Full pull each day.** The whole feed is ~25 requests at `perPage=500` and well inside the rate limit. This is the simplest way to always have a consistent set of `campaign_id` values — but it means you cannot cache old snapshots by ID.
+- **Local correlation (recommended for anything long-lived).** Ignore `campaign_id` and re-compute clusters on your side over the natural join keys (`bot_token`'s bot ID prefix, `source_chat_id`, `webhook`, `admins` creator, `malware_file_hash`, `bot_description`, menu URLs, referral codes). That way you only need to fetch new rows incrementally and your own cluster labels stay stable across days.
 
 ## Authentication
 
@@ -105,14 +133,21 @@ curl -G "https://YOUR-ENDPOINT/api/collections/Telegram/records" \
   -H "X-API-Key: YOUR_API_KEY" \
   --data-urlencode 'filter=families ~ "asyncrat"' \
   --data-urlencode 'sort=-created'
+
+# only records that were assigned to a campaign cluster (campaign_id is numeric,
+# null for singletons / clusters of only one distinct sample hash)
+curl -G "https://YOUR-ENDPOINT/api/collections/Telegram/records" \
+  -H "X-API-Key: YOUR_API_KEY" \
+  --data-urlencode 'filter=campaign_id != null' \
+  --data-urlencode 'sort=campaign_id'
 ```
 
 Rolling windows (e.g. "last 10 days") cannot be expressed as arithmetic in the filter — compute the date on your side and pass it as an absolute value.
 
 ## Sorting & field selection
 
-- `sort=-created` (newest first) or `sort=first_seen`
-- `fields=bot_name,bot_token,families,first_seen` to limit returned fields
+- `sort=-created` (newest first), `sort=first_seen`, or `sort=campaign_id` to walk clusters in order
+- `fields=bot_name,bot_token,families,first_seen,campaign_id` to limit returned fields
 
 ## Rate limits
 
@@ -135,7 +170,8 @@ Need a higher limit for your use case? Contact **telegram@mboll.eu**.
 | `families` | Malware family/families, e.g. `trojan.msil/asyncrat` |
 | `threat_categories` | Category, e.g. `trojan`, `stealer` |
 | `first_seen` | First submission of the sample to VirusTotal (sample age — **not** our discovery date) |
-| `chat_name`, `admins`, `commands`, `webhook`, `bot_description`, `permissions`, `user_count`, `group_name` | Bot / chat metadata where available |
+| `chat_name`, `admins`, `commands`, `webhook`, `bot_description`, `permissions`, `user_count` | Bot / chat metadata where available |
+| `campaign_id` | Integer campaign label from Union-Find clustering (records linked by shared bot ID, source chat, webhook, creator, sample hash, description, menu URL or referral code). `null` when the record is not part of a cluster with ≥ 2 distinct sample hashes. |
 | `created` / `updated` | When the record entered / last changed in this feed |
 
 ## Example response
