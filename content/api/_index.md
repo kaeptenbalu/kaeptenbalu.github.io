@@ -54,28 +54,21 @@ Background on the ecosystem: [The Telegram Malware Ecosystem (ransom-isac.com)](
 
 ## Update schedule
 
-The pipeline that produces this feed runs **once per day, starting at 15:00 Europe/Berlin (13:00 UTC)**, as a single chain launched by cron. In order, it:
+The pipeline that produces this feed runs **once per day, starting at 13:00 UTC**, as a single chain.
 
-1. Pulls new candidate files from VirusTotal (VT search + per-file `contacted_urls`).
-2. Extracts bot tokens and destination `chat_id`s, validates each token against `getMe`, writes new rows to PocketBase.
-3. Runs `remove_dublkicate` — collapses rows that ended up duplicated across the earlier stages.
-4. Enriches records with VirusTotal family / category labels and tria.ge links (with a 10-minute wait so triggered rescans can finish).
-5. Fetches per-chat metadata via the Bot API (`getChat`, `getChatAdministrators`, `getMyCommands`, …) for bots that are still live.
-6. **Recomputes `campaign_id`** from scratch across the entire collection (Union-Find over every join key), then writes the new integer labels back.
-
-**Chain runtime is variable.** In a typical week the whole thing finishes between 17:30 and 20:00 Berlin (2.5 – 5 h). On days with a large VT backlog it can run into the night and, in the worst case observed so far, until roughly 11:00 the following day. `campaign_id` is only complete after the *last* step, which is the very last stage of the chain.
+**Chain runtime is variable.** In a typical week the whole thing finishes between 15:30 and 18:00 UTC (2.5 – 5 h). On days with a large VT backlog it can run into the night and, in the worst case observed so far, until roughly 09:00 UTC the following day. `campaign_id` is only complete after the *last* step, which is the very last stage of the chain.
 
 ### When to pull
 
-- **Safe window: 12:00 – 14:59 Europe/Berlin** (10:00 – 12:59 UTC), i.e. a couple of hours before the next chain kicks off at 15:00. At that point the previous day's chain is guaranteed to have finished on all observed runs, deduplication has completed, and `campaign_id` reflects the current state of the collection.
-- **Avoid pulling between 15:00 and ~20:00 Berlin.** During the run you may see rows with missing `families` / `threat_categories` (pre-enrichment), duplicates (pre-dedup), or a mix of old and new `campaign_id` values (pre- or mid-clustering).
-- **Incremental pulls (`filter=created >= "<last sync>"`) are fine at any time** *if you only care about new rows and do your own correlation locally*. New rows are complete metadata-wise once step 4 has passed them; only `campaign_id` is a moving target across the day.
+- **Safe window: **10:00 – 12:59 UTC**, i.e. a couple of hours before the next chain kicks off at 13:00. At that point the previous day's chain is guaranteed to have finished on all observed runs, deduplication has completed, and `campaign_id` reflects the current state of the collection.
+- **Avoid pulling between 13:00 and ~18:00 Berlin.**
+- **Incremental pulls (`filter=created >= "<last sync>"`) are recomendet** if you only care about new rows and do your **own correlation locally**.
 
 ### If you need stable campaign IDs
 
 Because the Union-Find pass re-labels every cluster from `1` on each run, the `campaign_id` you saw yesterday is not the same number as today's. Two options:
 
-- **Full pull each day.** The whole feed is ~25 requests at `perPage=500` and well inside the rate limit. This is the simplest way to always have a consistent set of `campaign_id` values — but it means you cannot cache old snapshots by ID.
+- **Full pull each day.** This is the simplest way to always have a consistent set of `campaign_id` values — but it means you cannot cache old snapshots by ID.
 - **Local correlation (recommended for anything long-lived).** Ignore `campaign_id` and re-compute clusters on your side over the natural join keys (`bot_token`'s bot ID prefix, `source_chat_id`, `webhook`, `admins` creator, `malware_file_hash`, `bot_description`, menu URLs, referral codes). That way you only need to fetch new rows incrementally and your own cluster labels stay stable across days.
 
 ## Authentication
@@ -94,11 +87,11 @@ curl -H "X-API-Key: YOUR_API_KEY" \
 ## Endpoint
 
 ```
-GET  https://YOUR-ENDPOINT/api/collections/Telegram/records
-GET  https://YOUR-ENDPOINT/api/collections/Telegram/records/{id}
+GET  https://api.mboll.eu/api/collections/Telegram/records
+GET  https://api.mboll.eu/api/collections/Telegram/records/{id}
 ```
 
-`YOUR-ENDPOINT` is provided to you by email. All responses are JSON.
+All responses are JSON.
 
 ## Pagination
 
@@ -106,16 +99,14 @@ Results are paged — use `page` and `perPage` (max **500**).
 
 ```bash
 curl -H "X-API-Key: YOUR_API_KEY" \
-  "https://YOUR-ENDPOINT/api/collections/Telegram/records?page=1&perPage=200"
+  "https://api.mboll.eu/api/collections/Telegram/records?page=1&perPage=200"
 ```
-
-Envelope: `{ "page", "perPage", "totalItems", "totalPages", "items": [...] }`. Iterate `page` from `1` to `totalPages`.
 
 ## Filtering
 
 Use the `filter` query parameter. Pass it URL-encoded, e.g. with `curl -G --data-urlencode`.
 
-Operators: `=`  `!=`  `>`  `>=`  `<`  `<=`  `~` (contains); combine with `&&` / `||`; date macros `@now`, `@todayStart`, `@monthStart`, `@yearStart`.
+Operators: `=`  `!=`  `>`  `>=`  `<`  `<=`  `~` ; combine with `&&` / `||`; date macros `@now`, `@todayStart`, `@monthStart`, `@yearStart`.
 
 ```bash
 # records added to the feed today
@@ -151,11 +142,7 @@ Rolling windows (e.g. "last 10 days") cannot be expressed as arithmetic in the f
 
 ## Rate limits
 
-Each API key is limited to **30 requests per minute** — one request every 2 seconds. Budgets are per key and independent of other partners. Exceeding the limit returns **`429 Too Many Requests`** — back off and retry after roughly 60 seconds.
-
-To stay well within the limit:
-- page with `perPage=500` — a full pull of the feed is only ~25 requests, comfortably inside one minute at the current volume, and
-- for updates, query incrementally, e.g. `filter=created >= "<your last sync timestamp>"`.
+Each API key is limited to **30 requests per minute**. Exceeding the limit returns **`429 Too Many Requests`** — back off and retry after roughly 60 seconds.
 
 Need a higher limit for your use case? Contact **telegram@mboll.eu**.
 
@@ -170,7 +157,13 @@ Need a higher limit for your use case? Contact **telegram@mboll.eu**.
 | `families` | Malware family/families, e.g. `trojan.msil/asyncrat` |
 | `threat_categories` | Category, e.g. `trojan`, `stealer` |
 | `first_seen` | First submission of the sample to VirusTotal (sample age — **not** our discovery date) |
-| `chat_name`, `admins`, `commands`, `webhook`, `bot_description`, `permissions`, `user_count` | Bot / chat metadata where available |
+| `chat_name` | Chat title / first name from `getChat`. Present only where the bot was still a member and could be queried. |
+| `user_count` | Member count from `getChatMemberCount`. **`0` means the count could not be retrieved (bot no longer in the chat, chat deleted, API error) — not that the chat has zero members.** Treat `0` as "unknown", not as a real value. |
+| `admins` | Space-separated `userid:role` pairs from `getChatAdministrators`, e.g. `7862389560:administrator 6394819451:creator`. |
+| `commands` | Registered slash-commands from `getMyCommands`. For a malware bot this is often a published list of C2 verbs. |
+| `webhook` | Delivery URL from `getWebhookInfo` if the bot uses webhook mode. A non-empty value is a fresh IOC — a second piece of attacker infrastructure. |
+| `bot_description` | Bot's own About text from `getMyDescription`. Often a service ad, seller handle, or MaaS template. |
+| `permissions` | Bot's own `getMe` flags, stored verbatim as `can_read_all_group_messages=<true\|false> can_join_groups=<true\|false>`. |
 | `campaign_id` | Integer campaign label from Union-Find clustering (records linked by shared bot ID, source chat, webhook, creator, sample hash, description, menu URL or referral code). `null` when the record is not part of a cluster with ≥ 2 distinct sample hashes. |
 | `created` / `updated` | When the record entered / last changed in this feed |
 
