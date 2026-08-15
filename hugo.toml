@@ -1,7 +1,12 @@
 baseURL = 'https://www.mboll.eu/'
 languageCode = 'en-us'
 title = 'mboll IT-Security'
-theme = 'maverick'
+
+[markup]
+  [markup.highlight]
+    style = "gruvbox"
+    noClasses = true
+    tabWidth = 4
 
 # RSS Feed Configuration
 [outputs]
@@ -16,11 +21,6 @@ theme = 'maverick'
   limit = 20
 
 [menu]
-  [[menu.main]]
-    name = "Home"
-    url = "/"
-    weight = 1
-
   [[menu.main]]
     name = "Posts"
     url = "/posts/"
@@ -43,9 +43,10 @@ theme = 'maverick'
 
 [params]
   items = 10
-  author = "Manuel Boll"
+  authorName = "Manuel Boll"
+  description = "IT-security research by Manuel Boll — malware analysis, reverse engineering, and threat intelligence on Telegram bots abused as C2 infrastructure."
   images = ["/img/og-default.png"]
 
-[params.Author]
+[params.author]
   name = "Manuel Boll"
   email = "hello@mboll.eu"

@@ -1,64 +1,67 @@
-<!doctype html>
-<html lang="en">
-  {{ partial "head.html" . }}
-<body class="homepage-body">
-  <a class="skip-link" href="#main">Skip to main</a>
-  <main id="main">
-    <div class="content homepage-content">
-      {{ partial "header.html" . }}
+{{ define "main" }}
+<section class="hero">
+  <div class="container">
+    <p class="hero-label fade-in">{{ .Params.label | default "IT-Security Research · Threat Intelligence" }}</p>
+    <h1 class="hero-name fade-in">{{ .Site.Params.author.name }}</h1>
+    <p class="hero-tagline fade-in">{{ .Params.tagline | default "Your malware is talking. I'm listening." }}</p>
+    <div class="hero-bio fade-in">
+      {{ .Content }}
+    </div>
+    <div class="hero-cta fade-in">
+      <a class="btn btn-primary" href="{{ "/posts/" | relURL }}">Read the research</a>
+      <a class="btn btn-ghost" href="{{ "/api/" | relURL }}">Threat-Intel API</a>
+    </div>
+  </div>
+</section>
 
-      <div class="homepage-intro">
-        {{ .Content }}
-      </div>
-
-      {{ if gt (len ( where .Site.RegularPages "Section" "posts" )) 0 }}
-      <section class="homepage-posts">
-        <h2 class="homepage-section-title">Latest Posts</h2>
-        <div class="homepage-posts-grid">
-          {{ range (first 4 (where .Site.RegularPages "Section" "posts" ).ByDate.Reverse) }}
-            <article class="post-card">
-              <a href="{{ .Permalink }}" class="post-card-link">
-                {{ with .Params.image }}
-                <div class="post-card-image">
-                  <img src="{{ . | relURL }}" alt="" loading="lazy">
-                </div>
-                {{ end }}
-                <div class="post-card-content">
-                  {{ with (index .Params.tags 0) }}
-                  <span class="post-card-tag">{{ . }}</span>
-                  {{ end }}
-                  <h3 class="post-card-title">{{ .Title }}</h3>
-                  {{ if .Description }}
-                  <p class="post-card-description">{{ .Description }}</p>
-                  {{ else }}
-                  <p class="post-card-description">{{ .Summary | plainify | truncate 160 }}</p>
-                  {{ end }}
-                  <div class="post-card-meta">
-                    <time datetime="{{ dateFormat "2006-01-02" .Date }}">{{ dateFormat "Jan 2, 2006" .Date }}</time>
-                  </div>
-                </div>
-              </a>
-            </article>
-          {{ end }}
+{{ $posts := where .Site.RegularPages "Section" "posts" }}
+{{ if gt (len $posts) 0 }}
+<section class="section section-alt">
+  <div class="container">
+    <p class="section-label">Research &amp; Write-ups</p>
+    <h2 class="section-title">Latest Posts</h2>
+    <div class="post-list">
+      {{ range first 5 $posts.ByDate.Reverse }}
+      <a class="post-row" href="{{ .Permalink }}">
+        <div class="post-row-meta">
+          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 02, 2006" }}</time>
         </div>
-      </section>
+        <h3 class="post-row-title">{{ .Title }}</h3>
+        <p class="post-row-desc">{{ or .Description (.Summary | plainify | truncate 200) }}</p>
+        <div class="post-row-footer">
+          <div class="post-row-tags">
+            {{ range first 4 (.Params.tags | default (slice)) }}<span class="tag">#{{ . | urlize }}</span>{{ end }}
+          </div>
+          <span class="read-arrow">read →</span>
+        </div>
+      </a>
       {{ end }}
     </div>
-  </main>
-
-  <footer class="homepage-footer">
-    <div class="content">
-      <div class="footer-links">
-        <a href="https://www.linkedin.com/in/manuel-boll-78097b217/" target="_blank" rel="noopener">📺 LinkedIn</a>
-        <a href="https://github.com/kaeptenbalu" target="_blank" rel="noopener">❤️ GitHub</a>
-        <a href="mailto:hello@mboll.eu">📧 Email</a>
-        <a href="https://www.mboll.eu/feed.xml">📡 RSS Feed</a>
-        <a href="https://ctftime.org/user/82511" target="_blank" rel="noopener">🏴 CTFTime</a>
-        <a href="https://app.hackthebox.com/profile/61653" target="_blank" rel="noopener">🧠 Hack The Box</a>
-        <a href="https://www.credly.com/users/manuel-boll/badges" target="_blank" rel="noopener">🎖️ Credly</a>
-        <a href="https://freakazoids.de/" target="_blank" rel="noopener">🧩 FreakazoidS</a>
-      </div>
+    <div class="section-footer">
+      <a class="view-all-link" href="{{ "/posts/" | relURL }}">view all posts →</a>
     </div>
-  </footer>
-</body>
-</html>
+  </div>
+</section>
+{{ end }}
+
+<section class="section">
+  <div class="container">
+    <p class="section-label">Beyond the Blog</p>
+    <h2 class="section-title">Data &amp; Feeds</h2>
+    <div class="feature-grid">
+      <a class="feature-card" href="{{ "/api/" | relURL }}">
+        <p class="feature-kicker">Read-only REST API</p>
+        <h3 class="feature-title">Telegram Threat-Intelligence Feed</h3>
+        <p class="feature-desc">Structured intelligence on Telegram bots abused by malware — bot tokens, chat IDs and campaign context, collected daily from live samples. Access for vetted partners.</p>
+        <span class="read-arrow">request access →</span>
+      </a>
+      <a class="feature-card" href="{{ "/sharing/" | relURL }}">
+        <p class="feature-kicker">Open Data</p>
+        <h3 class="feature-title">Datasets from the Research</h3>
+        <p class="feature-desc">Exports and datasets behind the write-ups, free to download and reuse for your own analysis. Sharing is caring.</p>
+        <span class="read-arrow">browse data →</span>
+      </a>
+    </div>
+  </div>
+</section>
+{{ end }}

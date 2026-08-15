@@ -1,0 +1,17 @@
+<nav class="site-nav">
+  <div class="container nav-inner">
+    <a class="nav-logo" href="{{ "/" | relURL }}"><span class="nav-prompt">$</span>mboll.eu</a>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links">
+      {{ $current := . }}
+      {{ range .Site.Menus.main }}
+      <a class="nav-link{{ if or ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) }} active{{ end }}" href="{{ .URL | relURL }}">{{ .Name }}</a>
+      {{ end }}
+      <a class="nav-rss" href="{{ "feed.xml" | absURL }}" aria-label="RSS feed" title="RSS feed">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M6.18 20.82a2.18 2.18 0 1 1-4.36 0 2.18 2.18 0 0 1 4.36 0zM1.82 8.91v3.05c5.65 0 10.22 4.57 10.22 10.22h3.05c0-7.33-5.94-13.27-13.27-13.27zM1.82 1.64v3.05c10.05 0 18.22 8.17 18.22 18.22h3.05C23.09 11.16 13.57 1.64 1.82 1.64z"/></svg>
+      </a>
+    </div>
+  </div>
+</nav>

@@ -1,151 +1,45 @@
 <head>
-    <script>
-        (function() {
-            try {
-                var theme = localStorage.getItem('theme');
-                if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                    document.documentElement.setAttribute('data-theme', 'dark');
-                }
-            } catch(e) {}
-        })();
-    </script>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="author" content="Liste - {{ .Site.BaseURL }}">
-    <title>{{ if eq .IsHome true }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
-    <meta name="description" content="{{ if ne .Description "" }}{{ .Description }}{{ else }}{{ .Site.Params.description }}{{ end }}">
-    {{ template "_internal/opengraph.html" . }}
-    {{ template "_internal/twitter_cards.html" . }}
-    {{ template "_internal/schema.html" . }}
-    {{ template "_internal/google_analytics.html" . }}
-    <link rel="canonical" href="{{ .Permalink }}">
-    <link rel="icon" href="{{ .Site.BaseURL }}/assets/favicon.ico">
-    <link rel="dns-prefetch" href="https://www.google-analytics.com">
-    <link href="https://www.google-analytics.com" rel="preconnect" crossorigin>
-    <link rel="alternate" type="application/atom+xml" title="{{ .Site.Title }}" href="{{ .Site.BaseURL }}/atom.xml" />
-    <link rel="alternate" type="application/json" title="{{ .Site.Title }}" href="{{ .Site.BaseURL }}/feed.json" />
-    <link rel="shortcut icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bricolage+Grotesque">
-    {{ $styles := resources.Get "scss/styles.scss" | toCSS (dict "outputStyle" "compressed") | minify }}
-    <style>{{ $styles.Content | safeCSS }}</style>
-    <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/custom.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="{{ .Site.Params.author.name }}">
+  <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+  <meta name="description" content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+  {{ template "_internal/opengraph.html" . }}
+  {{ template "_internal/twitter_cards.html" . }}
+  <link rel="canonical" href="{{ .Permalink }}">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" href="{{ "feed.xml" | absURL }}">
+  <link rel="preload" href="/fonts/newsreader-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-sans-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/custom.css">
 
-    {{ if .IsHome -}}
-    <script type="application/ld+json">
-    {
-        "@context": "http://schema.org",
-        "@type": "WebSite",
-        "name": "{{ .Site.Title }}",
-        "url": "{{ .Site.BaseURL }}",
-        "description": "{{ .Site.Params.description }}",
-        "thumbnailUrl": "{{ .Site.Params.Logo | absURL }}",
-        "license": "{{ .Site.Params.Copyright }}"
-    }
-    </script>
-    {{ else if .IsPage }}
-    {{ $author :=  or (.Params.author) (.Site.Author.name) }}
-    {{ $org_name :=  .Site.Title }}
-    <script type="application/ld+json">
-    {
-        "@context": "http://schema.org",
-        "@type": "BlogPosting",
-        "articleSection": "{{ .Section }}",
-        "name": "{{ .Title | safeJS }}",
-        "headline": "{{ .Title | safeJS }}",
-        "alternativeHeadline": "{{ .Params.lead }}",
-        "description": "{{ if .Description }}{{ .Description | safeJS }}{{ else }}{{if .IsPage}}{{ .Summary  }}{{ end }}{{ end }}",
-        "inLanguage": {{ .Site.LanguageCode | default "en-us" }},
-        "isFamilyFriendly": "true",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "{{ .Permalink }}"
-        },
-        "author" : {
-            "@type": "Person",
-            "name": "{{ $author }}"
-        },
-        "creator" : {
-            "@type": "Person",
-            "name": "{{ $author }}"
-        },
-        "accountablePerson" : {
-            "@type": "Person",
-            "name": "{{ $author }}"
-        },
-        "copyrightHolder" : "{{ $org_name }}",
-        "copyrightYear" : "{{ .Date.Format "2006" }}",
-        "dateCreated": "{{ .Date.Format "2006-01-02T15:04:05.00Z" | safeHTML }}",
-        "datePublished": "{{ .PublishDate.Format "2006-01-02T15:04:05.00Z" | safeHTML }}",
-        "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05.00Z" | safeHTML }}",
-        "publisher":{
-            "@type":"Organization",
-            "name": {{ $org_name }},
-            "url": {{ .Site.BaseURL }},
-            "logo": {
-                "@type": "ImageObject",
-                "url": "{{ .Site.Params.logo | absURL }}",
-                "width":"32",
-                "height":"32"
-            }
-        },
-        "image": {{ if .Params.images }}[{{ range $i, $e := .Params.images }}{{ if $i }}, {{ end }}{{ $e | absURL }}{{ end }}]{{ else}}{{.Site.Params.logo | absURL }}{{ end }},
-        "url" : "{{ .Permalink }}",
-        "wordCount" : "{{ .WordCount }}",
-        "genre" : [ {{ range $index, $tag := .Params.tags }}{{ if $index }}, {{ end }}"{{ $tag }}" {{ end }}],
-        "keywords" : [ {{ range $index, $tag := .Params.tags }}{{ if $index }}, {{ end }}"{{ $tag }}" {{ end }}]
-    }
-    </script>
-    {{ end }}
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const burger = document.querySelector('.burger');
-            const nav = document.querySelector('.nav-menu');
-            const header = document.querySelector('header');
-
-            if (burger) {
-                burger.addEventListener('click', () => {
-                    nav.classList.toggle('active');
-                    header.classList.toggle('menu-open');
-                });
-
-                // Close menu when clicking outside
-                document.addEventListener('click', (e) => {
-                    if (!header.contains(e.target) && nav.classList.contains('active')) {
-                        nav.classList.remove('active');
-                        header.classList.remove('menu-open');
-                    }
-                });
-            }
-        });
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var toggle = document.createElement('button');
-            toggle.className = 'theme-toggle';
-            toggle.id = 'themeToggle';
-            toggle.setAttribute('aria-label', 'Toggle dark mode');
-            document.body.appendChild(toggle);
-
-            var html = document.documentElement;
-
-            function updateIcon() {
-                toggle.textContent = html.getAttribute('data-theme') === 'dark' ? '☀' : '☾';
-            }
-            updateIcon();
-
-            toggle.addEventListener('click', function() {
-                var isDark = html.getAttribute('data-theme') === 'dark';
-                if (isDark) {
-                    html.removeAttribute('data-theme');
-                    localStorage.setItem('theme', 'light');
-                } else {
-                    html.setAttribute('data-theme', 'dark');
-                    localStorage.setItem('theme', 'dark');
-                }
-                updateIcon();
-            });
-        });
-    </script>
-  </head>
+  {{ if .IsHome -}}
+  <script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": {{ .Site.Title }},
+    "url": {{ .Site.BaseURL }},
+    "description": {{ .Site.Params.description }}
+  }
+  </script>
+  {{- else if and .IsPage (eq .Section "posts") -}}
+  <script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": {{ .Title }},
+    "description": {{ or .Description .Summary | plainify }},
+    "inLanguage": {{ .Site.LanguageCode | default "en-us" }},
+    "mainEntityOfPage": { "@type": "WebPage", "@id": {{ .Permalink }} },
+    "author": { "@type": "Person", "name": {{ or .Params.author .Site.Params.author.name }} },
+    "datePublished": {{ .PublishDate.Format "2006-01-02T15:04:05Z07:00" }},
+    "dateModified": {{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }},
+    {{ with .Params.images }}"image": {{ range first 1 . }}{{ . | absURL }}{{ end }},{{ end }}
+    "url": {{ .Permalink }},
+    "wordCount": {{ printf "%d" .WordCount }},
+    "keywords": {{ .Params.tags | default (slice) }}
+  }
+  </script>
+  {{- end }}
+</head>

@@ -1,8 +1,7 @@
 ---
-title: "API"
+title: "Telegram Threat-Intelligence Feed"
+label: "Read-only REST API"
 ---
-
-# Telegram Threat-Intelligence Feed — API
 
 A read-only REST API providing structured threat intelligence on **Telegram bots abused by malware**
 

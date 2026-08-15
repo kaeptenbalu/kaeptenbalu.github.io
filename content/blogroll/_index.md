@@ -1,8 +1,7 @@
 ---
 title: "Blogroll"
+label: "Reading List"
 ---
-
-# Blogroll
 
 The internet is huge. These are the spots I keep coming back to. People I learn from, tools I actually use, and communities worth being part of. All worth your time.
 

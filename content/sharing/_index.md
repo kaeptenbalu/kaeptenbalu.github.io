@@ -1,5 +1,6 @@
 ---
 title: "Data Sharing"
+label: "Open Data"
 ---
 Sharing is caring 
 
