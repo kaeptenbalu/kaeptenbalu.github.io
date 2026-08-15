@@ -3,7 +3,7 @@ title: "About"
 label: "Who is behind this"
 ---
 
-![manuel.png](https://github.com/kaeptenbalu/kaeptenbalu.github.io/blob/main/assets/img/manuel.png?raw=true)
+![manuel.png](https://github.com/kaeptenbalu/kaeptenbalu.github.io/blob/main/assets/img/manuel1.png?raw=true)
 
 I'm an IT Security enthusiast passionate about dissecting logs and uncovering insights from raw data.
 
