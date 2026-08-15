@@ -1,5 +1,5 @@
 ---
-title: "Volt Typhoon – Constructed Intelligence or Defeated Adversary?"
+title: "Volt Typhoon: Constructed Intelligence or Defeated Adversary?"
 date: 2025-08-04
 author: "Manuel Boll"
 tags: ["Threat Intelligence","TI", "commentary"]

@@ -1,5 +1,5 @@
 ---
-title: "Ping Me Maybe - When SubCrawl Started Talking to Teams"
+title: "Extending SubCrawl: Rebuilt MISP Storage and Real-Time Teams Alerting"
 date: 2025-09-30
 author: "Manuel Boll"
 tags: ["Open Source","Threat Intelligence","Subcrawl", "TI", "Blue Team", "Teams", "OpenSource"]

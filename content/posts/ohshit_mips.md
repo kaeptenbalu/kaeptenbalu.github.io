@@ -1,5 +1,5 @@
 ---
-title: "Reading Pointers Backwards Since 1985 — A MIPS Mirai Variant Up Close"
+title: "Reversing a Big-Endian MIPS Mirai Variant: A Beginner’s Static-Analysis Walkthrough"
 date: 2026-06-29
 author: "Manuel Boll"
 tags: ["Learning RE Series","Malware-Analysis","Reverse Engineering", "MIPS", "Mirai", "IoT"]

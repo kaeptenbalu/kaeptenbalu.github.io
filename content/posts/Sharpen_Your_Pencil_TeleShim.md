@@ -1,5 +1,5 @@
 ---
-title: "Sharpen Your Pencil, We're Copying TeleShim's Telegram"
+title: "TeleShim: Static Analysis of an ASUS-Masquerading Sideloader with Telegram C2"
 date: 2026-08-05
 author: "Manuel Boll"
 tags: ["Learning RE Series","Malware-Analysis", "Reverse Engineering", "Malcat", "Telegram", "DLL Sideloading", "TeleShim"]

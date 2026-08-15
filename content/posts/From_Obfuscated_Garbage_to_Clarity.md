@@ -1,5 +1,5 @@
 ---
-title: "From Obfuscated Garbage to Clarity"
+title: "Deobfuscating a Zero-Detection PowerShell Loader, Step by Step"
 date: 2025-05-15
 author: "Manuel Boll"
 tags: ["Learning RE Series","Malware-Analysis","PowerShell", "Reverse Engineering", "Blue Team"]
