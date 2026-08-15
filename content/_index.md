@@ -1,7 +1,7 @@
 ---
 title: "mboll IT-Security"
 label: "IT-Security Research · Threat Intelligence"
-tagline: "Your malware is talking. I'm listening."
+tagline: "Follow the data. It rarely lies."
 ---
 
-I take malware apart to see who it talks to — from reverse-engineering IoT botnets to running a threat-intelligence pipeline that tracks Telegram bots abused as command-and-control infrastructure. Everything published here comes from hands-on analysis: real samples, real data, no noise.
+Security research driven by curiosity: I reverse-engineer malware, analyze the traces it leaves, and publish what I find. No vendor spin, no recycled headlines — just hands-on work with real samples and real data.
