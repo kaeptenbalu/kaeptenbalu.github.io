@@ -1,13 +1,12 @@
 {{ define "main" }}
 <section class="hero">
   <div class="container">
-    <p class="hero-label fade-in">{{ .Params.label | default "IT-Security Research · Threat Intelligence" }}</p>
-    <h1 class="hero-name fade-in">{{ .Site.Params.author.name }}</h1>
-    <p class="hero-tagline fade-in">{{ .Params.tagline | default "Follow the data. It rarely lies." }}</p>
-    <div class="hero-bio fade-in">
+    <p class="hero-label">{{ .Params.label | default "IT-Security Research · Threat Intelligence" }}</p>
+    <h1 class="hero-name">{{ .Site.Params.author.name }}</h1>
+    <div class="hero-bio">
       {{ .Content }}
     </div>
-    <div class="hero-cta fade-in">
+    <div class="hero-cta">
       <a class="btn btn-primary" href="{{ "/posts/" | relURL }}">Read the research</a>
       <a class="btn btn-ghost" href="{{ "/api/" | relURL }}">Threat-Intel API</a>
     </div>
@@ -26,19 +25,18 @@
         <div class="post-row-meta">
           <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 02, 2006" }}</time>
         </div>
-        <h3 class="post-row-title">{{ .Title }}</h3>
-        <p class="post-row-desc">{{ or .Description (.Summary | plainify | truncate 200) }}</p>
-        <div class="post-row-footer">
+        <div class="post-row-body">
+          <h3 class="post-row-title">{{ .Title }}</h3>
+          <p class="post-row-desc">{{ or .Description (.Summary | plainify | truncate 200) }}</p>
           <div class="post-row-tags">
-            {{ range first 4 (.Params.tags | default (slice)) }}<span class="tag">#{{ . | urlize }}</span>{{ end }}
+            {{ range first 4 (.Params.tags | default (slice)) }}<span class="tag">{{ . | urlize }}</span>{{ end }}
           </div>
-          <span class="read-arrow">read →</span>
         </div>
       </a>
       {{ end }}
     </div>
     <div class="section-footer">
-      <a class="view-all-link" href="{{ "/posts/" | relURL }}">view all posts →</a>
+      <a class="view-all-link" href="{{ "/posts/" | relURL }}">Browse the full archive</a>
     </div>
   </div>
 </section>
@@ -53,13 +51,13 @@
         <p class="feature-kicker">Read-only REST API</p>
         <h3 class="feature-title">Telegram Threat-Intelligence Feed</h3>
         <p class="feature-desc">Structured intelligence on Telegram bots abused by malware — bot tokens, chat IDs and campaign context, collected daily from live samples. Access for vetted partners.</p>
-        <span class="read-arrow">request access →</span>
+        <span class="card-link">Request access</span>
       </a>
       <a class="feature-card" href="{{ "/sharing/" | relURL }}">
         <p class="feature-kicker">Open Data</p>
         <h3 class="feature-title">Datasets from the Research</h3>
         <p class="feature-desc">Exports and datasets behind the write-ups, free to download and reuse for your own analysis. Sharing is caring.</p>
-        <span class="read-arrow">browse data →</span>
+        <span class="card-link">Browse the data</span>
       </a>
     </div>
   </div>

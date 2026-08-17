@@ -20,13 +20,12 @@
         <div class="post-row-meta">
           <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 02, 2006" }}</time>
         </div>
-        <h2 class="post-row-title">{{ .Title }}</h2>
-        <p class="post-row-desc">{{ or .Description (.Summary | plainify | truncate 200) }}</p>
-        <div class="post-row-footer">
+        <div class="post-row-body">
+          <h2 class="post-row-title">{{ .Title }}</h2>
+          <p class="post-row-desc">{{ or .Description (.Summary | plainify | truncate 200) }}</p>
           <div class="post-row-tags">
-            {{ range first 4 (.Params.tags | default (slice)) }}<span class="tag">#{{ . | urlize }}</span>{{ end }}
+            {{ range first 4 (.Params.tags | default (slice)) }}<span class="tag">{{ . | urlize }}</span>{{ end }}
           </div>
-          <span class="read-arrow">read →</span>
         </div>
       </a>
       {{ end }}
