@@ -1,6 +1,8 @@
 ---
 title: "Data Sharing"
 label: "Open Data"
+image: "/img/posts/etherhiding.svg"
+images: ["/img/posts/etherhiding.png"]
 ---
 Sharing is caring 
 
