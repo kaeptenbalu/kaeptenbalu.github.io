@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="'Bricolage Grotesque','Comic Sans MS',sans-serif">
+  <rect width="800" height="500" fill="#f5efe0"/>
+
+  <text x="400" y="48" font-size="25" font-weight="900" text-anchor="middle" fill="#1a1a1a">
+    THEY HID THE MALWARE C2
+  </text>
+  <text x="400" y="80" font-size="21" font-weight="700" text-anchor="middle" fill="#d2401a">
+    on an immutable public blockchain
+  </text>
+
+  <!-- the blockchain: three linked blocks, slightly tilted like a chain laid on a desk -->
+  <g transform="translate(150,150) rotate(-4 250 120)">
+
+    <!-- chain links between the blocks -->
+    <g stroke="#1a1a1a" stroke-width="4" fill="none">
+      <ellipse cx="128" cy="150" rx="16" ry="9"/>
+      <ellipse cx="150" cy="150" rx="16" ry="9"/>
+      <ellipse cx="318" cy="150" rx="16" ry="9"/>
+      <ellipse cx="340" cy="150" rx="16" ry="9"/>
+    </g>
+
+    <!-- block 1: registry -->
+    <g>
+      <rect x="0" y="108" width="110" height="86" fill="#fff8ea" stroke="#1a1a1a" stroke-width="3"/>
+      <rect x="0" y="108" width="110" height="22" fill="#1a1a1a"/>
+      <text x="8" y="124" font-family="ui-monospace,'Courier New',monospace" font-size="11" font-weight="700" fill="#fff8ea">0x9179..53</text>
+      <g font-family="ui-monospace,'Courier New',monospace" font-size="10" font-weight="700" fill="#b8ab88">
+        <text x="8" y="150">block</text>
+        <text x="8" y="166">#61.2M</text>
+        <text x="8" y="182">set()</text>
+      </g>
+    </g>
+
+    <!-- block 2: the focal block being read -->
+    <g>
+      <rect x="170" y="108" width="110" height="86" fill="#fff8ea" stroke="#1a1a1a" stroke-width="3"/>
+      <rect x="170" y="108" width="110" height="22" fill="#d2401a"/>
+      <text x="178" y="124" font-family="ui-monospace,'Courier New',monospace" font-size="11" font-weight="700" fill="#fff8ea">0xa1de..2e</text>
+      <g font-family="ui-monospace,'Courier New',monospace" font-size="10" font-weight="700" fill="#b8ab88">
+        <text x="178" y="150">get()</text>
+        <text x="178" y="166">0x6d4c..</text>
+      </g>
+    </g>
+
+    <!-- block 3: store -->
+    <g>
+      <rect x="340" y="108" width="110" height="86" fill="#fff8ea" stroke="#1a1a1a" stroke-width="3"/>
+      <rect x="340" y="108" width="110" height="22" fill="#1a1a1a"/>
+      <text x="348" y="124" font-family="ui-monospace,'Courier New',monospace" font-size="11" font-weight="700" fill="#fff8ea">0x0820..08</text>
+      <g font-family="ui-monospace,'Courier New',monospace" font-size="10" font-weight="700" fill="#b8ab88">
+        <text x="348" y="150">block</text>
+        <text x="348" y="166">#66.1M</text>
+        <text x="348" y="182">set()</text>
+      </g>
+    </g>
+
+    <!-- sticky note popping out of the focal block: the decoded C2 -->
+    <g transform="translate(150,-2) rotate(-6)">
+      <rect x="0" y="0" width="196" height="86" fill="#fff5d6" stroke="#1a1a1a" stroke-width="2.5"/>
+      <text x="12" y="26" font-family="ui-monospace,'Courier New',monospace" font-size="12" font-weight="700" fill="#1a1a1a">eth_call get()</text>
+      <line x1="12" y1="36" x2="184" y2="36" stroke="#1a1a1a" stroke-width="1.2" stroke-dasharray="4 4"/>
+      <text x="12" y="60" font-family="ui-monospace,'Courier New',monospace" font-size="13" font-weight="900" fill="#d2401a">cloud-safe.click</text>
+      <text x="12" y="78" font-family="ui-monospace,'Courier New',monospace" font-size="10" font-weight="700" fill="#777">no tx  ·  no trace</text>
+    </g>
+
+    <!-- magnifying glass reading the note -->
+    <g>
+      <circle cx="252" cy="52" r="58" fill="#ffffff" fill-opacity="0.10" stroke="#1a1a1a" stroke-width="6"/>
+      <line x1="293" y1="93" x2="345" y2="147" stroke="#1a1a1a" stroke-width="12" stroke-linecap="round"/>
+      <path d="M210 32 A58 58 0 0 1 234 12" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" opacity="0.6"/>
+    </g>
+  </g>
+
+  <text x="400" y="452" font-size="18" font-weight="900" text-anchor="middle" fill="#d2401a">
+    immutable cuts both ways.
+  </text>
+  <text x="400" y="478" font-size="13" font-style="italic" text-anchor="middle" fill="#777">
+    read-only, no transaction, no takedown. i read it anyway.
+  </text>
+</svg>
