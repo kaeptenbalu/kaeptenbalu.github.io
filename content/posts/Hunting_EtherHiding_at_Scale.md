@@ -1,6 +1,6 @@
 ---
 title: "Hunting EtherHiding at Scale: An On-Chain Campaign Tracker"
-date: 2026-09-08
+date: 2026-09-07
 author: "Manuel Boll"
 tags: ["Research","Threat Intelligence","EtherHiding","ClickFix","Blockchain","Polygon","BSC"]
 description: "EtherHiding hides a malware campaign's C2 pointer inside a smart contract, read back with a stealthy eth_call. I built a tracker that seeds contracts from urlscan, reads them with eth_call, derives every other contract an operator ever deployed from the deployer nonce, and reconstructs the full C2-rotation history by bisecting block height. Run for a few weeks it mapped 381 contracts across 63 wallet clusters, and the clusters line up with named campaigns like UNC5142/CLEARSHORT."
