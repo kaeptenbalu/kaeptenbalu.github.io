@@ -1,80 +1,42 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="'Bricolage Grotesque','Comic Sans MS',sans-serif">
   <rect width="800" height="500" fill="#f5efe0"/>
 
-  <text x="400" y="48" font-size="25" font-weight="900" text-anchor="middle" fill="#1a1a1a">
+  <text x="400" y="52" font-size="26" font-weight="900" text-anchor="middle" fill="#1a1a1a">
     THEY HID THE MALWARE C2
   </text>
-  <text x="400" y="80" font-size="21" font-weight="700" text-anchor="middle" fill="#d2401a">
+  <text x="400" y="84" font-size="20" font-weight="700" text-anchor="middle" fill="#d2401a">
     on an immutable public blockchain
   </text>
 
-  <!-- the blockchain: three linked blocks, slightly tilted like a chain laid on a desk -->
-  <g transform="translate(150,150) rotate(-4 250 120)">
+  <!-- soft drop shadow -->
+  <rect x="118" y="146" width="580" height="214" rx="12" fill="#1a1a1a" opacity="0.10"/>
 
-    <!-- chain links between the blocks -->
-    <g stroke="#1a1a1a" stroke-width="4" fill="none">
-      <ellipse cx="128" cy="150" rx="16" ry="9"/>
-      <ellipse cx="150" cy="150" rx="16" ry="9"/>
-      <ellipse cx="318" cy="150" rx="16" ry="9"/>
-      <ellipse cx="340" cy="150" rx="16" ry="9"/>
-    </g>
+  <!-- terminal card (gruvbox dark) -->
+  <rect x="110" y="138" width="580" height="214" rx="12" fill="#282828" stroke="#1a1a1a" stroke-width="2"/>
 
-    <!-- block 1: registry -->
-    <g>
-      <rect x="0" y="108" width="110" height="86" fill="#fff8ea" stroke="#1a1a1a" stroke-width="3"/>
-      <rect x="0" y="108" width="110" height="22" fill="#1a1a1a"/>
-      <text x="8" y="124" font-family="ui-monospace,'Courier New',monospace" font-size="11" font-weight="700" fill="#fff8ea">0x9179..53</text>
-      <g font-family="ui-monospace,'Courier New',monospace" font-size="10" font-weight="700" fill="#b8ab88">
-        <text x="8" y="150">block</text>
-        <text x="8" y="166">#61.2M</text>
-        <text x="8" y="182">set()</text>
-      </g>
-    </g>
+  <!-- title bar -->
+  <path d="M110 150 a12 12 0 0 1 12 -12 h556 a12 12 0 0 1 12 12 v22 h-580 z" fill="#32302f"/>
+  <circle cx="134" cy="161" r="6" fill="#cc5540"/>
+  <circle cx="154" cy="161" r="6" fill="#b9a05c"/>
+  <circle cx="174" cy="161" r="6" fill="#7a8b5a"/>
+  <text x="400" y="165" font-family="ui-monospace,'Courier New',monospace" font-size="12" font-weight="700" text-anchor="middle" fill="#928374">polygon-rpc.com</text>
 
-    <!-- block 2: the focal block being read -->
-    <g>
-      <rect x="170" y="108" width="110" height="86" fill="#fff8ea" stroke="#1a1a1a" stroke-width="3"/>
-      <rect x="170" y="108" width="110" height="22" fill="#d2401a"/>
-      <text x="178" y="124" font-family="ui-monospace,'Courier New',monospace" font-size="11" font-weight="700" fill="#fff8ea">0xa1de..2e</text>
-      <g font-family="ui-monospace,'Courier New',monospace" font-size="10" font-weight="700" fill="#b8ab88">
-        <text x="178" y="150">get()</text>
-        <text x="178" y="166">0x6d4c..</text>
-      </g>
-    </g>
+  <!-- body -->
+  <g font-family="ui-monospace,'Courier New',monospace" font-weight="700">
+    <text x="132" y="212" font-size="15" fill="#a9b665" xml:space="preserve">$ <tspan fill="#ebdbb2">eth_call </tspan><tspan fill="#83a598">0x0820…d308</tspan><tspan fill="#ebdbb2"> get()</tspan></text>
+    <text x="132" y="238" font-size="14" fill="#928374">  selector 0x38bcdc1c   ·   read-only, no transaction</text>
 
-    <!-- block 3: store -->
-    <g>
-      <rect x="340" y="108" width="110" height="86" fill="#fff8ea" stroke="#1a1a1a" stroke-width="3"/>
-      <rect x="340" y="108" width="110" height="22" fill="#1a1a1a"/>
-      <text x="348" y="124" font-family="ui-monospace,'Courier New',monospace" font-size="11" font-weight="700" fill="#fff8ea">0x0820..08</text>
-      <g font-family="ui-monospace,'Courier New',monospace" font-size="10" font-weight="700" fill="#b8ab88">
-        <text x="348" y="150">block</text>
-        <text x="348" y="166">#66.1M</text>
-        <text x="348" y="182">set()</text>
-      </g>
-    </g>
+    <line x1="132" y1="258" x2="668" y2="258" stroke="#3c3836" stroke-width="1.5"/>
 
-    <!-- sticky note popping out of the focal block: the decoded C2 -->
-    <g transform="translate(150,-2) rotate(-6)">
-      <rect x="0" y="0" width="196" height="86" fill="#fff5d6" stroke="#1a1a1a" stroke-width="2.5"/>
-      <text x="12" y="26" font-family="ui-monospace,'Courier New',monospace" font-size="12" font-weight="700" fill="#1a1a1a">eth_call get()</text>
-      <line x1="12" y1="36" x2="184" y2="36" stroke="#1a1a1a" stroke-width="1.2" stroke-dasharray="4 4"/>
-      <text x="12" y="60" font-family="ui-monospace,'Courier New',monospace" font-size="13" font-weight="900" fill="#d2401a">cloud-safe.click</text>
-      <text x="12" y="78" font-family="ui-monospace,'Courier New',monospace" font-size="10" font-weight="700" fill="#777">no tx  ·  no trace</text>
-    </g>
-
-    <!-- magnifying glass reading the note -->
-    <g>
-      <circle cx="252" cy="52" r="58" fill="#ffffff" fill-opacity="0.10" stroke="#1a1a1a" stroke-width="6"/>
-      <line x1="293" y1="93" x2="345" y2="147" stroke="#1a1a1a" stroke-width="12" stroke-linecap="round"/>
-      <path d="M210 32 A58 58 0 0 1 234 12" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" opacity="0.6"/>
-    </g>
+    <text x="132" y="300" font-size="13" fill="#928374">  decoded return:</text>
+    <text x="132" y="332" font-size="26" font-weight="900" fill="#fe8019">  cloud-safe.click</text>
+    <text x="560" y="332" font-size="13" font-style="italic" text-anchor="end" fill="#928374">current C2 ▮</text>
   </g>
 
-  <text x="400" y="452" font-size="18" font-weight="900" text-anchor="middle" fill="#d2401a">
+  <text x="400" y="404" font-size="18" font-weight="900" text-anchor="middle" fill="#d2401a">
     immutable cuts both ways.
   </text>
-  <text x="400" y="478" font-size="13" font-style="italic" text-anchor="middle" fill="#777">
-    read-only, no transaction, no takedown. i read it anyway.
+  <text x="400" y="430" font-size="13" font-style="italic" text-anchor="middle" fill="#777">
+    no transaction, no trace, no takedown. i read it anyway.
   </text>
 </svg>
