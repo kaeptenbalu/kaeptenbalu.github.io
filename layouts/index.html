@@ -1,15 +1,58 @@
 {{ define "main" }}
 <section class="hero">
-  <div class="container">
-    <p class="hero-label">{{ .Params.label | default "Threat Research · Malware Analysis" }}</p>
-    <h1 class="hero-name">{{ .Site.Params.author.name }}</h1>
-    <div class="hero-bio">
-      {{ .Content }}
+  <div class="container hero-grid">
+    <div class="hero-main">
+      <p class="hero-label">{{ .Params.label | default "Threat Research · Malware Analysis" }}</p>
+      <h1 class="hero-name">{{ .Site.Params.author.name }}</h1>
+      <div class="hero-bio">
+        {{ .Content }}
+      </div>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="{{ "/posts/" | relURL }}">Read the research</a>
+        <a class="btn btn-ghost" href="{{ "/api/" | relURL }}">Threat-Intel API</a>
+      </div>
     </div>
-    <div class="hero-cta">
-      <a class="btn btn-primary" href="{{ "/posts/" | relURL }}">Read the research</a>
-      <a class="btn btn-ghost" href="{{ "/api/" | relURL }}">Threat-Intel API</a>
-    </div>
+    <aside class="hero-featured">
+      <p class="hero-featured-label">Talks &amp; Press</p>
+      <ul class="featured-list">
+        <li>
+          <a href="https://hack.lu/" target="_blank" rel="noopener">
+            <span class="featured-name">Hack.lu 2026</span>
+            <span class="featured-role">Speaker</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.botconf.eu/" target="_blank" rel="noopener">
+            <span class="featured-name">Botconf 2026</span>
+            <span class="featured-role">Speaker</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://ransom-isac.org/blog/the-telegram-malware-ecosystem/" target="_blank" rel="noopener">
+            <span class="featured-name">Ransom-ISAC</span>
+            <span class="featured-role">Research</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.lemagit.fr/actualites/366646373/Telegram-le-nouveau-bus-dexfiltration-des-maliciels" target="_blank" rel="noopener">
+            <span class="featured-name">LeMagIT</span>
+            <span class="featured-role">Press</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://1275.ru/ioc/telegram-boty-stali-massovym-kanalom-upravleniya-vredonosnym-po-issledovanie-vyyavilo-pochti-10-tysyach-obraztsov_33481" target="_blank" rel="noopener">
+            <span class="featured-name">SEC-1275</span>
+            <span class="featured-role">Press</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://cisoclub.ru/telegram-bot-api-9-678-tokenov-i-854-kampanii-vpo" target="_blank" rel="noopener">
+            <span class="featured-name">CISOCLUB</span>
+            <span class="featured-role">Press</span>
+          </a>
+        </li>
+      </ul>
+    </aside>
   </div>
 </section>
 

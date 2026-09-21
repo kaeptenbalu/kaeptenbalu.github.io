@@ -333,6 +333,78 @@ a:hover {
   flex-wrap: wrap;
 }
 
+/* Randspalte "Talks & Press" rechts neben dem Namen (Print-Marginalie) */
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 292px;
+  gap: 24px 72px;
+  align-items: start;
+}
+
+.hero-featured {
+  border-top: 4px double var(--rule-strong);
+  padding-top: 16px;
+  margin-top: 6px;
+}
+
+.hero-featured-label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  margin-bottom: 6px;
+}
+
+.featured-list {
+  list-style: none;
+}
+
+.featured-list li + li {
+  border-top: 1px solid var(--rule);
+}
+
+.featured-list a {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 9px 2px;
+  color: var(--ink);
+}
+
+.featured-list a:hover .featured-name {
+  color: var(--rubric);
+}
+
+.featured-name {
+  font-family: var(--serif);
+  font-size: 1.02rem;
+}
+
+.featured-role {
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  font-weight: 500;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  white-space: nowrap;
+}
+
+@media (max-width: 880px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-featured {
+    max-width: 420px;
+    margin-top: 34px;
+  }
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
