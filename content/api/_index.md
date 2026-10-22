@@ -158,6 +158,18 @@ Need a higher limit for your use case? Contact **telegram@mboll.eu**.
 | `bot_description` | Bot's own About text from `getMyDescription`. Often a service ad, seller handle, or MaaS template. |
 | `permissions` | Bot's own `getMe` flags, stored verbatim as `can_read_all_group_messages=<true\|false> can_join_groups=<true\|false>`. |
 | `created` / `updated` | When the record entered / last changed in this feed |
+| `api_methods` | Space-separated Bot API methods the bot actually calls, e.g. `sendDocument sendMessage`. Useful indicator of C2 capabilities and exfiltration style. |
+| `triage` | URL to a [tria.ge](https://tria.ge) sandbox analysis of the sample, when available. Empty string if not yet analysed. |
+| `private` | Boolean. `true` if the bot has privacy mode enabled (cannot read group messages without being addressed). |
+| `menu_webapp_url` | WebApp URL set as the bot's menu button, when present. A second piece of attacker infrastructure — treat as an IOC. |
+| `pinned_message` | Text of the pinned message in the exfiltration chat, when retrievable. Can contain operator contact handles or service ads. |
+| `chat_picture` | Telegram file ID of the exfiltration chat's profile picture, when available. |
+| `creator_picture` | Telegram file ID of the chat creator's profile picture, when available. |
+| `source_chat_id_raw` | Raw, unprocessed chat ID string as observed in the webhook payload before normalization into `source_chat_id`. Usually identical; diverges when the operator used a username or invite link instead of a numeric ID. |
+| `relay` | Bot token of an intermediate relay bot used during sinkholing, when applicable. Typically empty in the external feed. |
+| `relay_account` | Telegram account ID of the relay operator, when applicable. Typically empty in the external feed. |
+| `investigation_name` | Internal label if the record was associated with a named investigation case. Typically empty in the external feed. |
+| `investigation_url` | URL of the associated investigation case, e.g. a tracking ticket. Typically empty in the external feed. |
 
 ## Example response
 
