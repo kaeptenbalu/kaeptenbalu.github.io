@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="'Bricolage Grotesque','Comic Sans MS',sans-serif">
+  <rect width="800" height="500" fill="#f5efe0"/>
+
+  <text x="400" y="52" font-size="26" font-weight="900" text-anchor="middle" fill="#1a1a1a">
+    THE DOMAIN CHANGED HANDS
+  </text>
+  <text x="400" y="84" font-size="20" font-weight="700" text-anchor="middle" fill="#d2401a">
+    telegram kept delivering anyway
+  </text>
+
+  <!-- soft drop shadow -->
+  <rect x="118" y="146" width="580" height="214" rx="12" fill="#1a1a1a" opacity="0.10"/>
+
+  <!-- terminal card (gruvbox dark) -->
+  <rect x="110" y="138" width="580" height="214" rx="12" fill="#282828" stroke="#1a1a1a" stroke-width="2"/>
+
+  <!-- title bar -->
+  <path d="M110 150 a12 12 0 0 1 12 -12 h556 a12 12 0 0 1 12 12 v22 h-580 z" fill="#32302f"/>
+  <circle cx="134" cy="161" r="6" fill="#cc5540"/>
+  <circle cx="154" cy="161" r="6" fill="#b9a05c"/>
+  <circle cx="174" cy="161" r="6" fill="#7a8b5a"/>
+  <text x="400" y="165" font-family="ui-monospace,'Courier New',monospace" font-size="12" font-weight="700" text-anchor="middle" fill="#928374">sinkhole access.log</text>
+
+  <!-- body -->
+  <g font-family="ui-monospace,'Courier New',monospace" font-weight="700">
+    <text x="132" y="212" font-size="15" fill="#a9b665" xml:space="preserve">POST <tspan fill="#ebdbb2">/</tspan><tspan fill="#83a598">58xxxxxxxx:AAH…</tspan><tspan fill="#ebdbb2"> 200</tspan></text>
+    <text x="132" y="238" font-size="14" fill="#928374">  from 149.154.167.x   ·   update_id, message, chat</text>
+
+    <line x1="132" y1="258" x2="668" y2="258" stroke="#3c3836" stroke-width="1.5"/>
+
+    <text x="132" y="300" font-size="13" fill="#928374">  40 days later:</text>
+    <text x="132" y="332" font-size="26" font-weight="900" fill="#fe8019">  5,471,500 updates</text>
+    <text x="668" y="332" font-size="13" font-style="italic" text-anchor="end" fill="#928374">32,781 bots ▮</text>
+  </g>
+
+  <text x="400" y="404" font-size="18" font-weight="900" text-anchor="middle" fill="#d2401a">
+    a webhook is just a url.
+  </text>
+  <text x="400" y="430" font-size="13" font-style="italic" text-anchor="middle" fill="#777">
+    whoever owns the domain gets the updates. and often the token.
+  </text>
+</svg>
