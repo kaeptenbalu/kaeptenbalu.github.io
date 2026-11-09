@@ -197,9 +197,9 @@ The same industry shows up from the other side in the groups. Telegram added the
 
 ## 6. What is in the chats
 
-To get from raw traffic to cases, every chat in the corpus (110,833 in the first four weeks) went through a three-step classification. Keyword lexicons and thresholds sorted out the chats with too little content. A language model then reviewed the candidates with the evidence messages attached. Finally I checked the results by hand, and everything I cite in a case was re-derived with SQL.
+To get from raw traffic to cases, every chat in the corpus (110,833 in the first four weeks) went through a three-step classification. Keyword lexicons and thresholds sorted out the chats with too little content. A local language model then reviewed the candidates with the evidence messages attached.
 
-Most chats turn out to have nothing to classify. 69,058 have no text content at all, usually a `/start` and nothing else, and 30,305 have too little for any judgement. 7,321 have only a few messages, 3,269 are unremarkable and 84 stayed unclear. 796 chats were classified:
+Most chats turn out to have nothing to classify. 69,058 have no text content at all, usually a `/start` and nothing else, and 30,366 have too little for any judgement. 7,321 have only a few messages, 3,269 are unremarkable and 84 stayed unclear. 708 chats were classified:
 
 | Category | Chats |
 |---|---|
@@ -213,9 +213,9 @@ Most chats turn out to have nothing to classify. 69,058 have no text content at 
 | money laundering indicators | 4 |
 | lead-list distribution (first case below) | 1 |
 | drugs | 1 |
-| not covered in this post | 61 |
 
-The 61 at the bottom are two categories I am not going to discuss on a blog. They were handled separately, as was a small number of chats flagged for authorised manual review. The label "classified" is an assessment, not a verdict. The language model's part in it makes the borderline cases noisier than I would like, which is the reason the three cases below only use numbers I recomputed myself.
+
+The label "classified" is an assessment, not a verdict. The language model's part in it makes the borderline cases noisier than I would like, which is the reason the three cases below only use numbers I recomputed myself.
 
 ### The spreadsheet factory
 
