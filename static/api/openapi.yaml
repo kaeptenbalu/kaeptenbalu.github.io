@@ -4,11 +4,12 @@ info:
   version: "1.0.0"
   summary: Read-only feed of Telegram bots abused by malware.
   description: |
+    **Base URL: `https://ti.mboll.eu`** — every endpoint lives under `/v1`,
+    e.g. `https://ti.mboll.eu/v1/records`. Authenticate with the `X-API-Key` header.
+
     Technical reference: endpoints, parameters, filter syntax and every field.
     Access, terms of use, data model, update schedule and
     versioning are explained in the [guide](https://www.mboll.eu/api/).
-  contact:
-    url: https://www.mboll.eu/api/
 
 servers:
   - url: https://ti.mboll.eu
