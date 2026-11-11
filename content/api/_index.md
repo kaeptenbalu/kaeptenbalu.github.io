@@ -3,199 +3,66 @@ title: "Telegram Threat-Intelligence Feed"
 label: "Read-only REST API"
 ---
 
-A read-only REST API providing structured threat intelligence on **Telegram bots abused by malware**
+A read-only REST API providing structured threat intelligence on **Telegram bots abused by malware**: the bot tokens and exfiltration chats hard-coded in malware samples, validated against the Telegram Bot API and enriched with malware family, sandbox links and bot/chat metadata.
 
-> **Classification: TLP:AMBER+STRICT.** The data may be used **only within your own organization** on a need-to-know basis and **must not be shared onward**. Use is permitted for lawful defensive and research purposes only.
+> **Classification: TLP:AMBER+STRICT.** Use the data **only within your own organization**, on a need-to-know basis, for lawful defensive or research purposes — **no onward sharing**. Keys are personal and must not be shared; access can be revoked at any time, and any unlawful use ends it immediately.
+
+**→ [API reference](/api/reference/)** — endpoints, parameters, filter syntax, every field and its caveats, error codes · [openapi.yaml](/api/openapi.yaml) for code generators, Postman or Insomnia.
 
 ## Requesting access
 
-The API is **not public**. Access is granted to **vetted, trustworthy partners** only.
-
-To request access, email **telegram@mboll.eu** with who you are and your intended use:
+Access is granted to **vetted, trustworthy partners** only. Email **telegram@mboll.eu** with who you are and your intended use:
 
 | Use case | Cost |
 |---|---|
 | **Research / non-commercial** | free of charge |
 | **Commercial** | paid — contact for terms |
 
-After approval you receive **your personal endpoint URL** and **your personal API key** by email. The endpoint is intentionally not published here.
+After approval you receive **your personal API key** by email. The API is served at **`https://ti.mboll.eu`** — without a valid key every request is rejected.
+
+## Quick start
+
+```bash
+curl -G "https://ti.mboll.eu/v1/records" \
+  -H "X-API-Key: YOUR_API_KEY" \
+  --data-urlencode 'filter=created >= @todayStart' \
+  --data-urlencode 'sort=-created' \
+  --data-urlencode 'perPage=100'
+```
+
+**Versioning:** all paths live under `/v1`. Within `v1` the response format and field semantics stay stable — fields may be added, never silently changed; a breaking change would ship as `/v2` with an overlap period.
+
+> **Already a partner?** The legacy path `/api/collections/Telegram/records` keeps working during the transition but is **deprecated** — please switch to `/v1/records` (same parameters, same response).
 
 ## Understanding the data
 
-The collection is a **flat, denormalized feed**: **one record ≈ one observed link between a bot and a malware sample**, plus enrichment.
+The collection is a **flat, denormalized feed**: **one record ≈ one observed link between a malware sample, a bot token and (where observed) a chat**, plus enrichment. Samples, bots and chats repeat across records, so treat the feed as an **edge list of a graph** (sample —uses→ bot —exfiltrates-to→ chat), not a flat table:
 
-### Relationships (many-to-many)
-
-- **Sample ↔ Bot** — a single sample may ship several tokens (fallback / rotation), and a single bot is reused across many builds and samples. Both `malware_file_hash` and `bot_token` recur across records.
-- **Bot ↔ Chat** — bots exfiltrate to a `source_chat_id`; operators funnel **many bots into one chat/channel**.
+- **Sample ↔ Bot** — a sample may ship several tokens (fallback / rotation); a bot is reused across many builds and samples.
+- **Bot ↔ Chat** — operators funnel **many bots into one chat/channel**.
 - **Operator ↔ Bots** — the same creator (`admins`) runs many bots.
 
-### How to pivot / cluster
+### Pivoting and clustering
+
+The feed ships **no pre-computed cluster label** — commodity malware is used by many independent operators, so automatic transitive clustering chains unrelated actors together. **Correlate locally** over the natural join keys; your own labels then stay stable across days:
 
 | Group by | Gives you |
 |---|---|
 | `malware_file_hash` | all bots a given sample used |
-| `bot_token` | all samples / builds using that bot (campaign lineage) |
+| bot ID (the number before `:` in `bot_token`) | all samples / builds using that bot — stable even if the operator rotates the token secret |
 | `source_chat_id` | bots sharing a drop channel → same operator / campaign |
-| `admins` | operator attribution across bots |
+| `admins` (the `creator`) | operator attribution across bots |
+| `relay_account` | Cloudflare Worker relays run by the same account |
+| `webhook`, `menu_webapp_url`, `bot_description` | shared infrastructure, MaaS templates, seller handles, referral codes |
 
-Because bots, samples and chats repeat, treat the feed as an **edge list of a graph** (sample —uses→ bot —exfiltrates-to→ chat), not a flat table, when clustering campaigns or attributing operators.
-
-### Caveats
-
-- A `bot_token` may already be **dead / revoked** by the time you read it (tokens are validated when first collected).
-- `first_seen` is the sample's **first VirusTotal submission** (its age) — not when we discovered it (that is `created`).
-- Bot / chat metadata (`chat_name`, `admins`, `commands`, `webhook`, …) is present only where the bot was live and could be queried.
-- There is **no pre-computed cluster label.** If you need a stable handle for a campaign, pin it to one of the natural join keys (a chat, a creator ID, or a shared webhook) and correlate locally.
+Where a record has been tied to a **named investigation or public report** by a bot, chat or token match, it carries `investigation_name` / `investigation_url`.
 
 Background on the ecosystem: [The Telegram Malware Ecosystem (ransom-isac.com)](https://ransom-isac.com/blog/the-telegram-malware-ecosystem/).
 
 ## Update schedule
 
-The pipeline that produces this feed runs **once per day, starting at 13:00 UTC**, as a single chain.
+The pipeline runs **once per day, starting at 15:00 Europe/Berlin** (13:00 UTC in summer, 14:00 UTC in winter). On normal days it finishes around **midnight Berlin time**; with a large VirusTotal backlog it has run into the next morning. Enrichment fields are complete only after the last step. A small relay-discovery job may add a few records around 10:00 Berlin.
 
-**Chain runtime is variable.** In a typical week the whole thing finishes between 15:30 and 18:00 UTC (2.5 – 5 h). On days with a large VT backlog it can run into the night and, in the worst case observed so far, until roughly 09:00 UTC the following day. Enrichment fields are only complete after the *last* step of the chain.
-
-### When to pull
-
-- **Safe window: **10:00 – 12:59 UTC**, i.e. a couple of hours before the next chain kicks off at 13:00. At that point the previous day's chain is guaranteed to have finished on all observed runs, deduplication has completed and all enrichment fields reflect the current state of the collection.
-- **Avoid pulling between 13:00 and ~18:00 Berlin.**
-- **Incremental pulls (`filter=created >= "<last sync>"`) are recomendet** if you only care about new rows and do your **own correlation locally**.
-
-### Clustering campaigns
-
-The feed intentionally ships **no pre-computed cluster label** — commodity malware is used by many independent operators, so any automatic transitive clustering ends up chaining unrelated actors together. Instead, **correlate locally** over the natural join keys: `bot_token`'s bot ID prefix, `source_chat_id`, `webhook`, `admins` creator, `malware_file_hash`, `bot_description`, menu URLs, referral codes. That way you only need to fetch new rows incrementally and your own cluster labels stay stable across days.
-
-## Authentication
-
-Every request must include your key in the `X-API-Key` header. The API is **read-only** (only `GET` is allowed).
-
-```bash
-curl -H "X-API-Key: YOUR_API_KEY" \
-  "https://YOUR-ENDPOINT/api/collections/Telegram/records?perPage=50"
-```
-
-- Missing / invalid key → `403 Forbidden`
-- Rate limit exceeded → `429 Too Many Requests` (default: 30 requests/minute per key — one request every 2 seconds)
-- Any non-`GET` method or other path → `403`
-
-## Endpoint
-
-```
-GET  https://api.mboll.eu/api/collections/Telegram/records
-GET  https://api.mboll.eu/api/collections/Telegram/records/{id}
-```
-
-All responses are JSON.
-
-## Pagination
-
-Results are paged — use `page` and `perPage` (max **500**).
-
-```bash
-curl -H "X-API-Key: YOUR_API_KEY" \
-  "https://api.mboll.eu/api/collections/Telegram/records?page=1&perPage=200"
-```
-
-## Filtering
-
-Use the `filter` query parameter. Pass it URL-encoded, e.g. with `curl -G --data-urlencode`.
-
-Operators: `=`  `!=`  `>`  `>=`  `<`  `<=`  `~` ; combine with `&&` / `||`; date macros `@now`, `@todayStart`, `@monthStart`, `@yearStart`.
-
-```bash
-# records added to the feed today
-curl -G "https://YOUR-ENDPOINT/api/collections/Telegram/records" \
-  -H "X-API-Key: YOUR_API_KEY" \
-  --data-urlencode 'filter=created >= @todayStart'
-
-# samples first seen on/after a date
-curl -G "https://YOUR-ENDPOINT/api/collections/Telegram/records" \
-  -H "X-API-Key: YOUR_API_KEY" \
-  --data-urlencode 'filter=first_seen >= "2026-07-01 00:00:00"'
-
-# a specific malware family, newest first
-curl -G "https://YOUR-ENDPOINT/api/collections/Telegram/records" \
-  -H "X-API-Key: YOUR_API_KEY" \
-  --data-urlencode 'filter=families ~ "asyncrat"' \
-  --data-urlencode 'sort=-created'
-
-# all bots exfiltrating to the same chat (same operator / campaign)
-curl -G "https://YOUR-ENDPOINT/api/collections/Telegram/records" \
-  -H "X-API-Key: YOUR_API_KEY" \
-  --data-urlencode 'filter=source_chat_id = "5283662956"'
-```
-
-Rolling windows (e.g. "last 10 days") cannot be expressed as arithmetic in the filter — compute the date on your side and pass it as an absolute value.
-
-## Sorting & field selection
-
-- `sort=-created` (newest first) or `sort=first_seen`
-- `fields=bot_name,bot_token,families,first_seen` to limit returned fields
-
-## Rate limits
-
-Each API key is limited to **30 requests per minute**. Exceeding the limit returns **`429 Too Many Requests`** — back off and retry after roughly 60 seconds.
-
-Need a higher limit for your use case? Contact **telegram@mboll.eu**.
-
-## Field reference
-
-| Field | Description |
-|---|---|
-| `bot_name` | Telegram bot username |
-| `bot_token` | Observed bot API token (`bot<id>:<secret>`) |
-| `malware_file_hash` | SHA-256 of the malware sample using the bot |
-| `source_chat_id` | Chat/channel the bot exfiltrates to, when observed |
-| `families` | Malware family/families, e.g. `trojan.msil/asyncrat` |
-| `threat_categories` | Category, e.g. `trojan`, `stealer` |
-| `first_seen` | First submission of the sample to VirusTotal (sample age — **not** our discovery date) |
-| `chat_name` | Chat title / first name from `getChat`. Present only where the bot was still a member and could be queried. |
-| `user_count` | Member count from `getChatMemberCount`. **`0` means the count could not be retrieved (bot no longer in the chat, chat deleted, API error) — not that the chat has zero members.** Treat `0` as "unknown", not as a real value. |
-| `admins` | Space-separated `userid:role` pairs from `getChatAdministrators`, e.g. `7862389560:administrator 6394819451:creator`. |
-| `commands` | Registered slash-commands from `getMyCommands`. For a malware bot this is often a published list of C2 verbs. |
-| `webhook` | Delivery URL from `getWebhookInfo` if the bot uses webhook mode. A non-empty value is a fresh IOC — a second piece of attacker infrastructure. |
-| `bot_description` | Bot's own About text from `getMyDescription`. Often a service ad, seller handle, or MaaS template. |
-| `permissions` | Bot's own `getMe` flags, stored verbatim as `can_read_all_group_messages=<true\|false> can_join_groups=<true\|false>`. |
-| `created` / `updated` | When the record entered / last changed in this feed |
-| `api_methods` | Space-separated Bot API methods the bot actually calls, e.g. `sendDocument sendMessage`. Useful indicator of C2 capabilities and exfiltration style. |
-| `triage` | URL to a [tria.ge](https://tria.ge) sandbox analysis of the sample, when available. Empty string if not yet analysed. |
-| `private` | Boolean. `true` if the bot has privacy mode enabled (cannot read group messages without being addressed). |
-| `menu_webapp_url` | WebApp URL set as the bot's menu button, when present. A second piece of attacker infrastructure — treat as an IOC. |
-| `pinned_message` | Text of the pinned message in the exfiltration chat, when retrievable. Can contain operator contact handles or service ads. |
-| `chat_picture` | Telegram file ID of the exfiltration chat's profile picture, when available. |
-| `creator_picture` | Telegram file ID of the chat creator's profile picture, when available. |
-| `source_chat_id_raw` | Raw, unprocessed chat ID string as observed in the webhook payload before normalization into `source_chat_id`. Usually identical; diverges when the operator used a username or invite link instead of a numeric ID. |
-| `relay` | Bot token of an intermediate relay bot used during sinkholing, when applicable. Typically empty in the external feed. |
-| `relay_account` | Telegram account ID of the relay operator, when applicable. Typically empty in the external feed. |
-| `investigation_name` | Internal label if the record was associated with a named investigation case. Typically empty in the external feed. |
-| `investigation_url` | URL of the associated investigation case, e.g. a tracking ticket. Typically empty in the external feed. |
-
-## Example response
-
-```json
-{
-  "page": 1,
-  "perPage": 2,
-  "totalItems": 12100,
-  "totalPages": 6050,
-  "items": [
-    {
-      "bot_name": "anuZSteel_bot",
-      "bot_token": "bot8122935411:AAH...",
-      "families": "trojan.msil/asyncrat",
-      "threat_categories": "trojan",
-      "first_seen": "2025-05-10 20:58:16.000Z"
-    }
-  ]
-}
-```
-
-## Terms of use (summary)
-
-- **TLP:AMBER+STRICT** — internal use within your organization only; **no onward disclosure**.
-- Lawful **defensive / research** use only; any unlawful use terminates access immediately.
-- Do not share your API key. Access is per-partner and can be revoked at any time.
-- **Commercial** use requires a paid agreement; **research / non-commercial** use is free for vetted partners.
-
-Access requests and questions: **telegram@mboll.eu**
+- **Recommended window: 10:30 – 12:30 UTC** — the previous run has finished, deduplication is complete and all enrichment is current.
+- **Avoid pulling while the chain runs** — from 15:00 Berlin until roughly midnight Berlin.
+- **Pull incrementally:** remember the newest `created` value you have seen and request `filter=created > "<that value>"` with `sort=created`.

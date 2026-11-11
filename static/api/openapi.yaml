@@ -1,0 +1,412 @@
+openapi: 3.1.0
+info:
+  title: Telegram Threat-Intelligence Feed
+  version: "1.0.0"
+  summary: Read-only feed of Telegram bots abused by malware.
+  description: |
+    Technical reference: endpoints, parameters, filter syntax and every field.
+    Access, terms of use, data model, update schedule and
+    versioning are explained in the [guide](https://www.mboll.eu/api/).
+  contact:
+    url: https://www.mboll.eu/api/
+
+servers:
+  - url: https://ti.mboll.eu
+    description: Production (requires a valid X-API-Key)
+
+security:
+  - ApiKey: []
+
+tags:
+  - name: Records
+
+paths:
+  /v1/records:
+    get:
+      tags: [Records]
+      operationId: listRecords
+      summary: List / search records
+      description: |
+        Returns a paginated list of records. Combine `filter`, `sort` and `fields`
+        to search and to keep responses small.
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/perPage"
+        - $ref: "#/components/parameters/filter"
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/fields"
+        - $ref: "#/components/parameters/skipTotal"
+      responses:
+        "200":
+          description: A page of records
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecordList"
+              examples:
+                default:
+                  $ref: "#/components/examples/RecordListExample"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+
+  /v1/records/{id}:
+    get:
+      tags: [Records]
+      operationId: getRecord
+      summary: Get a single record
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Record ID (15 characters, `[a-z0-9]`).
+          schema:
+            type: string
+            pattern: "^[a-z0-9]{15}$"
+          example: 6wt5fl4nyzq8n1u
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: The record
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Record"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          description: No record with this ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+
+components:
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: |
+        Your personal API key. Missing or invalid key → `403`.
+        Keys are per partner and must not be shared.
+
+  parameters:
+    page:
+      name: page
+      in: query
+      description: Page number (1-based).
+      schema: { type: integer, minimum: 1, default: 1 }
+    perPage:
+      name: perPage
+      in: query
+      description: Records per page. Values above 1000 are capped at 1000.
+      schema: { type: integer, minimum: 1, maximum: 1000, default: 30 }
+    filter:
+      name: filter
+      in: query
+      description: |
+        Filter expression. **URL-encode it** (e.g. `curl -G --data-urlencode`).
+
+        - Operators: `=` `!=` `>` `>=` `<` `<=` `~` (contains, case-insensitive)
+          `!~` (does not contain)
+        - Combine with `&&`, `||` and parentheses
+        - **String values must be quoted**: `families ~ "asyncrat"` — unquoted
+          values return `400`
+        - Dates are UTC, format `"YYYY-MM-DD HH:MM:SS"`; macros `@now`,
+          `@todayStart`, `@monthStart`, `@yearStart`
+        - Rolling windows ("last 10 days") cannot be computed in the filter —
+          compute the date on your side and pass it as an absolute value
+      schema: { type: string }
+      examples:
+        today:
+          summary: Records added to the feed today
+          value: created >= @todayStart
+        family:
+          summary: One malware family
+          value: families ~ "asyncrat"
+        chat:
+          summary: All bots exfiltrating to one chat (same operator)
+          value: source_chat_id = "5283662956"
+        live:
+          summary: Tokens that were still valid when last validated
+          value: private = false
+        sample:
+          summary: All bots used by one sample
+          value: malware_file_hash = "e636c2bcfe5215b07ac6bbd83e8292c62fbf1e36354f57645278ddc040a15de7"
+        incremental:
+          summary: Incremental sync since your last pull
+          value: created > "2026-11-09 00:00:00"
+    sort:
+      name: sort
+      in: query
+      description: |
+        Comma-separated field names; prefix `-` for descending.
+        Examples: `-created`, `first_seen`, `-first_seen,bot_name`.
+      schema: { type: string }
+      example: -created
+    fields:
+      name: fields
+      in: query
+      description: Comma-separated list of fields to return (keeps responses small).
+      schema: { type: string }
+      example: bot_name,bot_token,families,first_seen
+    skipTotal:
+      name: skipTotal
+      in: query
+      description: |
+        If `true`, `totalItems` and `totalPages` are not computed (returned as `-1`)
+        — noticeably faster for large paged exports.
+      schema: { type: boolean, default: false }
+
+  responses:
+    BadRequest:
+      description: Invalid filter or sort expression (most often an unquoted string value).
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
+          example:
+            status: 400
+            message: Something went wrong while processing your request.
+            data: {}
+    Forbidden:
+      description: |
+        Missing or invalid `X-API-Key`, a method other than `GET`, or a path outside
+        the documented endpoints. Plain-text body.
+      content:
+        text/plain:
+          schema: { type: string }
+          example: Forbidden - valid X-API-Key required (read-only Telegram feed)
+    TooManyRequests:
+      description: |
+        Rate limit exceeded: **30 requests per minute per key**. Back off and retry
+        after about 60 seconds. Higher limits are available on request.
+
+  schemas:
+    Error:
+      type: object
+      properties:
+        status: { type: integer }
+        message: { type: string }
+        data: { type: object }
+
+    RecordList:
+      type: object
+      required: [page, perPage, totalItems, totalPages, items]
+      properties:
+        page: { type: integer, example: 1 }
+        perPage: { type: integer, example: 2 }
+        totalItems:
+          type: integer
+          description: Total matching records (`-1` with `skipTotal=true`).
+          example: 56942
+        totalPages:
+          type: integer
+          description: Total pages (`-1` with `skipTotal=true`).
+          example: 28471
+        items:
+          type: array
+          items: { $ref: "#/components/schemas/Record" }
+
+    Record:
+      type: object
+      description: |
+        A feed record. Empty strings / `0` mean "not observed / not retrievable",
+        not a real value.
+      properties:
+        id:
+          type: string
+          description: Record ID.
+          example: 6wt5fl4nyzq8n1u
+        collectionId:
+          type: string
+          description: Internal collection ID (constant).
+        collectionName:
+          type: string
+          description: Always `Telegram`.
+          example: Telegram
+
+        bot_token:
+          type: string
+          description: |
+            Observed bot API token, stored as `bot<bot_id>:<secret>`. The numeric
+            `bot_id` before the colon is stable for a bot even if the operator
+            rotates the secret — use it as the bot's join key.
+          example: "bot8122935411:AAH…"
+        bot_name:
+          type: string
+          description: |
+            Bot username from `getMe`. **`PRIVATE_BOT` means the token was already
+            invalid (HTTP 401) when we first validated it**, so no username could be
+            retrieved.
+          example: anuZSteel_bot
+        private:
+          type: boolean
+          description: |
+            **`true` = the token is dead / revoked**: Telegram answered `getMe` with
+            HTTP 401 at validation time. `false` = the token was valid at that time.
+            This is **not** the bot's privacy mode — that is in `permissions`.
+        permissions:
+          type: string
+          description: |
+            The bot's own `getMe` flags, verbatim:
+            `can_read_all_group_messages=<true|false> can_join_groups=<true|false>`.
+            `can_read_all_group_messages=true` means privacy mode is **off**.
+            `unknown` when the token was already dead.
+          example: can_read_all_group_messages=false can_join_groups=true
+        api_methods:
+          type: string
+          description: |
+            Space-separated Bot API methods the sample actually calls, e.g.
+            `sendDocument sendMessage` — indicates exfiltration style / C2 capability.
+          example: sendDocument sendMessage
+
+        malware_file_hash:
+          type: string
+          description: SHA-256 of the malware sample containing the token.
+          example: e636c2bcfe5215b07ac6bbd83e8292c62fbf1e36354f57645278ddc040a15de7
+        first_seen:
+          type: string
+          format: date-time
+          description: |
+            First submission of the **sample** to VirusTotal (its age, UTC) — **not**
+            the date we discovered it (that is `created`).
+          example: "2025-05-10 20:58:16.000Z"
+        families:
+          type: string
+          description: Suggested malware family label from VirusTotal, e.g. `trojan.msil/asyncrat`. Empty if VT has no consensus label.
+          example: trojan.msil/asyncrat
+        threat_categories:
+          type: string
+          description: Comma-separated VirusTotal threat categories, e.g. `trojan, stealer`.
+          example: trojan
+        triage:
+          type: string
+          description: |
+            URL of a [tria.ge](https://tria.ge) analysis of this sample, matched by
+            hash. Empty if the sample is not on tria.ge.
+          example: https://tria.ge/260824-3lmc7szzdz
+
+        source_chat_id:
+          type: string
+          description: |
+            Chat / channel / user ID the bot exfiltrates to, as found in the sample
+            (normalized). Empty if no chat ID was observed. It always stays the ID
+            from the sample — if the group was later migrated to a supergroup, the
+            chat metadata (`chat_name`, `admins`, …) reflects the current chat.
+          example: "5283662956"
+        source_chat_id_raw:
+          type: string
+          description: |
+            Original chat-ID string from the sample **before** normalization (e.g.
+            `5825611283%20`). Only set where normalization changed the value.
+        chat_name:
+          type: string
+          description: Chat title (or first name for private chats) from `getChat`. Only where the bot could still query the chat.
+        user_count:
+          type: integer
+          description: |
+            Member count from `getChatMemberCount`. **`0` means "could not be
+            retrieved"** (bot no longer in the chat, chat deleted, API error) — not
+            zero members.
+        admins:
+          type: string
+          description: |
+            Space-separated `user_id:role` pairs from `getChatAdministrators`, e.g.
+            `7862389560:administrator 6394819451:creator`. The `creator` ID is the
+            strongest operator-attribution key.
+          example: 7862389560:administrator 6394819451:creator
+        pinned_message:
+          type: string
+          description: Text of the pinned message in the exfiltration chat, when retrievable. Often contains operator handles or service ads.
+        chat_picture:
+          type: string
+          description: |
+            File name of the stored chat profile picture (internal). Its presence
+            tells you a picture exists; the image itself is **not downloadable via
+            this API**.
+          example: chat_1016786786_i59thfkxp7.jpg
+        creator_picture:
+          type: string
+          description: File name of the stored profile picture of the chat creator (internal; not downloadable via this API).
+
+        commands:
+          type: string
+          description: Registered slash-commands from `getMyCommands` — often the C2 verb list of the malware panel.
+          example: /start /logs /panel
+        bot_description:
+          type: string
+          description: The bot's About text from `getMyDescription`. Often a service ad, seller handle or MaaS template.
+        webhook:
+          type: string
+          description: |
+            Delivery URL from `getWebhookInfo` if the bot uses webhook mode — a
+            second piece of attacker infrastructure. Note that some are generic
+            services (webhook.site, pipedream, bot builders).
+        menu_webapp_url:
+          type: string
+          description: WebApp URL of the bot's menu button, when set — treat as an IOC.
+
+        relay:
+          type: string
+          description: |
+            Host name of a **Cloudflare Worker relay** the sample uses instead of
+            calling `api.telegram.org` directly (e.g.
+            `proxy.example.workers.dev`). Empty for direct connections.
+          example: proxy.long7aa1.workers.dev
+        relay_account:
+          type: string
+          description: Cloudflare Workers account sub-domain the relay belongs to (e.g. `long7aa1.workers.dev`) — groups relays of one operator.
+          example: long7aa1.workers.dev
+
+        investigation_name:
+          type: string
+          description: |
+            Label of a named investigation or public report (actor / campaign case)
+            the record has been associated with — either a short slug such as
+            `heavygram-handala-2026` or a report title. Set only where a bot, chat
+            or token match ties the record to that case — never by malware family
+            alone. Empty for most records.
+          example: heavygram-handala-2026
+        investigation_url:
+          type: string
+          description: URL of the report or blog post behind `investigation_name`, when available.
+
+        created:
+          type: string
+          format: date-time
+          description: When the record entered this feed (UTC). Use for incremental sync.
+          example: "2026-11-10 17:22:48.510Z"
+        updated:
+          type: string
+          format: date-time
+          description: When the record was last changed (UTC) — enrichment runs update it.
+
+  examples:
+    RecordListExample:
+      value:
+        page: 1
+        perPage: 1
+        totalItems: 56942
+        totalPages: 56942
+        items:
+          - id: 6wt5fl4nyzq8n1u
+            collectionName: Telegram
+            bot_token: "bot8122935411:AAH…"
+            bot_name: anuZSteel_bot
+            private: false
+            permissions: can_read_all_group_messages=false can_join_groups=true
+            api_methods: sendDocument sendMessage
+            malware_file_hash: "…"
+            first_seen: "2025-05-10 20:58:16.000Z"
+            families: trojan.msil/asyncrat
+            threat_categories: trojan
+            source_chat_id: "6835822112"
+            user_count: 0
+            created: "2025-12-03 08:23:00.696Z"
+            updated: "2026-10-27 17:34:07.394Z"
