@@ -19,6 +19,28 @@ security:
 
 tags:
   - name: Records
+    description: |
+      The flat feed: one record per observed link between a malware sample, a bot
+      token and (where observed) a chat, with sample, bot and chat data merged in.
+  - name: Samples
+    description: One entry per malware sample. Join key `sha256` (= `malware_file_hash` in records).
+  - name: Bots
+    description: |
+      One entry per bot (current state). Join key `bot_id` — the number before the
+      colon of a token; stable even if the operator rotates the token secret.
+  - name: Tokens
+    description: |
+      One entry per token string, with liveness over time (re-checked daily).
+      Join keys `token` (= `bot_token` in records) and `bot_id`.
+  - name: Chats
+    description: One entry per exfiltration chat (current state). Join key `chat_id` (= `source_chat_id` in records).
+  - name: History
+    description: |
+      Changes over time. `bot-history` records replaced bot values (webhook,
+      description, commands, username); `chat-history` records chat events (title,
+      description, photo, pinned message, admins, migration, chat gone/restored).
+      For events reconstructed from data collected before November 2026,
+      `detected_at` is the last time the old value was seen.
 
 paths:
   /v1/records:
@@ -86,6 +108,330 @@ paths:
         "429":
           $ref: "#/components/responses/TooManyRequests"
 
+  /v1/samples:
+    get:
+      tags: [Samples]
+      operationId: listSamples
+      summary: List / search samples
+      description: |
+        Same paging, filter, sort and field-selection rules as `/v1/records`.
+
+        Examples: `filter=sha256 = "e636c2bcfe5215b07ac6bbd83e8292c62fbf1e36354f57645278ddc040a15de7"` · `filter=families ~ "stealer"`
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/perPage"
+        - $ref: "#/components/parameters/filterEntity"
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/fields"
+        - $ref: "#/components/parameters/skipTotal"
+      responses:
+        "200":
+          description: A page of samples
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Page"
+                  - type: object
+                    properties:
+                      items:
+                        type: array
+                        items: { $ref: "#/components/schemas/Sample" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+  /v1/samples/{id}:
+    get:
+      tags: [Samples]
+      operationId: getSamples
+      summary: Get a single sample
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Entry ID (15 characters, `[a-z0-9]`) as returned in a list response.
+          schema: { type: string, pattern: "^[a-z0-9]{15}$" }
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: The sample
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Sample" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { description: No entry with this ID }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /v1/bots:
+    get:
+      tags: [Bots]
+      operationId: listBots
+      summary: List / search bots
+      description: |
+        Same paging, filter, sort and field-selection rules as `/v1/records`.
+
+        Examples: `filter=bot_id = "8122935411"` · `filter=webhook != ""`
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/perPage"
+        - $ref: "#/components/parameters/filterEntity"
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/fields"
+        - $ref: "#/components/parameters/skipTotal"
+      responses:
+        "200":
+          description: A page of bots
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Page"
+                  - type: object
+                    properties:
+                      items:
+                        type: array
+                        items: { $ref: "#/components/schemas/Bot" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+  /v1/bots/{id}:
+    get:
+      tags: [Bots]
+      operationId: getBots
+      summary: Get a single bot
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Entry ID (15 characters, `[a-z0-9]`) as returned in a list response.
+          schema: { type: string, pattern: "^[a-z0-9]{15}$" }
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: The bot
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Bot" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { description: No entry with this ID }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /v1/tokens:
+    get:
+      tags: [Tokens]
+      operationId: listTokens
+      summary: List / search tokens
+      description: |
+        Same paging, filter, sort and field-selection rules as `/v1/records`.
+
+        Examples: `filter=bot_id = "8122935411"` · `filter=status = "ok"`
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/perPage"
+        - $ref: "#/components/parameters/filterEntity"
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/fields"
+        - $ref: "#/components/parameters/skipTotal"
+      responses:
+        "200":
+          description: A page of tokens
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Page"
+                  - type: object
+                    properties:
+                      items:
+                        type: array
+                        items: { $ref: "#/components/schemas/Token" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+  /v1/tokens/{id}:
+    get:
+      tags: [Tokens]
+      operationId: getTokens
+      summary: Get a single token
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Entry ID (15 characters, `[a-z0-9]`) as returned in a list response.
+          schema: { type: string, pattern: "^[a-z0-9]{15}$" }
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: The token
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Token" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { description: No entry with this ID }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /v1/chats:
+    get:
+      tags: [Chats]
+      operationId: listChats
+      summary: List / search chats
+      description: |
+        Same paging, filter, sort and field-selection rules as `/v1/records`.
+
+        Examples: `filter=chat_id = "-1001614217318"` · `filter=admins ~ ":creator" && user_count > 10`
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/perPage"
+        - $ref: "#/components/parameters/filterEntity"
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/fields"
+        - $ref: "#/components/parameters/skipTotal"
+      responses:
+        "200":
+          description: A page of chats
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Page"
+                  - type: object
+                    properties:
+                      items:
+                        type: array
+                        items: { $ref: "#/components/schemas/Chat" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+  /v1/chats/{id}:
+    get:
+      tags: [Chats]
+      operationId: getChats
+      summary: Get a single chat
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Entry ID (15 characters, `[a-z0-9]`) as returned in a list response.
+          schema: { type: string, pattern: "^[a-z0-9]{15}$" }
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: The chat
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Chat" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { description: No entry with this ID }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /v1/bot-history:
+    get:
+      tags: [History]
+      operationId: listBotHistory
+      summary: List / search bot history
+      description: |
+        Same paging, filter, sort and field-selection rules as `/v1/records`.
+
+        Examples: `filter=bot_id = "6205694016"` · `filter=event_type = "webhook_changed"`
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/perPage"
+        - $ref: "#/components/parameters/filterEntity"
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/fields"
+        - $ref: "#/components/parameters/skipTotal"
+      responses:
+        "200":
+          description: A page of bot history events
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Page"
+                  - type: object
+                    properties:
+                      items:
+                        type: array
+                        items: { $ref: "#/components/schemas/BotHistoryEvent" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+  /v1/bot-history/{id}:
+    get:
+      tags: [History]
+      operationId: getBotHistory
+      summary: Get a single bot history event
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Entry ID (15 characters, `[a-z0-9]`) as returned in a list response.
+          schema: { type: string, pattern: "^[a-z0-9]{15}$" }
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: The bot history event
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/BotHistoryEvent" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { description: No entry with this ID }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /v1/chat-history:
+    get:
+      tags: [History]
+      operationId: listChatHistory
+      summary: List / search chat history
+      description: |
+        Same paging, filter, sort and field-selection rules as `/v1/records`.
+
+        Examples: `filter=chat_id = "-1001868255344"` · `filter=event_type = "chat_migrated"`
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/perPage"
+        - $ref: "#/components/parameters/filterEntity"
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/fields"
+        - $ref: "#/components/parameters/skipTotal"
+      responses:
+        "200":
+          description: A page of chat history events
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Page"
+                  - type: object
+                    properties:
+                      items:
+                        type: array
+                        items: { $ref: "#/components/schemas/ChatHistoryEvent" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+  /v1/chat-history/{id}:
+    get:
+      tags: [History]
+      operationId: getChatHistory
+      summary: Get a single chat history event
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Entry ID (15 characters, `[a-z0-9]`) as returned in a list response.
+          schema: { type: string, pattern: "^[a-z0-9]{15}$" }
+        - $ref: "#/components/parameters/fields"
+      responses:
+        "200":
+          description: The chat history event
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ChatHistoryEvent" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { description: No entry with this ID }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
 components:
   securitySchemes:
     ApiKey:
@@ -107,6 +453,13 @@ components:
       in: query
       description: Records per page. Values above 1000 are capped at 1000.
       schema: { type: integer, minimum: 1, maximum: 1000, default: 30 }
+    filterEntity:
+      name: filter
+      in: query
+      description: |
+        Filter expression, same syntax as for `/v1/records` (quote string values,
+        URL-encode the expression). See the endpoint description for examples.
+      schema: { type: string }
     filter:
       name: filter
       in: query
@@ -386,6 +739,153 @@ components:
           type: string
           format: date-time
           description: When the record was last changed (UTC) — enrichment runs update it.
+          example: "2026-11-11 07:19:49.312Z"
+
+    Page:
+      type: object
+      properties:
+        page: { type: integer, example: 1 }
+        perPage: { type: integer, example: 30 }
+        totalItems: { type: integer, description: "Total matching entries (-1 with skipTotal=true)." }
+        totalPages: { type: integer, description: "Total pages (-1 with skipTotal=true)." }
+
+    Sample:
+      type: object
+      properties:
+        id: { type: string, example: 8v2kq1x9zt4m0ab }
+        sha256:
+          type: string
+          description: SHA-256 of the malware sample (= `malware_file_hash` in records).
+          example: e636c2bcfe5215b07ac6bbd83e8292c62fbf1e36354f57645278ddc040a15de7
+        first_seen:
+          type: string
+          format: date-time
+          description: First submission to VirusTotal (sample age, UTC).
+          example: "2025-05-10 20:58:16.000Z"
+        families: { type: string, description: "VirusTotal suggested family label; empty if none.", example: trojan.msil/asyncrat }
+        threat_categories: { type: string, description: "Comma-separated VirusTotal threat categories.", example: "trojan, stealer" }
+        triage: { type: string, description: "tria.ge analysis of this sample (matched by hash); empty if none.", example: "https://tria.ge/260824-3lmc7szzdz" }
+        created:
+          type: string
+          format: date-time
+          description: When this entry was first added (UTC).
+        updated:
+          type: string
+          format: date-time
+          description: When this entry last changed (UTC).
+
+    Bot:
+      type: object
+      properties:
+        id: { type: string, example: q7t2m9x4k1zb3ce }
+        bot_id:
+          type: string
+          description: Numeric bot ID (the part before `:` in the token). Stable across token rotation.
+          example: "8122935411"
+        bot_name: { type: string, description: "Current username (last successful getMe). Empty if no token of this bot was ever valid.", example: anuZSteel_bot }
+        permissions: { type: string, description: "Current getMe flags, verbatim.", example: "can_read_all_group_messages=false can_join_groups=true" }
+        bot_description: { type: string, description: "Current About text (getMyDescription)." }
+        commands: { type: string, description: "Current slash-commands (getMyCommands).", example: "/start /logs" }
+        webhook: { type: string, description: "Current webhook URL; empty = long-polling or removed. Earlier values are in bot-history." }
+        menu_webapp_url: { type: string, description: "Current menu-button WebApp URL." }
+        created:
+          type: string
+          format: date-time
+          description: When this entry was first added (UTC).
+        updated:
+          type: string
+          format: date-time
+          description: When this entry last changed (UTC).
+
+    Token:
+      type: object
+      properties:
+        id: { type: string, example: h3k9p2w7x0zq5ma }
+        token: { type: string, description: "Token as observed, `bot<bot_id>:<secret>` (= `bot_token` in records).", example: "bot8122935411:AAH…" }
+        bot_id: { type: string, description: "Bot this token belongs to.", example: "8122935411" }
+        status:
+          type: string
+          enum: [unknown, ok, unauthorized, not_found, rate_limited, error]
+          description: |
+            Result of the latest getMe check (re-checked daily). `ok` = token valid,
+            `unauthorized` / `not_found` = token dead or revoked.
+        first_checked_alive: { type: string, format: date-time, description: "First check that found the token valid." }
+        last_checked_alive: { type: string, format: date-time, description: "Last check that found the token valid." }
+        first_checked_dead: { type: string, format: date-time, description: "First check that found the token dead (empty if never)." }
+        last_checked: { type: string, format: date-time, description: "Latest check of any result." }
+        checks_total: { type: integer, description: "Number of checks so far." }
+        checks_alive: { type: integer, description: "Number of checks that found the token valid." }
+        created:
+          type: string
+          format: date-time
+          description: When this entry was first added (UTC).
+        updated:
+          type: string
+          format: date-time
+          description: When this entry last changed (UTC).
+
+    Chat:
+      type: object
+      properties:
+        id: { type: string, example: c4n8r1v6y2xq0tb }
+        chat_id: { type: string, description: "Telegram chat ID (= `source_chat_id` in records).", example: "-1001614217318" }
+        chat_type: { type: string, enum: [unknown, private, group, supergroup, channel] }
+        chat_name: { type: string, description: "Current title (first name for private chats).", example: MeteorStealerTeam }
+        chat_description: { type: string, description: "Current chat description / bio." }
+        pinned_message: { type: string, description: "Current pinned message text." }
+        admins: { type: string, description: "Current admins as `user_id:role` pairs.", example: "1965881969:creator" }
+        admins_detail:
+          type: [array, "null"]
+          description: Current admins with Telegram profile data (null if never retrieved).
+          items:
+            type: object
+            properties:
+              user_id: { type: integer, example: 1965881969 }
+              role: { type: string, enum: [creator, administrator] }
+              username: { type: [string, "null"], example: nocta221 }
+              first_name: { type: [string, "null"] }
+              last_name: { type: [string, "null"] }
+              is_bot: { type: boolean }
+        user_count: { type: integer, description: "Member count; 0 = could not be retrieved." }
+        last_status:
+          type: string
+          enum: [unknown, ok, chat_gone, forbidden, unauthorized, error, invalid_format]
+          description: Result of the latest daily chat check.
+        last_checked: { type: string, format: date-time, description: "Latest chat check." }
+        last_diff_at: { type: string, format: date-time, description: "Latest check that detected a change." }
+        created:
+          type: string
+          format: date-time
+          description: When this entry was first added (UTC).
+        updated:
+          type: string
+          format: date-time
+          description: When this entry last changed (UTC).
+
+    BotHistoryEvent:
+      type: object
+      properties:
+        id: { type: string }
+        bot_id: { type: string, example: "8122935411" }
+        event_type: { type: string, enum: [username_changed, description_changed, commands_changed, webhook_changed, menu_url_changed] }
+        old_value: { type: string, description: "Value before the change.", example: "https://perehodnik.click/managed/4e30…" }
+        new_value: { type: string, description: "Value after the change (empty = removed).", example: "https://factorkz.com/managed/4e30…" }
+        detected_at: { type: string, format: date-time, description: "When the change was detected (UTC)." }
+
+    ChatHistoryEvent:
+      type: object
+      properties:
+        id: { type: string }
+        chat_id: { type: string, example: "-1001614217318" }
+        event_type:
+          type: string
+          enum: [title_changed, description_changed, photo_changed, pinned_changed, admins_changed,
+                 admin_added, admin_removed, admin_role_changed, chat_migrated, chat_rotated,
+                 chat_gone, chat_restored]
+        user_id: { type: string, description: "Affected user for admin_added / admin_removed / admin_role_changed." }
+        old_value: { type: string, description: "Value before (for chat_migrated: the old chat ID)." }
+        new_value: { type: string, description: "Value after (for chat_migrated: the new supergroup ID)." }
+        detected_at: { type: string, format: date-time, description: "When the event was detected (UTC)." }
 
   examples:
     RecordListExample:

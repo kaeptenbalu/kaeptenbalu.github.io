@@ -42,6 +42,8 @@ The collection is a **flat, denormalized feed**: **one record ≈ one observed l
 - **Bot ↔ Chat** — operators funnel **many bots into one chat/channel**.
 - **Operator ↔ Bots** — the same creator (`admins`) runs many bots.
 
+Besides the flat feed (`/v1/records`), the same data is available **per entity** — `/v1/samples`, `/v1/bots`, `/v1/tokens` (with daily liveness), `/v1/chats` (incl. admin usernames) and the change history in `/v1/bot-history` and `/v1/chat-history`. All are joined by natural keys (`sha256`, `bot_id`, `token`, `chat_id`); details in the [API reference](/api/reference/).
+
 ### Pivoting and clustering
 
 The feed ships **no pre-computed cluster label** — commodity malware is used by many independent operators, so automatic transitive clustering chains unrelated actors together. **Correlate locally** over the natural join keys; your own labels then stay stable across days:
