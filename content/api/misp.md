@@ -45,9 +45,9 @@ Download: [telegram-bot/definition.json](/api/misp/telegram-bot/definition.json)
 
 Without the template the events still import, but the new fields are not recognised as part of the template.
 
-### 2. Install the taxonomy
+### 2. Install the taxonomy (optional)
 
-The feed's own tags (token status, relay type, …) are defined in the taxonomy `mboll-telegram`:
+The feed's own tags (token status, relay type, …) are defined in the taxonomy `mboll-telegram`. **This step is optional:** without it, MISP creates the tags automatically as free tags on import — they work for filtering and searching all the same. Installing the taxonomy adds the descriptions of each tag and makes them available in the tag picker:
 
 ```bash
 D=/var/www/MISP/app/files/taxonomies/mboll-telegram
