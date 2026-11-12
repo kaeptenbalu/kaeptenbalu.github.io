@@ -17,7 +17,7 @@ The data of the [Telegram Threat-Intelligence Feed](/api/) is also available as 
 | **Event** | One per Telegram bot (`Telegram bot <bot_id> (@username) used by malware for exfiltration`), dated to the earliest sample. |
 | **Event report „Overview“** | Human-readable summary: tokens and their liveness, channels (token + chat) with sample counts and time span, malware families, infrastructure. |
 | **`telegram-bot` object** | One per **channel** = token + exfiltration chat: token, bot username and description, chat ID, name and description, **all samples (SHA-256)** using this channel, webhook / WebApp URLs, relay hosts. |
-| **`telegram-account` object** | Chat creator and admins (ID, username, name), linked to the channel. |
+| **`telegram-account` object** | Chat creator and admins (ID, username, name), linked to the channel — where known (group / channel chats only; for private chats the chat ID already is the operator's account). |
 | **`url` attribute** | The Bot API endpoint `https://api.telegram.org/bot<token>/` hard-coded in the malware (detection indicator). |
 
 Events are **updated in place**: a new sample, token, webhook or a dead token changes the existing event (stable UUIDs), it never creates a duplicate. Items that disappear from the data are delivered as **deleted** for 30 days, so they are removed in your MISP as well. MISP only re-downloads events that actually changed.
