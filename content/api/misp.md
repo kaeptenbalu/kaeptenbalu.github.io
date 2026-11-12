@@ -20,6 +20,8 @@ The data of the [Telegram Threat-Intelligence Feed](/api/) is also available as 
 | **`telegram-account` object** | Chat creator and admins (ID, username, name), linked to the channel — where known (group / channel chats only; for private chats the chat ID already is the operator's account). |
 | **`url` attribute** | The Bot API endpoint `https://api.telegram.org/bot<token>/` hard-coded in the malware (detection indicator). |
 
+Background on the data model — channels, token liveness, shared tokens, pivoting: [Understanding the data](/api/reference/#section/Understanding-the-data).
+
 Events are **updated in place**: a new sample, token, webhook or a dead token changes the existing event (stable UUIDs), it never creates a duplicate. Items that disappear from the data are delivered as **deleted** for 30 days, so they are removed in your MISP as well. MISP only re-downloads events that actually changed.
 
 ## Setup
