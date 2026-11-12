@@ -1,0 +1,105 @@
+{
+  "namespace": "mboll-telegram",
+  "description": "Tags of the mboll.eu Telegram threat-intelligence feed: bot-token liveness, relay infrastructure and data provenance.",
+  "version": 3,
+  "expanded": "mboll.eu Telegram TI feed",
+  "predicates": [
+    {
+      "value": "token-status",
+      "expanded": "Bot token status",
+      "description": "Result of the latest daily getMe check. On a token attribute: status of exactly this token. On an event: 'alive' if at least one token of the bot is alive, otherwise 'dead'."
+    },
+    {
+      "value": "relay-type",
+      "expanded": "Relay type",
+      "description": "Infrastructure the malware uses instead of calling api.telegram.org directly."
+    },
+    {
+      "value": "source",
+      "expanded": "Source",
+      "description": "How the indicator was obtained."
+    },
+    {
+      "value": "indicator-scope",
+      "expanded": "Indicator scope",
+      "description": "Whether a network indicator is specific to the operator or a shared/generic service."
+    },
+    {
+      "value": "usage",
+      "expanded": "Usage pattern",
+      "description": "How widely the bot token is used across samples."
+    }
+  ],
+  "values": [
+    {
+      "predicate": "token-status",
+      "entry": [
+        {
+          "value": "alive",
+          "expanded": "Alive",
+          "description": "Token: Telegram accepted this token at the latest check. Event: at least one token of the bot is alive."
+        },
+        {
+          "value": "dead",
+          "expanded": "Dead / revoked",
+          "description": "Token: Telegram rejected this token (HTTP 401/404) at the latest check. Event: all tokens of the bot are dead."
+        },
+        {
+          "value": "unknown",
+          "expanded": "Unknown",
+          "description": "Not checked yet or the last check failed."
+        }
+      ]
+    },
+    {
+      "predicate": "relay-type",
+      "entry": [
+        {
+          "value": "cloudflare-worker",
+          "expanded": "Cloudflare Worker",
+          "description": "A *.workers.dev host proxying requests to the Telegram Bot API."
+        }
+      ]
+    },
+    {
+      "predicate": "source",
+      "entry": [
+        {
+          "value": "vt-sandbox",
+          "expanded": "VirusTotal sandbox",
+          "description": "Extracted from URLs contacted by the sample in VirusTotal sandboxes."
+        },
+        {
+          "value": "telegram-bot-api",
+          "expanded": "Telegram Bot API",
+          "description": "Retrieved live from the Telegram Bot API with the observed token (getMe, getChat, ...)."
+        }
+      ]
+    },
+    {
+      "predicate": "indicator-scope",
+      "entry": [
+        {
+          "value": "operator-specific",
+          "expanded": "Operator-specific",
+          "description": "Infrastructure that belongs to the operator; suitable for detection."
+        },
+        {
+          "value": "shared-service",
+          "expanded": "Shared / generic service",
+          "description": "A generic service (webhook relays, bot builders); do not block on it."
+        }
+      ]
+    },
+    {
+      "predicate": "usage",
+      "entry": [
+        {
+          "value": "shared-suspected",
+          "expanded": "Shared / leaked token suspected",
+          "description": "Many samples across several malware families use this token; likely a builder default or leaked token used by independent actors. Do not attribute on this bot alone."
+        }
+      ]
+    }
+  ]
+}

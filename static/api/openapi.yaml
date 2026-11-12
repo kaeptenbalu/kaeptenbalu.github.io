@@ -4,12 +4,35 @@ info:
   version: "1.0.0"
   summary: Read-only feed of Telegram bots abused by malware.
   description: |
-    **Base URL: `https://ti.mboll.eu`** — every endpoint lives under `/v1`,
-    e.g. `https://ti.mboll.eu/v1/records`. Authenticate with the `X-API-Key` header.
+    **Base URL: `https://ti.mboll.eu`** — every REST endpoint lives under `/v1`,
+    e.g. `https://ti.mboll.eu/v1/records`. Authenticate with the `X-API-Key` header;
+    access, terms of use, data model and update schedule are explained in the
+    [guide](https://www.mboll.eu/api/).
 
-    Technical reference: endpoints, parameters, filter syntax and every field.
-    Access, terms of use, data model, update schedule and
-    versioning are explained in the [guide](https://www.mboll.eu/api/).
+    ## Quick start
+
+    ```bash
+    curl -G "https://ti.mboll.eu/v1/records" \
+      -H "X-API-Key: YOUR_API_KEY" \
+      --data-urlencode 'filter=created >= @todayStart' \
+      --data-urlencode 'sort=-created' \
+      --data-urlencode 'perPage=100'
+    ```
+
+    ## Versioning
+
+    Within `v1` the response format and field semantics stay stable — fields may be
+    added, never silently changed; a breaking change would ship as `/v2` with an
+    overlap period.
+
+    **Legacy path:** `/api/collections/Telegram/records` answers like `/v1/records`
+    but is **deprecated and will be switched off on 1 December 2026** — please use
+    `/v1/records`.
+
+    ## MISP feed
+
+    The same data is available as a MISP feed under `/misp/` with the same key —
+    setup guide, object template and taxonomy: [MISP feed](https://www.mboll.eu/api/misp/).
 
 servers:
   - url: https://ti.mboll.eu
@@ -42,6 +65,14 @@ tags:
       description, photo, pinned message, admins, migration, chat gone/restored).
       For events reconstructed from data collected before November 2026,
       `detected_at` is the last time the old value was seen.
+
+  - name: MISP feed
+    description: |
+      Static files of the MISP feed (one event per bot), regenerated daily around 00:35
+      Europe/Berlin. Configure it in MISP as feed type *MISP Feed* with the URL
+      `https://ti.mboll.eu/misp` and the header `X-API-Key` — step-by-step guide:
+      [MISP feed](https://www.mboll.eu/api/misp/). The feed files have their own,
+      higher rate limit for the initial synchronisation.
 
 paths:
   /v1/records:
@@ -432,6 +463,46 @@ paths:
         "403": { $ref: "#/components/responses/Forbidden" }
         "404": { description: No entry with this ID }
         "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /misp/manifest.json:
+    get:
+      tags: [MISP feed]
+      operationId: mispManifest
+      summary: Feed manifest (index of all events)
+      description: |
+        MISP feed index: event UUID → info, date, tags and `timestamp`. MISP compares the
+        timestamps and downloads only new or changed events.
+      responses:
+        "200": { description: Manifest, content: { application/json: { schema: { type: object } } } }
+        "403": { $ref: "#/components/responses/Forbidden" }
+  /misp/{uuid}.json:
+    get:
+      tags: [MISP feed]
+      operationId: mispEvent
+      summary: One MISP event (one Telegram bot)
+      description: |
+        Standard MISP event JSON with `telegram-bot` objects (one per channel = token + chat),
+        `telegram-account` objects, the Bot API endpoint and the event report „Overview“.
+        Removed items are delivered with `deleted: true` for 30 days.
+      parameters:
+        - name: uuid
+          in: path
+          required: true
+          description: Event UUID from the manifest (stable per bot).
+          schema: { type: string, format: uuid }
+      responses:
+        "200": { description: MISP event, content: { application/json: { schema: { type: object } } } }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { description: No event with this UUID }
+  /misp/hashes.csv:
+    get:
+      tags: [MISP feed]
+      operationId: mispHashes
+      summary: Value hashes for MISP feed caching
+      description: "`md5(value),event-uuid` per line — used by MISP's feed cache for correlation without import."
+      responses:
+        "200": { description: CSV, content: { text/csv: { schema: { type: string } } } }
+        "403": { $ref: "#/components/responses/Forbidden" }
 
 components:
   securitySchemes:
