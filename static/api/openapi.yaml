@@ -63,13 +63,13 @@ info:
 
     | Time | What changes |
     |---|---|
-    | **~10:00 – 12:00** | Token liveness re-check → `/v1/tokens` (status, last seen alive) |
-    | **~12:00 – 12:20** | Chat check → `/v1/chats`, `/v1/chat-history` |
-    | **15:00 – ~00:30** | Main pipeline: new observations, malware families, bot / chat enrichment, sandbox links → `/v1/records` and all entity endpoints |
-    | **~00:35** | MISP feed regenerated |
+    | **15:00 – ~00:45** | Main pipeline: new observations, malware families, bot / chat enrichment, sandbox links → `/v1/records` and all entity endpoints |
+    | **~00:45 – ~03:00** | Token liveness re-check → `/v1/tokens` (status, last seen alive) |
+    | **~03:00 – ~03:20** | Chat check → `/v1/chats`, `/v1/chat-history` |
+    | **~03:20** | MISP feed regenerated |
 
-    - **Recommended pull window: 01:00 – 14:30** — the previous run is complete and all enrichment is current. For the freshest token and chat status, pull `/v1/tokens` and `/v1/chats` after 12:30.
-    - **Avoid pulling while the main pipeline runs** (15:00 – ~00:30): observations exist before their enrichment is complete.
+    - **Recommended pull window: 04:00 – 14:30** — the daily run is complete and all data, including token and chat status, reflects the same state. Token and chat status do not change in this window; only occasionally a few observations from relay analysis (~10:00) are added.
+    - **Avoid pulling while the pipeline runs** (15:00 – ~03:30): observations exist before their enrichment is complete, and token / chat status is being updated.
     - **Pull incrementally:** remember the newest `created` value you have seen and request `filter=created > "<that value>"` with `sort=created`.
 
     ## Versioning
@@ -121,7 +121,7 @@ tags:
 
   - name: MISP feed
     description: |
-      Static files of the MISP feed (one event per bot), regenerated daily around 00:35
+      Static files of the MISP feed (one event per bot), regenerated daily around 03:20
       Europe/Berlin. Configure it in MISP as feed type *MISP Feed* with the URL
       `https://ti.mboll.eu/misp` and the header `X-API-Key` — step-by-step guide:
       [MISP feed](https://www.mboll.eu/api/misp/). The feed files have their own,

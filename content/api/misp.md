@@ -99,11 +99,11 @@ In **Sync Actions → List Feeds**, next to your feed:
 
 ### 7. Fetch daily
 
-The feed is regenerated **once a day around 00:35 Europe/Berlin**, after the daily pipeline has finished. It then contains that day's new observations as well as the latest token-liveness and chat checks ([update schedule](/api/reference/#section/Update-schedule)); fetching more than once a day brings nothing new. Fetch it after 01:00, e.g. with a cron job on the MISP server:
+The feed is regenerated **once a day around 03:20 Europe/Berlin**, after the daily pipeline has finished. It then contains that day's new observations as well as the latest token-liveness and chat checks ([update schedule](/api/reference/#section/Update-schedule)); fetching more than once a day brings nothing new. Fetch it after 04:00, e.g. with a cron job on the MISP server:
 
 ```bash
 # m h dom mon dow  command   (user id 1 = your admin user, last argument = feed id or "all")
-30 2 * * *  /var/www/MISP/app/Console/cake Server fetchFeed 1 <FEED_ID>
+30 4 * * *  /var/www/MISP/app/Console/cake Server fetchFeed 1 <FEED_ID>
 ```
 
 ## Keeping it inside your organisation
