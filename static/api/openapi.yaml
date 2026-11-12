@@ -749,17 +749,6 @@ components:
         pinned_message:
           type: string
           description: Text of the pinned message in the exfiltration chat, when retrievable. Often contains operator handles or service ads.
-        chat_picture:
-          type: string
-          description: |
-            File name of the stored chat profile picture (internal). Its presence
-            tells you a picture exists; the image itself is **not downloadable via
-            this API**.
-          example: chat_1016786786_i59thfkxp7.jpg
-        creator_picture:
-          type: string
-          description: File name of the stored profile picture of the chat creator (internal; not downloadable via this API).
-
         commands:
           type: string
           description: Registered slash-commands from `getMyCommands` — often the C2 verb list of the malware panel.
