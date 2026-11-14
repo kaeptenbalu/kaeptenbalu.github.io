@@ -95,7 +95,7 @@ In **Sync Actions → List Feeds**, next to your feed:
 1. **Preview** (eye icon) — shows the event index without importing anything. If you see the list, URL and key are correct.
 2. **Fetch and store all feed data** (download icon) — imports the events. Afterwards they appear under **Event Actions → List Events** with the organisation `mboll.eu`.
 
-> **First fetch:** the feed contains about 18,000 events. MISP downloads them one by one, which takes a while; depending on your background-worker limits (PHP `memory_limit` / `max_execution_time`) the job may stop before the end. Simply **run the fetch again** — already imported events are skipped. Afterwards only changed events are downloaded.
+> **First fetch:** the first fetch downloads the complete feed (one event per bot), and MISP fetches the events one by one, so it takes a while; depending on your background-worker limits (PHP `memory_limit` / `max_execution_time`) the job may stop before the end. Simply **run the fetch again** — already imported events are skipped. Afterwards only changed events are downloaded.
 
 ### 7. Fetch daily
 
