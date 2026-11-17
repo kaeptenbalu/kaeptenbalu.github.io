@@ -64,12 +64,11 @@ info:
     | Time | What changes |
     |---|---|
     | **15:00 – ~00:45** | Main pipeline: new observations, malware families, bot / chat enrichment, sandbox links → `/v1/records` and all entity endpoints |
-    | **~00:45 – ~03:00** | Token liveness re-check → `/v1/tokens` (status, last seen alive) |
-    | **~03:00 – ~03:20** | Chat check → `/v1/chats`, `/v1/chat-history` |
-    | **~03:20** | MISP feed regenerated |
+    | **~00:45 – ~03:30** | Token liveness re-check → `/v1/tokens` (status, last seen alive) |
+    | **~03:00 – ~04:00** | Chat check → `/v1/chats`, `/v1/chat-history`, then MISP feed regenerated |
 
-    - **Recommended pull window: 04:00 – 14:30** — the daily run is complete and all data, including token and chat status, reflects the same state. Token and chat status do not change in this window; only occasionally a few observations from relay analysis (~10:00) are added.
-    - **Avoid pulling while the pipeline runs** (15:00 – ~03:30): observations exist before their enrichment is complete, and token / chat status is being updated.
+    - **Recommended pull window: 05:00 – 14:30** — the daily run is complete and all data, including token and chat status, reflects the same state. Token and chat status do not change in this window; only occasionally a few observations from relay analysis (~10:00) are added.
+    - **Avoid pulling while the pipeline runs** (15:00 – ~04:00): observations exist before their enrichment is complete, and token / chat status is being updated.
     - **Pull incrementally:** remember the newest `created` value you have seen and request `filter=created > "<that value>"` with `sort=created`.
 
     ## Versioning
@@ -121,8 +120,8 @@ tags:
 
   - name: MISP feed
     description: |
-      Static files of the MISP feed (one event per bot), regenerated daily around 03:20
-      Europe/Berlin. Configure it in MISP as feed type *MISP Feed* with the URL
+      Static files of the MISP feed (one event per bot), regenerated daily between about
+      03:00 and 04:00 Europe/Berlin; fetch after 05:00. Configure it in MISP as feed type *MISP Feed* with the URL
       `https://ti.mboll.eu/misp` and the header `X-API-Key` — step-by-step guide:
       [MISP feed](https://www.mboll.eu/api/misp/). The feed files have their own,
       higher rate limit for the initial synchronisation.
