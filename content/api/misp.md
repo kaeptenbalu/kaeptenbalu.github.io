@@ -28,11 +28,23 @@ Events are **updated in place**: a new sample, token, webhook or a dead token ch
 
 Tested with MISP 2.5.51. All commands run on your MISP server; adjust `/var/www/MISP` if your installation lives elsewhere.
 
-### 1. Install the object template (draft v0.1)
+### 1. Object template `telegram-bot` version 3
 
-The events use an **extended version of the official `telegram-bot` object template**. It adds the fields `sha256`, `bot-description`, `chat-name`, `chat-description`, `url` and `relay`.
+The events use **version 3 of the official `telegram-bot` object template**. Version 3 adds the fields `sha256`, `bot-description`, `chat-name`, `chat-description`, `url` and `relay`. It is part of the official [misp-objects](https://github.com/MISP/misp-objects) repository since 17 November 2026 ([pull request #593](https://github.com/MISP/misp-objects/pull/593)).
 
-> **Draft v0.1 — subject to change.** The template has **not yet been submitted** to the official [misp-objects](https://github.com/MISP/misp-objects) repository; it will be proposed there once it has proven itself in practice, and fields may still change until then. The file carries template version `3` so that MISP accepts it as an update of the official version 2. **A MISP object update can reset it to the official version** — repeat this step after updating your MISP objects.
+**Check first** — you may already have it: **Global Actions → List Object Templates**, search for `telegram-bot`. If it shows version **3**, continue with step 2.
+
+Otherwise choose **one** of the two ways:
+
+**a) Update your object templates from the official repository** (gets all current templates, including `telegram-bot` v3). MISP releases that include the change bring it along automatically; on older installations:
+
+```bash
+cd /var/www/MISP/app/files/misp-objects
+sudo -u www-data git pull origin main
+grep '"version"' objects/telegram-bot/definition.json    # must show 3
+```
+
+**b) Install only this one template** — if you do not want to update your other object templates. The file is identical to the official version 3:
 
 ```bash
 F=/var/www/MISP/app/files/misp-objects/objects/telegram-bot/definition.json
@@ -41,11 +53,11 @@ curl -s https://www.mboll.eu/api/misp/telegram-bot/definition.json | sudo -u www
 grep '"version"' "$F"          # must show 3
 ```
 
-In MISP: **Global Actions → List Object Templates → Update Objects**. `telegram-bot` must now show version **3**; if not, open the template and click **Force update**.
-
 Download: [telegram-bot/definition.json](/api/misp/telegram-bot/definition.json)
 
-Without the template the events still import, but the new fields are not recognised as part of the template.
+Then in MISP: **Global Actions → List Object Templates → Update Objects**. `telegram-bot` must now show version **3**; if not, open the template and click **Force update**.
+
+Without version 3 the events still import, but the new fields are not recognised as part of the template.
 
 ### 2. Install the taxonomy (optional)
 
